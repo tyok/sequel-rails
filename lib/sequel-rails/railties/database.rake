@@ -4,7 +4,7 @@ namespace :db do
     desc "Create a db/schema.rb file that can be portably used against any DB supported by Sequel"
     task :dump do
       Sequel.extension :schema_dumper
-      db = Sequel.connect(Rails.configuration.database_configuration[Rails.env])
+      db = Sequel.connect(::Rails::Sequel.configuration.environment_for(Rails.env))
       File.open(ENV['SCHEMA'] || "#{Rails.root}/db/schema.rb", "w") do |file|
         file.write(db.dump_schema_migration)
       end
@@ -134,9 +134,28 @@ namespace :db do
   desc 'Drops and recreates the database from db/schema.rb for the current environment and loads the seeds.'
   task :reset => [ 'db:drop', 'db:setup' ]
   
+  desc 'Forcibly close any open connections to the test database'
+  task :force_close_open_connections => :environment do
+    if Rails.env.test?
+       db_config = Rails.configuration.database_configuration[Rails.env].symbolize_keys
+       begin
+         #Will only work on Postgres > 8.4
+         Sequel::Model.db.execute <<-SQL.gsub(/^\s{9}/,'')
+         SELECT COUNT(pg_terminate_backend(procpid))
+         FROM  pg_stat_activity
+         WHERE datname = '#{db_config[:database]}';
+         SQL
+       rescue => e
+         #Will raise an error as it kills existing process running this command
+         #Seems to be only way to ensure *all* test connections are closed
+       end
+     end
+  end
+  
   namespace :test do
     task :prepare do
       Rails.env = 'test'
+      Rake::Task['db:force_close_open_connections'].invoke()
       Rake::Task['db:reset'].invoke()
       Sequel::DATABASES.each do |db|
         db.disconnect

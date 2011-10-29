@@ -86,6 +86,18 @@ module Rails
         @password ||= config['password'] || ''
       end
 
+      def host
+        @host ||= config['host'] || ''
+      end
+
+      def port
+        @port ||= config['port'] || ''
+      end
+
+      def owner
+        @owner ||= config['owner'] || ''
+      end
+        
       def charset
         @charset ||= config['charset'] || ENV['CHARSET'] || 'utf8'
       end
@@ -125,13 +137,13 @@ module Rails
       private
 
         def execute(statement)
-          system(
-            'mysql',
-            (username.blank? ? '' : "--user=#{username}"),
-            (password.blank? ? '' : "--password=#{password}"),
-            '-e',
-            statement
-          )
+          commands = 'mysql '
+          commands << "--user=#{username} "     unless username.blank?
+          commands << "--password=#{password} " unless password.blank?
+          commands << "--host=#{host} "         unless host.blank?
+          commands << '-e '
+          commands << statement
+          system(commands)
         end
 
         def collation
@@ -142,14 +154,13 @@ module Rails
 
       class Postgres < Storage
         def _create
-          system(
-            'createdb',
-            '-E',
-            charset,
-            '-U',
-            username,
-            database
-          )
+          commands = "createdb --encoding=#{charset} "
+          commands << "--username=#{username} " unless username.blank?
+          commands << "--owner=#{owner} "       unless owner.blank?
+          commands << "--port=#{port} "         unless port.blank?
+          commands << "--host=#{host} "         unless host.blank?
+          commands << database
+          system(commands)
         end
 
         def _drop
