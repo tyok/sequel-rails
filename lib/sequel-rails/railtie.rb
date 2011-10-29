@@ -23,7 +23,7 @@ module Rails
 
       ::Sequel::Railties::LogSubscriber.attach_to :sequel
 
-      config.generators.orm :sequel, :migration => true
+      config.app_generators.orm :sequel, :migration => true
       config.rails_fancy_pants_logging = true
 
       rake_tasks do

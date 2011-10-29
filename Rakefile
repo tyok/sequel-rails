@@ -1,7 +1,9 @@
 begin
-  require 'bundler'
-  Bundler::GemHelper.install_tasks
-  FileList['tasks/**/*.rake'].each { |task| import task }
+  require 'bundler/setup'
 rescue LoadError
-  puts 'Bundler or a dependency is not installed, install them with: gem install bundler && bundle install'
+  puts 'You must `gem install bundler` and `bundle install` to run rake tasks'
 end
+
+Bundler::GemHelper.install_tasks
+
+FileList['tasks/**/*.rake'].each { |task| import task }

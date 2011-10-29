@@ -1,3 +1,9 @@
+== 0.2.0
+* Fix deprecation warning for config.generators
+* Update dependency to Rails 3.1.1
+* Update dependency to Sequel 3.28.0
+* Update dependency to RSpec 2.7.0
+
 == 0.1.4
 * Merged in changes to rake tasks and timestamp migrations
 
