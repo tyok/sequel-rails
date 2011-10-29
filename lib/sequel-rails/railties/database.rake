@@ -12,7 +12,7 @@ namespace :db do
     end
     
     desc "Load a schema.rb file into the database"
-    task :load, :needs => :environment do
+    task :load => :environment do
       require 'sequel-rails/storage'
       Rails::Sequel::Storage.new(Rails.env).create
       
@@ -27,14 +27,14 @@ namespace :db do
 
   namespace :create do
     desc 'Create all the local databases defined in config/database.yml'
-    task :all, :needs => :environment do
+    task :all => :environment do
       require 'sequel-rails/storage'
       Rails::Sequel::Storage.create_all
     end
   end
 
   desc "Create the database defined in config/database.yml for the current Rails.env - also creates the test database if Rails.env.development?"
-  task :create, :env, :needs => :environment do |t, args|
+  task :create, [:env] => :environment do |t, args|
     args.with_defaults(:env => Rails.env)
     
     require 'sequel-rails/storage'
@@ -47,14 +47,14 @@ namespace :db do
   
   namespace :drop do
     desc 'Drops all the local databases defined in config/database.yml'
-    task :all, :needs => :environment do
+    task :all => :environment do
       require 'sequel-rails/storage'
       Rails::Sequel::Storage.drop_all
     end
   end
   
   desc "Create the database defined in config/database.yml for the current Rails.env - also creates the test database if Rails.env.development?"
-  task :drop, :env, :needs => :environment do |t, args|
+  task :drop, [:env] => :environment do |t, args|
     args.with_defaults(:env => Rails.env)
     
     require 'sequel-rails/storage'
