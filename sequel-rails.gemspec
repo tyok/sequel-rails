@@ -4,7 +4,7 @@ $:.push File.expand_path("../lib", __FILE__)
 require "sequel-rails/version"
 
 Gem::Specification.new do |s|
-  s.name        = "sequel-rails"
+  s.name        = "talentbox-sequel-rails"
   s.version     = Rails::Sequel::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Brasten Sager (brasten)", "Jonathan TRON"]
