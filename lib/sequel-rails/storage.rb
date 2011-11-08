@@ -70,6 +70,7 @@ module Rails
       end
 
       def drop
+        ::Sequel::Model.db.disconnect
         _drop
         puts "[sequel] Dropped database '#{database}'"
       end
