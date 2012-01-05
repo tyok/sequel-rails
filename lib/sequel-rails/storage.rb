@@ -80,7 +80,7 @@ module Rails
       end
 
       def username
-        @username ||= config['username'] || ''
+        @username ||= config['username'] || config['user'] || ''
       end
 
       def password
@@ -155,13 +155,16 @@ module Rails
 
       class Postgres < Storage
         def _create
+          ENV["PGPASSWORD"] = password unless password.blank?
           commands = "createdb --encoding=#{charset} "
           commands << "--username=#{username} " unless username.blank?
           commands << "--owner=#{owner} "       unless owner.blank?
           commands << "--port=#{port} "         unless port.blank?
           commands << "--host=#{host} "         unless host.blank?
           commands << database
-          system(commands)
+          res = system(commands)
+          ENV["PGPASSWORD"] = nil
+          res
         end
 
         def _drop
