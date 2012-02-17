@@ -1,3 +1,18 @@
+== 0.3.1
+* Make `db:dump` Rake task depends on Rails `environment` task (Gabor Ratky)
+
+== 0.3.0
+* Update dependency to Rails (~> 3.2.0)
+
+== 0.2.3
+* Set `PGPASSWORD` environment variable before trying to create DB using `createdb`
+
+== 0.2.2
+* Ensure Sequel is disconnected before trying to drop a db
+
+== 0.2.1
+* Make dependency on Sequel more open (~> 3.28)
+
 == 0.2.0
 * Fix deprecation warning for config.generators
 * Update dependency to Rails 3.1.1
