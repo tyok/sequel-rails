@@ -1,5 +1,5 @@
 == 0.3.1
-* Make `db:dump` Rake task depends on Rails `environment` task (Gabor Ratky)
+* Make `db:schema:dump` Rake task depends on Rails `environment` task (Gabor Ratky)
 
 == 0.3.0
 * Update dependency to Rails (~> 3.2.0)
