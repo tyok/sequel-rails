@@ -1,3 +1,9 @@
+== 0.3.2
+* Ignore environments without `database` key (like ActiveRecord do it), to allow
+  shared configurations in `database.yml`.
+* Fix db creation commands to let the `system` method escape the arguments
+* Fix error when using `mysql2` gem
+
 == 0.3.1
 * Make `db:schema:dump` Rake task depends on Rails `environment` task (Gabor Ratky)
 
