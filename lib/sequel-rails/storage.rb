@@ -40,6 +40,7 @@ module Rails
 
         def with_local_repositories
           Rails::Sequel.configuration.environments.each_value do |config|
+            next if config['database'].blank?
             if config['host'].blank? || %w[ 127.0.0.1 localhost ].include?(config['host'])
               yield(config)
             else
