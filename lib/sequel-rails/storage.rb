@@ -152,6 +152,8 @@ module Rails
         end
 
       end
+      class Mysql2 < Mysql
+      end
 
       class Postgres < Storage
         def _create
