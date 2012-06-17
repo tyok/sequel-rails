@@ -54,7 +54,7 @@ module Sequel
       end
 
       def update_attributes(params=nil)
-        "#{name}.set(#{params})"
+        "#{name}.update(#{params})"
       end
 
       def errors
