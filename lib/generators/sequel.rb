@@ -38,7 +38,7 @@ module Sequel
       end
 
       def self.find(klass, params=nil)
-        "#{klass}.get(#{params})"
+        "#{klass}[#{params}]"
       end
 
       def self.build(klass, params=nil)
@@ -54,7 +54,7 @@ module Sequel
       end
 
       def update_attributes(params=nil)
-        "#{name}.update(#{params})"
+        "#{name}.set(#{params})"
       end
 
       def errors
