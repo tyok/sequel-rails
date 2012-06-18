@@ -89,6 +89,14 @@ This fork:
 
 * Jonathan Tron (JonathanTron)
 
+== Contributors
+
+Improvements has been made by those awesome contributors:
+
+* Benjamin Atkin (benatkin)
+* Gabor Ratky (rgabo)
+* Joshua Hansen (binarypaladin)
+
 == Copyright
 
 Copyright (c) 2010 The sequel-rails team. See {LICENSE}[http://github.com/brasten/sequel-rails/blob/master/LICENSE] for details.
