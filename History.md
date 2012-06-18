@@ -1,3 +1,14 @@
+0.3.4 - dev
+=====
+
+* Map some Sequel specific exceptions to `ActiveRecord` equivalents, in 
+  `config.action_dispatch.rescue_responses`. This allows controllers to behave
+  more like `ActiveRecord` when Sequel raises exceptions. (Joshua Hansen)
+ 
+* New Sequel plugin added to all `Sequel::Model` which allows to use 
+  `Sequel::Model#find!` which will raise an exception if record does not exists.
+  This method is an alias to `Sequel::Model#[]` method. (Joshua Hansen)
+
 0.3.3
 =====
 

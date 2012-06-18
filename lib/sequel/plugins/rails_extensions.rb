@@ -8,7 +8,7 @@ module Sequel
     # found. By adding the following code to a Railtie:
     #
     #   config.action_dispatch.rescue_responses.merge!(
-    #    'SSequel::Plugins::RailsExtensions::ModelNotFound' => :not_found
+    #    'Sequel::Plugins::RailsExtensions::ModelNotFound' => :not_found
     #   )
     # 
     # Usage:
