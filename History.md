@@ -1,3 +1,8 @@
+0.3.3
+=====
+
+* Fix generators and use better model and migration template (Joshua Hansen)
+
 0.3.2
 =====
 * Ignore environments without `database` key (like ActiveRecord do it), to allow
