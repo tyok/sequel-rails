@@ -6,7 +6,7 @@ namespace :db do
       Sequel.extension :schema_dumper
       db = Sequel.connect(::Rails::Sequel.configuration.environment_for(Rails.env))
       File.open(ENV['SCHEMA'] || "#{Rails.root}/db/schema.rb", "w") do |file|
-        file.write(db.dump_schema_migration)
+        file.write db.dump_schema_migration(same_db: true)
       end
       Rake::Task["db:schema:dump"].reenable
     end
