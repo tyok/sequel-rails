@@ -1,5 +1,12 @@
-0.3.4 - dev
+0.3.5 - dev
+===========
+
+0.3.4
 =====
+
+* Make `rake db:schema:dump` generate a schema file which contains foreign_keys
+  and uses db types instead of ruby equivalents. This ensure loading the schema
+  file will result in a correct db
 
 * Map some Sequel specific exceptions to `ActiveRecord` equivalents, in 
   `config.action_dispatch.rescue_responses`. This allows controllers to behave
