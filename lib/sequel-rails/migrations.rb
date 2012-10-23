@@ -17,6 +17,7 @@ module Rails
         end
 
         def pending_migrations?
+          return false unless File.exists?("db/migrate")
           !::Sequel::Migrator.is_current?(::Sequel::Model.db, "db/migrate")
         end
       end
