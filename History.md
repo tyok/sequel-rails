@@ -1,5 +1,8 @@
-0.3.6 - dev
+0.3.7 - dev
 ===========
+
+0.3.6
+=====
 
 * Ensure some tasks use the right db after setting `Rails.env`:
   - `db:schema:load`
