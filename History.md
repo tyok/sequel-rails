@@ -1,5 +1,14 @@
-0.3.8 - dev
+0.3.9 - dev
 ===========
+
+0.3.8
+=====
+
+* Fix bug in `db:force_close_open_connections` and make it work with
+  PostgreSQL 9.2.
+* Ensure `db:test:prepare` use `execute` instead of `invoke` so that tasks
+  already invoked are executed again. This make the following work as expected:
+    `rake db:create db:migrate db:test:prepare`
 
 0.3.7
 =====
