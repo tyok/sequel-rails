@@ -1,5 +1,10 @@
-0.3.7 - dev
+0.3.8 - dev
 ===========
+
+0.3.7
+=====
+
+* Check migration directory exists before checking if migration are pending
 
 0.3.6
 =====
