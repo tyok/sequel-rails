@@ -1,6 +1,9 @@
 0.3.6 - dev
 ===========
 
+* Depends on `railties` instead of `rails` to not pull `active_record` 
+  as dependency (Markus Fenske)
+
 0.3.5
 =====
 
