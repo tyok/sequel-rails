@@ -1,5 +1,10 @@
-0.3.5 - dev
+0.3.6 - dev
 ===========
+
+0.3.5
+=====
+
+* Fix `rake db:schema:load` (Markus Fenske)
 
 0.3.4
 =====
