@@ -1,6 +1,7 @@
 0.3.6 - dev
 ===========
 
+* Make `rake db:setup` load schema instead of running migrations (Markus Fenske)
 * Depends on `railties` instead of `rails` to not pull `active_record` 
   as dependency (Markus Fenske)
 
