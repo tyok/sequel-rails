@@ -142,13 +142,14 @@ namespace :db do
 
   desc 'Forcibly close any open connections to the test database'
   task :force_close_open_connections => :environment do
-    if Rails.env.test?
+    if db_for_current_env.database_type==:postgres
       begin
-        #Will only work on Postgres > 8.4
+        # Will only work on Postgres > 8.4
+        pid_column = db_for_current_env.server_version < 90200 ? "procpid" : "pid"
         db_for_current_env.execute <<-SQL.gsub(/^\s{9}/,'')
-          SELECT COUNT(pg_terminate_backend(procpid))
+          SELECT COUNT(pg_terminate_backend(#{pid_column}))
           FROM  pg_stat_activity
-          WHERE datname = '#{db_config[:database]}';
+          WHERE datname = '#{db_for_current_env.opts[:database]}';
         SQL
       rescue => e
         #Will raise an error as it kills existing process running this command
@@ -160,10 +161,10 @@ namespace :db do
   namespace :test do
     task :prepare => "db:abort_if_pending_migrations" do
       Rails.env = 'test'
-      Rake::Task['db:force_close_open_connections'].invoke
-      Rake::Task['db:drop'].invoke
-      Rake::Task['db:create'].invoke
-      Rake::Task['db:schema:load'].invoke
+      Rake::Task['db:force_close_open_connections'].execute
+      Rake::Task['db:drop'].execute
+      Rake::Task['db:create'].execute
+      Rake::Task['db:schema:load'].execute
       Sequel::DATABASES.each do |db|
         db.disconnect
       end
