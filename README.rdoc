@@ -96,6 +96,7 @@ Improvements has been made by those awesome contributors:
 * Benjamin Atkin (benatkin)
 * Gabor Ratky (rgabo)
 * Joshua Hansen (binarypaladin)
+* Arron Washington (radicaled)
 
 == Copyright
 

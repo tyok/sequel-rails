@@ -1,5 +1,7 @@
-0.3.9 - dev
-===========
+0.3.9
+=====
+
+* Correctly pass option to MySQL CLI and correctly escape them (Arron Washington)
 
 0.3.8
 =====
