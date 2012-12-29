@@ -22,8 +22,8 @@ end
 # Ensure db exists and clean state
 begin
   require "sequel-rails/storage"
-  Rails::Sequel::Storage.new(:test).drop
-  Rails::Sequel::Storage.new(:test).create
+  Rails::Sequel::Storage.adapter_for(:test).drop
+  Rails::Sequel::Storage.adapter_for(:test).create
 
   require 'sequel/extensions/migration'
   load "#{Rails.root}/db/schema.rb"

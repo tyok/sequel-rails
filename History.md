@@ -1,6 +1,7 @@
 0.4.0 dev
 ==========
 
+* Split `Rails::Sequel::Storage` class in multiple adapter for each db
 * Only log queries if logger level is set to :debug (matching ActiveRecord 
   default).
 * Correctly display time spent in models in controller logs.

@@ -52,7 +52,7 @@ namespace :db do
     args.with_defaults(:env => Rails.env)
 
     require 'sequel-rails/storage'
-    Rails::Sequel::Storage.new(args.env).create
+    Rails::Sequel::Storage.adapter_for(args.env).create
   end
 
   namespace :drop do
@@ -68,7 +68,7 @@ namespace :db do
     args.with_defaults(:env => Rails.env)
 
     require 'sequel-rails/storage'
-    Rails::Sequel::Storage.new(args.env).drop
+    Rails::Sequel::Storage.adapter_for(args.env).drop
   end
 
   namespace :migrate do
