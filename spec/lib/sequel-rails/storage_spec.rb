@@ -87,6 +87,11 @@ describe Rails::Sequel::Storage do
           adapter.config.should be config
         end
       end
+      it "raises when adapter is not valid" do
+        expect do
+          described_class.adapter_for({"adapter" => "unknown"})
+        end.to raise_error RuntimeError, "Adapter unknown not supported (:Unknown)"
+      end
     end
     context "when passed an environment" do
       it "returns adapter based on configured environment" do
