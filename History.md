@@ -1,6 +1,8 @@
 0.3.10 dev
 ==========
 
+* Add initial specs for railtie setup
+
 0.3.9
 =====
 
