@@ -1,20 +1,22 @@
-require 'sequel'
+require "sequel"
 
-require 'rails'
-require 'active_model/railtie'
+require "rails"
+require "active_model/railtie"
 
 # Comment taken from active_record/railtie.rb
 #
 # For now, action_controller must always be present with
-# rails, so let's make sure that it gets required before
+# rails, so let"s make sure that it gets required before
 # here. This is needed for correctly setting up the middleware.
 # In the future, this might become an optional require.
-require 'action_controller/railtie'
+require "action_controller/railtie"
 
-require 'sequel-rails/setup'
-require 'sequel-rails/railties/log_subscriber'
-require 'sequel-rails/railties/i18n_support'
-
+require "sequel-rails/setup"
+require "sequel-rails/migrations"
+require "sequel-rails/railties/log_subscriber"
+require "sequel-rails/railties/i18n_support"
+require "sequel-rails/railties/controller_runtime"
+require "sequel/plugins/rails_extensions"
 
 module Rails
   module Sequel
@@ -37,24 +39,24 @@ module Rails
       end
 
       initializer 'sequel.configuration' do |app|
-        configure_sequel(app)
+        configure_sequel app
       end
 
       initializer 'sequel.logger' do |app|
-        setup_logger(app, Rails.logger)
+        setup_logger app, ::Rails.logger
       end
 
       initializer 'sequel.i18n_support' do |app|
-        setup_i18n_support(app)
+        setup_i18n_support app
       end
 
       # Expose database runtime to controller for logging.
       initializer 'sequel.log_runtime' do |app|
-        setup_controller_runtime(app)
+        setup_controller_runtime app
       end
 
       initializer 'sequel.connect' do |app|
-        Rails::Sequel.setup(Rails.env)
+        ::Rails::Sequel.setup ::Rails.env
       end
 
       # Run setup code after_initialize to make sure all config/initializers
@@ -69,13 +71,13 @@ module Rails
 
       # Support overwriting crucial steps in subclasses
       def configure_sequel(app)
-        app.config.sequel = Rails::Sequel::Configuration.for(
-          Rails.root, app.config.database_configuration
+        app.config.sequel = ::Rails::Sequel::Configuration.for(
+          ::Rails.root, app.config.database_configuration
         )
       end
 
       def setup_i18n_support(app)
-        ::Sequel::Model.send :include, Rails::Sequel::I18nSupport
+        ::Sequel::Model.send :include, ::Rails::Sequel::I18nSupport
       end
 
       def setup_controller_runtime(app)
@@ -84,7 +86,7 @@ module Rails
       end
 
       def setup_logger(app, logger)
-        app.config.sequel.logger=logger
+        app.config.sequel.logger = logger
       end
 
     end

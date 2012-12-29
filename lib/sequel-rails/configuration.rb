@@ -1,4 +1,3 @@
-require 'active_support/core_ext/hash/except'
 require 'active_support/core_ext/class/attribute_accessors'
 
 module Rails
@@ -9,7 +8,7 @@ module Rails
     class Configuration
 
       def self.for(root, database_yml_hash)
-        Rails::Sequel.configuration ||= new(root, database_yml_hash)
+        ::Rails::Sequel.configuration ||= new(root, database_yml_hash)
       end
 
       attr_reader :root, :raw

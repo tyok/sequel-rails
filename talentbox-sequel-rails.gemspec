@@ -21,9 +21,8 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency("sequel", ["~> 3.28"])
   s.add_runtime_dependency("railties", ["~> 3.2.0"])
 
-  s.add_development_dependency("rake", ["~> 0.8.7"])
-  s.add_development_dependency("yard", ["~> 0.5"])
-  s.add_development_dependency("rspec", ["~> 2.7.0"])
-  s.add_development_dependency("autotest", ["~> 4.4.6"])
-  s.add_development_dependency("rcov", ["~> 0.9.11"])
+  s.add_development_dependency "rake", ">= 0.8.7"
+  s.add_development_dependency "rspec-rails", "~> 2.7.0"
+  s.add_development_dependency "combustion", "~> 0.3.1"
+  s.add_development_dependency "pg"
 end

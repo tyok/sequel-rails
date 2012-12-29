@@ -1,4 +1,5 @@
-require 'active_support/core_ext/module/attr_internal'
+require "active_support/core_ext/module/attr_internal"
+require "sequel-rails/runtime"
 
 module Rails
   module Sequel
