@@ -1,6 +1,16 @@
-0.3.10 dev
+0.4.0 dev
 ==========
 
+* Only log queries if logger level is set to :debug (matching ActiveRecord 
+  default).
+* Correctly display time spent in models in controller logs.
+* Add simple `ActiveSupport::Notification` support to Sequel using logger 
+  facility. This is done by monkey patching `Sequel::Database#log_yield`, so
+  it does not yield directly if no loggers configured and instrument the yield
+  call. Note that this does not allow to know from which class the query comes
+  from. So it still does not display the `Sequel::Model` subclass like 
+  `ActiveRecord` does (eg: User load).
+* Add spec for Sequel::Railties::LogSubscriber
 * Add initial specs for railtie setup
 
 0.3.9
