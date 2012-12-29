@@ -24,9 +24,11 @@ module Rails
         adapter_for(config).drop
       end
 
-      def self.adapter_for(config)
-        unless config.kind_of? Hash
-          config = Rails::Sequel.configuration.environments[config.to_s]
+      def self.adapter_for(config_or_env)
+        config = if config_or_env.kind_of? Hash
+          config_or_env
+        else
+          Rails::Sequel.configuration.environments[config_or_env.to_s]
         end
         lookup_class(config['adapter']).new config
       end
