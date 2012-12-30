@@ -3,5 +3,5 @@ require 'bundler'
 
 Bundler.require :default, :development
 
-Combustion.initialize!
+Combustion.initialize! "sequel_rails"
 run Combustion::Application

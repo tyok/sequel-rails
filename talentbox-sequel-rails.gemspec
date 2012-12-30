@@ -1,11 +1,11 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
 
-require "sequel-rails/version"
+require "sequel_rails/version"
 
 Gem::Specification.new do |s|
   s.name        = "talentbox-sequel-rails"
-  s.version     = Rails::Sequel::VERSION
+  s.version     = SequelRails::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Brasten Sager (brasten)", "Jonathan TRON"]
   s.email       = ["brasten@gmail.com", "jonathan.tron@thetalentbox.com"]
