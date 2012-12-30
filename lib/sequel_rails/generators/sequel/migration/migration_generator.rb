@@ -10,7 +10,7 @@ module SequelRails
 
       def create_migration_file
         set_local_assigns!
-        migration_template "migration.rb", "db/migrate/#{file_name}.rb"
+        migration_template "migration.rb.erb", "db/migrate/#{file_name}.rb"
       end
 
       attr_reader :migration_action, :table_action, :column_action, :use_change

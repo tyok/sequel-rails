@@ -14,11 +14,11 @@ module SequelRails
 
       def create_migration_file
         return unless options[:migration]
-        migration_template "migration.rb", "db/migrate/create_#{table_name}.rb"
+        migration_template "migration.rb.erb", "db/migrate/create_#{table_name}.rb"
       end
 
       def create_model_file
-        template 'model.rb', File.join('app/models', class_path, "#{file_name}.rb")
+        template 'model.rb.erb', File.join('app/models', class_path, "#{file_name}.rb")
       end
 
       hook_for :test_framework
