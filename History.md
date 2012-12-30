@@ -1,6 +1,8 @@
-0.4.0 dev
+0.4.0.pre
 ==========
 
+* **BIG CHANGE** rename `Rails::Sequel` module as `SequelRails`, this becomes
+  the namespace for all sequel-rails related classes.
 * Split `Rails::Sequel::Storage` class in multiple adapter for each db
 * Only log queries if logger level is set to :debug (matching ActiveRecord 
   default).

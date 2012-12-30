@@ -4,7 +4,7 @@ require "bundler"
 Bundler.require :default, :development, :test
 
 # Combustion initialization has to happend before loading rspec/rails
-Combustion.initialize! "sequel-rails"
+Combustion.initialize! "sequel_rails"
 
 require "rspec/rails"
 
@@ -21,9 +21,9 @@ end
 
 # Ensure db exists and clean state
 begin
-  require "sequel-rails/storage"
-  Rails::Sequel::Storage.adapter_for(:test).drop
-  Rails::Sequel::Storage.adapter_for(:test).create
+  require "sequel_rails/storage"
+  SequelRails::Storage.adapter_for(:test).drop
+  SequelRails::Storage.adapter_for(:test).create
 
   require 'sequel/extensions/migration'
   load "#{Rails.root}/db/schema.rb"
