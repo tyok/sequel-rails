@@ -27,3 +27,4 @@ vendor
 .bundle
 .rvmrc
 *.gem
+Gemfile.lock
