@@ -1,4 +1,4 @@
-require 'generators/sequel_rails'
+require "generators/sequel"
 
 module Sequel
   module Generators

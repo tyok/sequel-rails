@@ -34,12 +34,8 @@ module SequelRails
       "Sequel::NoExistingObject" => :unprocessable_entity
     )
 
-    generators do
-      require "sequel_rails/generators/sequel"
-    end
-
     rake_tasks do
-      require "sequel_rails/railties/database.rake"
+      load "sequel_rails/railties/database.rake"
     end
 
     initializer 'sequel.configuration' do |app|

@@ -1,6 +1,6 @@
-require 'generators/sequel_rails'
+require "generators/sequel"
 
-module SequelRails
+module Sequel
   module Generators
 
     class ModelGenerator < Base

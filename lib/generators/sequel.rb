@@ -1,13 +1,17 @@
-require 'rails/generators/named_base'
-require 'rails/generators/migration'
-require 'rails/generators/active_model'
+require "rails/generators/named_base"
+require "rails/generators/migration"
+require "rails/generators/active_model"
 
-module SequelRails
+module Sequel
   module Generators
 
     class Base < ::Rails::Generators::NamedBase #:nodoc:
 
       include ::Rails::Generators::Migration
+
+      def self.base_name
+        @_sequel_base_name ||= "sequel"
+      end
 
       def self.source_root
         @_sequel_source_root ||= File.expand_path(

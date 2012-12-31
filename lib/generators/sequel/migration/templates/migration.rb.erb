@@ -30,7 +30,7 @@ Sequel.migration do
     end
     <%- end -%>
   end
-  
+
   down do
     <%- alter_table_action = (table_action == 'drop') ? 'create' : table_action -%>
     <%- alter_column_action = (column_action == 'add') ? 'drop' : 'add' -%>
