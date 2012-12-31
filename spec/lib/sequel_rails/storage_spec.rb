@@ -36,7 +36,9 @@ describe SequelRails::Storage do
           and_return adapter
       end
       adapter.should_receive(:create).twice
-      described_class.create_all
+      capture(:stdout) do
+        described_class.create_all
+      end
     end
   end
   describe ".drop_all" do
@@ -48,7 +50,9 @@ describe SequelRails::Storage do
           and_return adapter
       end
       adapter.should_receive(:drop).twice
-      described_class.drop_all
+      capture(:stdout) do
+        described_class.drop_all
+      end
     end
   end
   describe ".create_environment" do

@@ -8,6 +8,22 @@ describe Sequel::Generators::MigrationGenerator do
 
   before { prepare_destination }
 
+  it "generates different ids for simultaneously generated migrations" do
+    migrations = ["create_authors", "create_users"]
+    first_number, second_number = migrations.collect do |migration_name|
+      run_generator [migration_name]
+      file_name = migration_file_name "db/migrate/#{migration_name}.rb"
+      File.basename(file_name).split("_").first
+    end
+    first_number.should_not == second_number
+  end
+
+  it "refuses to generate migration with invalid filename" do
+    expect do
+      run_generator ["add_something:datetime"]
+    end.to raise_error
+  end
+
   context "when name starts with create" do
     before { run_generator ["create_authors"] }
     it "creates a new migration using change to create the table" do

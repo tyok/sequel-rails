@@ -1,6 +1,12 @@
 require "generators/sequel"
 
 module Sequel
+  class IllegalMigrationNameError < StandardError
+    def initialize(name)
+      super("Illegal name for migration file: #{name}\n\t(only lower case letters, numbers, and '_' allowed)")
+    end
+  end
+
   module Generators
     class MigrationGenerator < Base #:nodoc:
 
@@ -8,6 +14,7 @@ module Sequel
 
       def create_migration_file
         set_local_assigns!
+        validate_file_name!
         migration_template "migration.rb.erb", "db/migrate/#{file_name}.rb"
       end
 
@@ -35,6 +42,12 @@ module Sequel
           end
           @use_change     = false
           @column_action  = 'add'
+        end
+      end
+
+      def validate_file_name!
+        unless file_name =~ /^[_a-z0-9]+$/
+          raise IllegalMigrationNameError.new(file_name)
         end
       end
     end
