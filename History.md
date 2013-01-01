@@ -1,6 +1,7 @@
 0.4.0.pre
 ==========
 
+* Add [Travis-CI](http://travis-ci.org) configuration
 * Ensure file name for migration are valid
 * **BIG CHANGE** rename `Rails::Sequel` module as `SequelRails`, this becomes
   the namespace for all sequel-rails related classes.

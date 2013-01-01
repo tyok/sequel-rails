@@ -1,0 +1,8 @@
+language: ruby
+rvm:
+  - 1.9.3
+gemfile: gemfiles/Gemfile.ci
+env:
+  - "TEST_ADAPTER=postgresql TEST_OWNER=postgres TEST_USERNAME=postgres"
+  - "TEST_ADAPTER=mysql TEST_USERNAME=root"
+  - "TEST_ADAPTER=sqlite3 TEST_DATABASE=':memory:'"
