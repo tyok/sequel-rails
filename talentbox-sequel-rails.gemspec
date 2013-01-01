@@ -18,6 +18,23 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.extra_rdoc_files = ["LICENSE", "README.rdoc"]
   s.rdoc_options = ["--charset=UTF-8"]
+
+  s.post_install_message = <<-EOF
+We've became the official maintainers of the sequel-rails gems, please update your gemfile to use:
+
+gem "sequel-rails"
+
+instead of
+
+gem "talentbox-sequel-rails"
+
+Then remove:
+
+require "sequel-rails/railtie"
+
+from your config/application.rb
+EOF
+
   s.add_runtime_dependency("sequel", ["~> 3.28"])
   s.add_runtime_dependency("railties", ["~> 3.2.0"])
 

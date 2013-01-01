@@ -1,5 +1,7 @@
-0.3.10 dev
-==========
+0.3.10
+======
+
+* Add post_install_message to notify users to switch to sequel-rails gem
 
 0.3.9
 =====
