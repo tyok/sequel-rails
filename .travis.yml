@@ -6,6 +6,7 @@ env:
   - "TEST_ADAPTER=mysql TEST_USERNAME=root TEST_ENCODING=utf8"
   - "TEST_ADAPTER=mysql2 TEST_USERNAME=root TEST_ENCODING=utf8"
   - "TEST_ADAPTER=sqlite3 TEST_DATABASE=':memory:'"
+script: "rake spec"
 notifications:
   email:
     - jonathan.tron@metrilio.com
