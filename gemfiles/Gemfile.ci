@@ -1,7 +1,0 @@
-source "http://rubygems.org"
-
-gemspec path: "../"
-
-gem "rspec-rails", require: false
-gem "mysql2"
-gem "sqlite3"

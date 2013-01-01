@@ -23,8 +23,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency("railties", ["~> 3.2.0"])
 
   s.add_development_dependency "rake", ">= 0.8.7"
-  s.add_development_dependency "rspec-rails", "~> 2.7.0"
+  s.add_development_dependency "rspec", "~> 2.7.0"
   s.add_development_dependency "combustion", "~> 0.3.1"
   s.add_development_dependency "generator_spec", "~> 0.8.7"
-  s.add_development_dependency "pg"
 end

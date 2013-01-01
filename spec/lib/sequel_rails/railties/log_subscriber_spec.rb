@@ -17,7 +17,7 @@ describe SequelRails::Railties::LogSubscriber do
     User.all
     wait
     @logger.logged(:debug).should have(1).line
-    @logger.logged(:debug).last.should =~ /SELECT \* FROM "users"/
+    @logger.logged(:debug).last.should =~ /SELECT \* FROM ("|`)users("|`)/
   end
 
   it "does not log query when logger level is not debug" do
