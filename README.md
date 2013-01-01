@@ -27,7 +27,7 @@ gem "sequel-rails"
 
 ... be sure to run "bundle install" if needed!
 
-Secondly, you'll need to require the different Rails component separatly in your `config/application.rb` file, and not require `ActiveRecord`.  The top of your `config/application.rb` will probably look something like:
+Secondly, you'll need to require the different Rails components separately in your `config/application.rb` file, and not require `ActiveRecord`.  The top of your `config/application.rb` will probably look something like:
 
 ```ruby
 # require 'rails/all'
