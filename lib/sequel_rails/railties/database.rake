@@ -138,7 +138,7 @@ namespace :db do
   desc 'Drops and recreates the database from db/schema.rb for the current environment and loads the seeds.'
   task :reset => [ 'db:drop', 'db:setup' ]
 
-  desc 'Forcibly close any open connections to the test database'
+  desc 'Forcibly close any open connections to the current env database (PostgreSQL specific)'
   task :force_close_open_connections => :environment do
     if db_for_current_env.database_type==:postgres
       begin
@@ -157,8 +157,9 @@ namespace :db do
   end
 
   namespace :test do
+    desc "Prepare test database (ensure all migrations ran, drop and re-create database then load schema). This task can be run in the same invocation as other task (eg: rake db:migrate db:test:prepare)."
     task :prepare => "db:abort_if_pending_migrations" do
-      Rails.env = 'test'
+      previous_env, Rails.env = Rails.env, 'test'
       Rake::Task['db:force_close_open_connections'].execute
       Rake::Task['db:drop'].execute
       Rake::Task['db:create'].execute
@@ -166,8 +167,9 @@ namespace :db do
       Sequel::DATABASES.each do |db|
         db.disconnect
       end
+      Rails.env = previous_env
     end
   end
 end
 
-task 'test:prepare' => 'db:test:prepare'
+task "test:prepare" => "db:test:prepare"
