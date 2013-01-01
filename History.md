@@ -17,6 +17,11 @@
 * Add spec for Sequel::Railties::LogSubscriber
 * Add initial specs for railtie setup
 
+0.3.10
+======
+
+* Add post_install_message to notify users to switch to sequel-rails gem
+
 0.3.9
 =====
 
