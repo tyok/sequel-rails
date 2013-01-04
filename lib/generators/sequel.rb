@@ -1,6 +1,6 @@
-require 'rails/generators/named_base'
-require 'rails/generators/migration'
-require 'rails/generators/active_model'
+require "rails/generators/named_base"
+require "rails/generators/migration"
+require "rails/generators/active_model"
 
 module Sequel
   module Generators
@@ -9,9 +9,14 @@ module Sequel
 
       include ::Rails::Generators::Migration
 
+      def self.base_name
+        @_sequel_base_name ||= "sequel"
+      end
+
       def self.source_root
-        @_sequel_source_root ||=
-        File.expand_path("../#{base_name}/#{generator_name}/templates", __FILE__)
+        @_sequel_source_root ||= File.expand_path(
+          "../#{base_name}/#{generator_name}/templates", __FILE__
+        )
       end
 
       protected
@@ -70,7 +75,6 @@ module Sequel
 end
 
 module Rails
-
   module Generators
     class GeneratedAttribute #:nodoc:
       def type_class
@@ -79,5 +83,4 @@ module Rails
       end
     end
   end
-
 end

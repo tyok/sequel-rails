@@ -1,0 +1,7 @@
+test:
+  adapter: "<%= ENV["TEST_ADAPTER"] || "postgresql" %>"
+  database: "<%= ENV["TEST_DATABASE"] || "sequel_rails_test" %>"
+  owner: "<%= ENV["TEST_OWNER"] || ENV["USER"] %>"
+  username: "<%= ENV["TEST_USERNAME"] || ENV["USER"] %>"
+  password: "<%= ENV["TEST_PASSWORD"] %>"
+  encoding: "<%= ENV["TEST_ENCODING"] || "unicode" %>"
