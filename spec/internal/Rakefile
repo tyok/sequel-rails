@@ -1,0 +1,10 @@
+begin
+  require 'bundler/setup'
+rescue LoadError
+  puts 'You must `gem install bundler` and `bundle install` to run rake tasks'
+end
+Bundler.require :default, :development, :test
+
+Combustion.path = ""
+Combustion.initialize! "sequel_rails"
+Combustion::Application.load_tasks
