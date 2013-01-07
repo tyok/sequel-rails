@@ -114,6 +114,7 @@ Improvements has been made by those awesome contributors:
 * Gabor Ratky (rgabo)
 * Joshua Hansen (binarypaladin)
 * Arron Washington (radicaled)
+* Thiago Pradi (tchandy)
 
 Credits
 =======
