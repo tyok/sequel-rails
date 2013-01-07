@@ -1,3 +1,8 @@
+0.4.0.pre1
+==========
+
+* Fix `rake db:drop` and `rake db:schema:load` tasks (Thiago Pradi)
+
 0.4.0.pre
 ==========
 
