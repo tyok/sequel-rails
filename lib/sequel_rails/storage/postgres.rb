@@ -10,7 +10,7 @@ module SequelRails
         commands << "--host" << host unless host.blank?
         commands << database
         res = system(*commands)
-        ENV["PGPASSWORD"] = nil
+        ENV["PGPASSWORD"] = nil unless password.blank?
         res
       end
 
@@ -22,7 +22,7 @@ module SequelRails
         commands << "--host" << host unless host.blank?
         commands << database
         res = system(*commands)
-        ENV["PGPASSWORD"] = nil
+        ENV["PGPASSWORD"] = nil unless password.blank?
         res
       end
     end
