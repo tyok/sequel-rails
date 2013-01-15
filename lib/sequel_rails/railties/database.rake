@@ -93,7 +93,6 @@ namespace :db do
       end
     end
 
-
     desc 'Resets your database using your migrations for the current environment'
     task :reset => ["db:drop", "db:create", "db:migrate"]
 
@@ -117,20 +116,6 @@ namespace :db do
   desc 'Migrate the database to the latest version'
   task :migrate => "migrate:load" do
     SequelRails::Migrations.migrate_up!(ENV["VERSION"] ? ENV["VERSION"].to_i : nil)
-    Rake::Task["db:schema:dump"].invoke unless Rails.env.test?
-  end
-
-  desc 'Rolls the schema back to the previous version. Specify the number of steps with STEP=n'
-  task :rollback => "migrate:load" do
-    step = ENV['STEP'] ? ENV['STEP'].to_i : 1
-    Sequel::Migrator.rollback('db/migrate/', step)
-    Rake::Task["db:schema:dump"].invoke unless Rails.env.test?
-  end
-
-  desc 'Pushes the schema to the next version. Specify the number of steps with STEP=n'
-  task :forward => "migrate:load" do
-    step = ENV['STEP'] ? ENV['STEP'].to_i : 1
-    Sequel::Migrator.forward('db/migrate/', step)
     Rake::Task["db:schema:dump"].invoke unless Rails.env.test?
   end
 

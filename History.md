@@ -1,6 +1,9 @@
 0.4.0.pre2
 ==========
 
+* Remove `rake db:forward` and `rake db:rollback` as it makes not much sense
+  when using the TimeStampMigration which is how this gem generates migrations
+* Ensure rake tasks returns appropriate code on errors
 * Ensure PostgreSQL adapter passes the right options to both create and drop 
   database (Sascha Cunz)
 

@@ -66,14 +66,12 @@ rake db:create:all                    # Create all the local databases defined i
 rake db:drop[env]                     # Create the database defined in config/database.yml for the current Rails.env
 rake db:drop:all                      # Drops all the local databases defined in config/database.yml
 rake db:force_close_open_connections  # Forcibly close any open connections to the test database 
-rake db:forward                       # Pushes the schema to the next version. Specify the number of steps with STEP=n
 rake db:migrate                       # Migrate the database to the latest version
 rake db:migrate:down                  # Runs the "down" for a given migration VERSION.
 rake db:migrate:redo                  # Rollbacks the database one migration and re migrate up.
 rake db:migrate:reset                 # Resets your database using your migrations for the current environment
 rake db:migrate:up                    # Runs the "up" for a given migration VERSION.
 rake db:reset                         # Drops and recreates the database from db/schema.rb for the current environment and loads the seeds.
-rake db:rollback                      # Rollbacks the database one migration and re migrate up. If you want to rollback more than one step, define STEP=x. Target specific version with VERSION=x.
 rake db:schema:dump                   # Create a db/schema.rb file that can be portably used against any DB supported by Sequel
 rake db:schema:load                   # Load a schema.rb file into the database
 rake db:seed                          # Load the seed data from db/seeds.rb
