@@ -1,3 +1,9 @@
+0.4.0.pre2
+==========
+
+* Ensure PostgreSQL adapter passes the right options to both create and drop 
+  database (Sascha Cunz)
+
 0.4.0.pre1
 ==========
 
