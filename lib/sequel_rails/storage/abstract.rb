@@ -9,14 +9,16 @@ module SequelRails
       end
 
       def create
-        _create
-        puts "[sequel] Created database '#{database}'"
+        res = _create
+        puts "[sequel] Created database '#{database}'" if res
+        res
       end
 
       def drop
         ::Sequel::Model.db.disconnect
-        _drop
-        puts "[sequel] Dropped database '#{database}'"
+        res = _drop
+        puts "[sequel] Dropped database '#{database}'" if res
+        res
       end
 
       def database

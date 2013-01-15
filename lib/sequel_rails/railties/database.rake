@@ -44,7 +44,9 @@ namespace :db do
   namespace :create do
     desc 'Create all the local databases defined in config/database.yml'
     task :all => :environment do
-      SequelRails::Storage.create_all
+      unless SequelRails::Storage.create_all
+        abort "Could not create all databases."
+      end
     end
   end
 
@@ -52,13 +54,17 @@ namespace :db do
   task :create, [:env] => :environment do |t, args|
     args.with_defaults(:env => Rails.env)
 
-    SequelRails::Storage.adapter_for(args.env).create
+    unless SequelRails::Storage.adapter_for(args.env).create
+      abort "Could not create database for #{args.env}."
+    end
   end
 
   namespace :drop do
     desc 'Drops all the local databases defined in config/database.yml'
     task :all => :environment do
-      SequelRails::Storage.drop_all
+      unless SequelRails::Storage.drop_all
+        abort "Could not drop all databases."
+      end
     end
   end
 
@@ -66,7 +72,9 @@ namespace :db do
   task :drop, [:env] => :environment do |t, args|
     args.with_defaults(:env => Rails.env)
 
-    SequelRails::Storage.adapter_for(args.env).drop
+    unless SequelRails::Storage.adapter_for(args.env).drop
+      abort "Could not drop database for #{args.env}."
+    end
   end
 
   namespace :migrate do
