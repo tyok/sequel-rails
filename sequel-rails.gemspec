@@ -19,8 +19,8 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = ["LICENSE", "README.md"]
   s.rdoc_options = ["--charset=UTF-8"]
 
-  s.add_runtime_dependency("sequel", ["~> 3.28"])
-  s.add_runtime_dependency("railties", ["~> 3.2.0"])
+  s.add_runtime_dependency "sequel", "~> 3.28"
+  s.add_runtime_dependency "railties", ">= 3.2.0"
 
   s.add_development_dependency "rake", ">= 0.8.7"
   s.add_development_dependency "rspec", "~> 2.7.0"
