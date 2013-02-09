@@ -16,7 +16,6 @@ require "sequel_rails/migrations"
 require "sequel_rails/railties/log_subscriber"
 require "sequel_rails/railties/i18n_support"
 require "sequel_rails/railties/controller_runtime"
-require "sequel_rails/sequel/plugins/rails_extensions"
 require "sequel_rails/sequel/database/active_support_notification"
 
 module SequelRails
@@ -57,16 +56,6 @@ module SequelRails
 
     initializer 'sequel.connect' do |app|
       ::SequelRails.setup ::Rails.env
-    end
-
-    # Run setup code after_initialize to make sure all config/initializers
-    # are in effect once we setup the connection. This is especially necessary
-    # for the cascaded adapter wrappers that need to be declared before setup.
-    config.after_initialize do |app|
-      ::Sequel::Model.plugin :active_model
-      ::Sequel::Model.plugin :validation_helpers
-      ::Sequel::Model.plugin :rails_extensions
-      ::Sequel::Model.raise_on_save_failure = false
     end
 
     # Support overwriting crucial steps in subclasses

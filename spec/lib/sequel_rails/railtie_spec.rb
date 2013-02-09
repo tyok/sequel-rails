@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe SequelRails::Railtie do
+  let(:app) { Combustion::Application }
+
   it "registers ::Sequel::Railtie::LogSubscriber to receive :sequel notification" do
     ActiveSupport::LogSubscriber.log_subscribers.select do |subscriber|
       subscriber.is_a?(SequelRails::Railties::LogSubscriber)
@@ -9,21 +11,21 @@ describe SequelRails::Railtie do
 
   context "configures generator to use Sequel" do
     it "as orm" do
-      Combustion::Application.config.generators.options[:rails][:orm].should == :sequel
+      app.config.generators.options[:rails][:orm].should == :sequel
     end
 
     it "for migrations" do
-      Combustion::Application.config.generators.options[:sequel][:migration].should be true
+      app.config.generators.options[:sequel][:migration].should be true
     end
   end
 
   it "configures rails to use fancy pants logging" do
-    Combustion::Application.config.rails_fancy_pants_logging.should be true
+    app.config.rails_fancy_pants_logging.should be true
   end
 
   context "configures action dispatch's rescue responses" do
     let(:rescue_responses) do
-      Combustion::Application.config.action_dispatch.rescue_responses
+      app.config.action_dispatch.rescue_responses
     end
 
     it "to handle Sequel::Plugins::RailsExtensions::ModelNotFound with :not_found" do
@@ -44,11 +46,11 @@ describe SequelRails::Railtie do
   end
 
   it "stores it's own config in app.config.sequel" do
-    Combustion::Application.config.sequel.should be_instance_of SequelRails::Configuration
+    app.config.sequel.should be_instance_of SequelRails::Configuration
   end
 
   it "sets Rails.logger as default logger for its configuration" do
-    Combustion::Application.config.sequel.logger.should be Rails.logger
+    app.config.sequel.logger.should be Rails.logger
   end
 
   it "configures Sequel::Model instances for i18n" do
@@ -59,22 +61,6 @@ describe SequelRails::Railtie do
     ActionController::Base.included_modules.should include(
       SequelRails::Railties::ControllerRuntime
     )
-  end
-
-  context "Sequel::Model is configured" do
-    let(:plugins) { Sequel::Model.plugins }
-    it "to use :active_model plugin" do
-      plugins.should include Sequel::Plugins::ActiveModel
-    end
-    it "to use :validation_helpers plugin" do
-      plugins.should include Sequel::Plugins::ValidationHelpers
-    end
-    it "to use :rails_extensions plugin" do
-      plugins.should include Sequel::Plugins::RailsExtensions
-    end
-    it "to not raise on save failure" do
-      Sequel::Model.raise_on_save_failure.should be false
-    end
   end
 
   it "configures database in Sequel" do

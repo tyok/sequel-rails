@@ -1,3 +1,19 @@
+0.4.0.pre3 - dev
+================
+
+* Do not add any Sequel plugin by default anymore. Plugins could not be removed
+  so it is safer to let the user add them via an initializer. Furthermore, we
+  were changing the default Sequel behaviour related to 'raise on save'.
+  All the previous plugins/behaviours of sequel-rails can be restored by 
+  creating an initializer with:
+
+  ```ruby
+  require "sequel_rails/railties/legacy_model_config"
+  ```
+
+  Thanks to @dlee, for raising concerns about this behaviour in 
+  [#11](https://github.com/TalentBox/sequel-rails/pull/11)
+
 0.4.0.pre2
 ==========
 

@@ -41,6 +41,14 @@ require "action_mailer/railtie"
 require "sprockets/railtie"
 ```
 
+Starting with sequel-rails 0.4.0.pre3 we don't change default Sequel behaviour
+nor include any plugin by default, if you want to get back the previous 
+behaviour, you can create a new initializer with:
+
+```ruby
+require "sequel_rails/railties/legacy_model_config"
+```
+
 After those changes, you should be good to go!
 
 Available sequel specific rake tasks
