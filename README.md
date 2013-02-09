@@ -43,7 +43,7 @@ require "sprockets/railtie"
 
 Starting with sequel-rails 0.4.0.pre3 we don't change default Sequel behaviour
 nor include any plugin by default, if you want to get back the previous 
-behaviour, you can create a new initializer with:
+behaviour, you can create a new initializer (eg: `config/initializers/sequel.rb`) with content:
 
 ```ruby
 require "sequel_rails/railties/legacy_model_config"
