@@ -2,6 +2,8 @@ source "http://rubygems.org"
 
 gemspec
 
+gem "fakefs", :require => "fakefs/safe"
+
 # MRI/Rubinius Adapter Dependencies
 platform :ruby do
   gem "pg"

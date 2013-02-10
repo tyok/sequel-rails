@@ -2,6 +2,7 @@ sequel-rails
 ============
 
 [![Build Status](https://travis-ci.org/TalentBox/sequel-rails.png?branch=master)](https://travis-ci.org/TalentBox/sequel-rails)
+[![Code Climate](https://codeclimate.com/github/TalentBox/sequel-rails.png)](https://codeclimate.com/github/TalentBox/sequel-rails)
 
 This gem provides the railtie that allows [sequel](http://github.com/jeremyevans/sequel) to hook into [rails3](http://github.com/rails/rails) and thus behave like a rails framework component. Just like activerecord does in rails, [sequel-rails](http://github.com/talentbox/sequel-rails) uses the railtie API to hook into rails. The two are actually hooked into rails almost identically.
 
