@@ -123,6 +123,7 @@ Improvements has been made by those awesome contributors:
 * Arron Washington (radicaled)
 * Thiago Pradi (tchandy)
 * Sascha Cunz (scunz)
+* Brian Donovan (eventualbuddha)
 
 Credits
 =======
