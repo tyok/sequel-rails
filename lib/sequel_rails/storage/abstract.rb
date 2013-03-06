@@ -21,6 +21,11 @@ module SequelRails
         res
       end
 
+      # To be overriden by subclasses
+      def close_connections
+        true
+      end
+
       def database
         @database ||= config['database'] || config['path']
       end

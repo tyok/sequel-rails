@@ -54,7 +54,7 @@ namespace :db do
   task :create, [:env] => :environment do |t, args|
     args.with_defaults(:env => Rails.env)
 
-    unless SequelRails::Storage.adapter_for(args.env).create
+    unless SequelRails::Storage.create_environment(args.env)
       abort "Could not create database for #{args.env}."
     end
   end
@@ -68,11 +68,11 @@ namespace :db do
     end
   end
 
-  desc "Create the database defined in config/database.yml for the current Rails.env"
+  desc "Drop the database defined in config/database.yml for the current Rails.env"
   task :drop, [:env] => :environment do |t, args|
     args.with_defaults(:env => Rails.env)
 
-    unless SequelRails::Storage.adapter_for(args.env).drop
+    unless SequelRails::Storage.drop_environment(args.env)
       abort "Could not drop database for #{args.env}."
     end
   end
@@ -132,29 +132,20 @@ namespace :db do
   task :reset => [ 'db:drop', 'db:setup' ]
 
   desc 'Forcibly close any open connections to the current env database (PostgreSQL specific)'
-  task :force_close_open_connections => :environment do
-    if db_for_current_env.database_type==:postgres
-      begin
-        # Will only work on Postgres > 8.4
-        pid_column = db_for_current_env.server_version < 90200 ? "procpid" : "pid"
-        db_for_current_env.execute <<-SQL.gsub(/^\s{9}/,'')
-          SELECT COUNT(pg_terminate_backend(#{pid_column}))
-          FROM  pg_stat_activity
-          WHERE datname = '#{db_for_current_env.opts[:database]}';
-        SQL
-      rescue => e
-        #Will raise an error as it kills existing process running this command
-        #Seems to be only way to ensure *all* test connections are closed
-      end
-    end
+  task :force_close_open_connections, [:env] => :environment do |t, args|
+    args.with_defaults(:env => Rails.env)
+    SequelRails::Storage.close_connections_environment(argv.env)
   end
 
   namespace :test do
     desc "Prepare test database (ensure all migrations ran, drop and re-create database then load schema). This task can be run in the same invocation as other task (eg: rake db:migrate db:test:prepare)."
     task :prepare => "db:abort_if_pending_migrations" do
       previous_env, Rails.env = Rails.env, 'test'
-      Rake::Task['db:force_close_open_connections'].execute
-      Rake::Task['db:drop'].execute
+      begin
+        Rake::Task['db:drop'].execute 
+      rescue Exception => e
+        $stderr.puts "Could not drop test db: #{e.message}"
+      end
       Rake::Task['db:create'].execute
       Rake::Task['db:schema:load'].execute
       Sequel::DATABASES.each do |db|

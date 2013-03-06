@@ -1,6 +1,7 @@
 0.4.0.pre3 - dev
 ================
 
+* Ensure we've dropped any opened connection before trying to drop database (Ed Ruder)
 * Make dependency on railtie looser (`>= 3.2.0`)
 * Do not add any Sequel plugin by default anymore. Plugins could not be removed
   so it is safer to let the user add them via an initializer. Furthermore, we

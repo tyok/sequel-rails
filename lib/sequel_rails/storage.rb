@@ -15,12 +15,22 @@ module SequelRails
       with_local_repositories { |config| drop_environment(config) }
     end
 
-    def self.create_environment(config)
-      adapter_for(config).create
+    def self.create_environment(config_or_env)
+      adapter_for(config_or_env).create
     end
 
-    def self.drop_environment(config)
-      adapter_for(config).drop
+    def self.drop_environment(config_or_env)
+      adapter = adapter_for(config_or_env)
+      adapter.close_connections
+      adapter.drop
+    end
+
+    def self.close_all_connections
+      with_all_repositories { |config| close_connections_environment(config) }
+    end
+
+    def self.close_connections_environment(config_or_env)
+      adapter_for(config_or_env).close_connections
     end
 
     def self.adapter_for(config_or_env)
@@ -42,6 +52,13 @@ module SequelRails
         else
           puts "This task only modifies local databases. #{config['database']} is on a remote host."
         end
+      end
+    end
+
+    def self.with_all_repositories
+      ::SequelRails.configuration.environments.each_value do |config|
+        next if config['database'].blank?
+        yield config
       end
     end
 

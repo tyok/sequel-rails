@@ -25,6 +25,23 @@ module SequelRails
         ENV["PGPASSWORD"] = nil unless password.blank?
         res
       end
+
+      def close_connections
+        begin
+          db = ::Sequel.connect(config)
+          # Will only work on Postgres > 8.4
+          pid_column = db.server_version < 90200 ? "procpid" : "pid"
+          db.execute <<-SQL.gsub(/^\s{12}/,'')
+            SELECT COUNT(pg_terminate_backend(#{pid_column}))
+            FROM pg_stat_activity
+            WHERE datname = '#{database}';
+          SQL
+        rescue => _
+          # Will raise an error as it kills existing process running this 
+          # command. Seems to be only way to ensure *all* test connections 
+          # are closed
+        end
+      end
     end
   end
 end
