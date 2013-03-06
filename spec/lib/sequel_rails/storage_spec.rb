@@ -17,6 +17,11 @@ describe SequelRails::Storage do
         "database" => "sequel_rails_test_storage_test",
         "host" => "127.0.0.1",
       },
+      "remote" => {
+        "adapter" => "postgres",
+        "host" => "10.0.0.1",
+        "database" => "sequel_rails_test_storage_remote",
+      },
       "production" => {
         "host" => "10.0.0.1",
         "database" => "sequel_rails_test_storage_production",
@@ -30,7 +35,7 @@ describe SequelRails::Storage do
   describe ".create_all" do
     it "creates all databases skipping ones on remote host or with no database name" do
       adapter = mock :storage_adapter
-      environments.except("production", "bogus").values.each do |env|
+      environments.except("remote", "production", "bogus").values.each do |env|
         SequelRails::Storage::Postgres.should_receive(:new).
           with(env).
           and_return adapter
@@ -44,11 +49,12 @@ describe SequelRails::Storage do
   describe ".drop_all" do
     it "drop all databases skipping ones on remote host or with no database name" do
       adapter = mock :storage_adapter
-      environments.except("production", "bogus").values.each do |env|
+      environments.except("remote", "production", "bogus").values.each do |env|
         SequelRails::Storage::Postgres.should_receive(:new).
           with(env).
           and_return adapter
       end
+      adapter.should_receive(:close_connections).twice
       adapter.should_receive(:drop).twice
       capture(:stdout) do
         described_class.drop_all
@@ -71,8 +77,33 @@ describe SequelRails::Storage do
       SequelRails::Storage::Postgres.should_receive(:new).
         with(environments["development"]).
         and_return adapter
+      adapter.should_receive :close_connections
       adapter.should_receive :drop
       described_class.drop_environment "development"
+    end
+  end
+  describe ".close_all_connections" do
+    it "drops opened connections to all databases on config" do
+      adapter = mock :storage_adapter
+      environments.except("production", "bogus").values.each do |env|
+        SequelRails::Storage::Postgres.should_receive(:new).
+          with(env).
+          and_return adapter
+      end
+      adapter.should_receive(:close_connections).exactly(3).times
+      capture(:stdout) do
+        described_class.close_all_connections
+      end
+    end
+  end
+  describe ".close_connections_environment" do
+    it "drops opened connections to database for specified environment" do
+      adapter = mock :storage_adapter
+      SequelRails::Storage::Postgres.should_receive(:new).
+        with(environments["development"]).
+        and_return adapter
+      adapter.should_receive :close_connections
+      described_class.close_connections_environment "development"
     end
   end
   describe ".adapter_for" do

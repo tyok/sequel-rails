@@ -46,7 +46,7 @@ module SequelRails
 
     def self.with_local_repositories
       ::SequelRails.configuration.environments.each_value do |config|
-        next if config['database'].blank?
+        next if config['database'].blank? || config['adapter'].blank?
         if config['host'].blank? || %w[ 127.0.0.1 localhost ].include?(config['host'])
           yield config
         else
@@ -57,14 +57,14 @@ module SequelRails
 
     def self.with_all_repositories
       ::SequelRails.configuration.environments.each_value do |config|
-        next if config['database'].blank?
+        next if config['database'].blank? || config['adapter'].blank?
         yield config
       end
     end
 
     def self.lookup_class(adapter)
+      raise "Adapter not specified in config, please set the :adapter key." unless adapter
       klass_name = adapter.camelize.to_sym
-
       unless self.const_defined?(klass_name)
         raise "Adapter #{adapter} not supported (#{klass_name.inspect})"
       end
