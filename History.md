@@ -1,5 +1,5 @@
-0.4.0.pre3 - dev
-================
+0.4.0 (2013-03-06)
+==================
 
 * Ensure we've dropped any opened connection before trying to drop database (Ed Ruder)
 * Make dependency on railtie looser (`>= 3.2.0`)
