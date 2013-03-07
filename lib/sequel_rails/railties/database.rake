@@ -63,7 +63,7 @@ namespace :db do
     desc 'Drops all the local databases defined in config/database.yml'
     task :all => :environment do
       unless SequelRails::Storage.drop_all
-        warn "Couldn't drop all databases: #{e.inspect}"
+        warn "Couldn't drop all databases"
       end
     end
   end
@@ -73,7 +73,7 @@ namespace :db do
     args.with_defaults(:env => Rails.env)
 
     unless SequelRails::Storage.drop_environment(args.env)
-      warn "Couldn't drop database for environment #{args.env}: #{e.inspect}"
+      warn "Couldn't drop database for environment #{args.env}"
     end
   end
 
