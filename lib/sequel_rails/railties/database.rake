@@ -62,10 +62,8 @@ namespace :db do
   namespace :drop do
     desc 'Drops all the local databases defined in config/database.yml'
     task :all => :environment do
-      begin
-        SequelRails::Storage.drop_all
-      rescue Exception => e
-        $stderr.puts "Couldn't drop all databases: #{e.inspect}"
+      unless SequelRails::Storage.drop_all
+        warn "Couldn't drop all databases: #{e.inspect}"
       end
     end
   end
@@ -74,10 +72,8 @@ namespace :db do
   task :drop, [:env] => :environment do |t, args|
     args.with_defaults(:env => Rails.env)
 
-    begin
-      SequelRails::Storage.drop_environment(args.env)
-    rescue Exception => e
-      $stderr.puts "Couldn't drop database for environment #{args.env}: #{e.inspect}"
+    unless SequelRails::Storage.drop_environment(args.env)
+      warn "Couldn't drop database for environment #{args.env}: #{e.inspect}"
     end
   end
 
