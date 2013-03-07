@@ -62,8 +62,10 @@ namespace :db do
   namespace :drop do
     desc 'Drops all the local databases defined in config/database.yml'
     task :all => :environment do
-      unless SequelRails::Storage.drop_all
-        abort "Could not drop all databases."
+      begin
+        SequelRails::Storage.drop_all
+      rescue Exception => e
+        $stderr.puts "Couldn't drop all databases: #{e.inspect}"
       end
     end
   end
@@ -72,8 +74,10 @@ namespace :db do
   task :drop, [:env] => :environment do |t, args|
     args.with_defaults(:env => Rails.env)
 
-    unless SequelRails::Storage.drop_environment(args.env)
-      abort "Could not drop database for #{args.env}."
+    begin
+      SequelRails::Storage.drop_environment(args.env)
+    rescue Exception => e
+      $stderr.puts "Couldn't drop database for environment #{args.env}: #{e.inspect}"
     end
   end
 
@@ -134,18 +138,14 @@ namespace :db do
   desc 'Forcibly close any open connections to the current env database (PostgreSQL specific)'
   task :force_close_open_connections, [:env] => :environment do |t, args|
     args.with_defaults(:env => Rails.env)
-    SequelRails::Storage.close_connections_environment(argv.env)
+    SequelRails::Storage.close_connections_environment(args.env)
   end
 
   namespace :test do
     desc "Prepare test database (ensure all migrations ran, drop and re-create database then load schema). This task can be run in the same invocation as other task (eg: rake db:migrate db:test:prepare)."
     task :prepare => "db:abort_if_pending_migrations" do
       previous_env, Rails.env = Rails.env, 'test'
-      begin
-        Rake::Task['db:drop'].execute 
-      rescue Exception => e
-        $stderr.puts "Could not drop test db: #{e.message}"
-      end
+      Rake::Task['db:drop'].execute
       Rake::Task['db:create'].execute
       Rake::Task['db:schema:load'].execute
       Sequel::DATABASES.each do |db|
