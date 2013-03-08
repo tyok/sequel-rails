@@ -3,23 +3,23 @@ module SequelRails
     class Jdbc < Abstract
 
       def _is_mysql?
-        database.match(/^jdbc:mysql/)
+        config['adapter'].match(/^jdbc:mysql/)
       end
 
       def _is_postgres?
-        database.match(/^jdbc:postgresql/)
+        config['adapter'].match(/^jdbc:postgresql/)
       end
 
       def _root_url
-        database.scan(/^jdbc:mysql:\/\/\w*:?\d*/)
+        config['url'].scan(/^jdbc:mysql:\/\/\w*:?\d*/)
       end
 
       def db_name
-        database.scan(/^jdbc:mysql:\/\/\w+:?\d*\/(\w+)/).flatten.first
+        config['database']
       end
 
       def _params
-        database.scan(/\?.*$/)
+        config['url'].scan(/\?.*$/)
       end
 
       def _create
