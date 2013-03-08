@@ -17,7 +17,7 @@ describe SequelRails::Migrations do
         end
       end
       context "with version specified" do
-        let(:opts) { {target: 1} }
+        let(:opts) { {:target => 1} }
         it "runs migrations using Sequel::Migrator" do
           ::Sequel::Migrator.should_receive(:run).with(
             db, "db/migrate", opts
