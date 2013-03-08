@@ -12,7 +12,7 @@ module Sequel
           "sql.sequel",
           :sql => sql,
           :name => self.class,
-          :binds => args,
+          :binds => args
         ) do
           yield
         end
