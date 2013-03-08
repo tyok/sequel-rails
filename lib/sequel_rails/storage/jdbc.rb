@@ -10,8 +10,12 @@ module SequelRails
         config['adapter'].match(/^jdbc:postgresql/)
       end
 
+      def _is_sqlite?
+        config['adapter'].match(/^jdbc:sqlite/)
+      end
+
       def _root_url
-        config['url'].scan(/^jdbc:mysql:\/\/\w*:?\d*/)
+        config['url'].scan(/^jdbc:mysql:\/\/\w*:?\d*/).first
       end
 
       def db_name
@@ -19,11 +23,14 @@ module SequelRails
       end
 
       def _params
-        config['url'].scan(/\?.*$/)
+        config['url'].scan(/\?.*$/).first
       end
 
       def _create
-        if _is_mysql?
+        if _is_sqlite?
+          return if in_memory?
+          ::Sequel.connect config['url']
+        elsif _is_mysql?
           ::Sequel.connect("#{_root_url}#{_params}") do |db|
             db.execute("CREATE DATABASE IF NOT EXISTS `#{db_name}` DEFAULT CHARACTER SET #{charset} DEFAULT COLLATE #{collation}")
           end
@@ -33,7 +40,10 @@ module SequelRails
       end
 
       def _drop
-        if _is_mysql?
+        if _is_sqlite?
+          return if in_memory?
+          ::Sequel.connect config['url']
+        elsif _is_mysql?
           ::Sequel.connect("#{_root_url}#{_params}") do |db|
             db.execute("DROP DATABASE IF EXISTS `#{db_name}`")
           end
@@ -46,6 +56,11 @@ module SequelRails
 
       def collation
         @collation ||= config['collation'] || ENV['COLLATION'] || 'utf8_unicode_ci'
+      end
+
+      def in_memory?
+        return false unless _is_sqlite?
+        database == ":memory:"
       end
 
     end

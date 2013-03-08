@@ -1,6 +1,7 @@
 language: ruby
 rvm:
   - 1.9.3
+  - jruby
 env:
   - "TEST_ADAPTER=postgresql TEST_OWNER=postgres TEST_USERNAME=postgres"
   - "TEST_ADAPTER=mysql TEST_USERNAME=root TEST_ENCODING=utf8"

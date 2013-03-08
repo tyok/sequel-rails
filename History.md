@@ -1,6 +1,9 @@
 0.4.1 - dev
 ===========
 
+* Enable JRuby in TravisCI
+* Run JDBC specs when jruby is detected
+* Fix problems with JDBC support when running in 1.9 mode
 * Fix JDBC support for mysql and postgresql and add specs on 
   `SequelRails::Configuration` (Jack Danger Canty)
 * Rescue exception when dropping database [#20](https://github.com/TalentBox/sequel-rails/issues/20)

@@ -81,7 +81,12 @@ module SequelRails
         end
         params_str = params.map { |k, v| "#{k}=#{v}" }.join('&')
         port = config['port'] ? ":#{config['port']}" : ''
-        config['url'] = "%s://%s%s/%s?%s" % [config['adapter'], config['host'], port, config['database'], params_str]
+        config['url'] = case config['adapter']
+        when /sqlite/
+          "%s:%s" % [config['adapter'], config['database']]
+        else
+          "%s://%s%s/%s?%s" % [config['adapter'], config['host'], port, config['database'], params_str]
+        end
       end
 
       config
