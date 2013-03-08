@@ -10,9 +10,9 @@ module Sequel
       begin
         ::ActiveSupport::Notifications.instrument(
           "sql.sequel",
-          sql: sql,
-          name: self.class,
-          binds: args,
+          :sql => sql,
+          :name => self.class,
+          :binds => args,
         ) do
           yield
         end
