@@ -11,7 +11,7 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
 RSpec.configure do |config|
   config.around :each do |example|
-    Sequel::Model.db.transaction(rollback: :always) do
+    Sequel::Model.db.transaction(:rollback => :always) do
       example.run
     end
   end
