@@ -16,8 +16,6 @@ describe SequelRails::Railties::LogSubscriber do
   it "logs queries" do
     User.all
     wait
-    puts @logger.logged(:debug).inspect
-    @logger.logged(:debug).should have(1).line
     @logger.logged(:debug).last.should =~ /SELECT \* FROM ("|`)users("|`)/
   end
 
