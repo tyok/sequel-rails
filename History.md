@@ -1,6 +1,8 @@
 0.4.1 - dev
 ===========
 
+* Fix JDBC support for mysql and postgresql and add specs on 
+  `SequelRails::Configuration` (Jack Danger Canty)
 * Rescue exception when dropping database [#20](https://github.com/TalentBox/sequel-rails/issues/20)
 
 0.4.0 (2013-03-06)

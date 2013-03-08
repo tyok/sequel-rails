@@ -124,6 +124,7 @@ Improvements has been made by those awesome contributors:
 * Thiago Pradi (tchandy)
 * Sascha Cunz (scunz)
 * Brian Donovan (eventualbuddha)
+* Jack Danger Canty (JackDanger)
 
 Credits
 =======
