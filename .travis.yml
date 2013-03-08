@@ -1,12 +1,19 @@
 language: ruby
 rvm:
   - 1.9.3
-  - jruby
+  - jruby-18mode
+  - jruby-19mode
 env:
   - "TEST_ADAPTER=postgresql TEST_OWNER=postgres TEST_USERNAME=postgres"
   - "TEST_ADAPTER=mysql TEST_USERNAME=root TEST_ENCODING=utf8"
   - "TEST_ADAPTER=mysql2 TEST_USERNAME=root TEST_ENCODING=utf8"
   - "TEST_ADAPTER=sqlite3 TEST_DATABASE=':memory:'"
+matrix:
+  exclude:
+    - rvm: jruby-18mode
+      env: "TEST_ADAPTER=mysql2 TEST_USERNAME=root TEST_ENCODING=utf8"
+    - rvm: jruby-19mode
+      env: "TEST_ADAPTER=mysql2 TEST_USERNAME=root TEST_ENCODING=utf8"
 script: "rake spec"
 notifications:
   email:
