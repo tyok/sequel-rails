@@ -38,6 +38,20 @@ namespace :db do
     end
   end
 
+  namespace :structure do
+    desc "Dump the database structure to db/structure.sql. Specify another file with DB_STRUCTURE=db/my_structure.sql"
+    task :dump, [:env] => :environment do |t, args|
+      args.with_defaults(:env => Rails.env)
+      
+      filename = ENV['DB_STRUCTURE'] || File.join(Rails.root, "db", "structure.sql")
+      unless SequelRails::Storage.dump_environment args.env, filename
+        abort "Could not dump structure for #{args.env}."
+      end
+      
+      Rake::Task["db:structure:dump"].reenable
+    end
+  end
+  
   namespace :create do
     desc 'Create all the local databases defined in config/database.yml'
     task :all => :environment do
