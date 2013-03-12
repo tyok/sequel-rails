@@ -39,6 +39,19 @@ module SequelRails
         res
       end
 
+      def _load filename
+        ENV["PGPASSWORD"] = password unless password.blank?
+        commands = %w(psql)
+        commands << "-f" << filename
+        commands << "-U" << username unless username.blank?
+        commands << "--port" << port.to_s unless port.blank?
+        commands << "--host" << host unless host.blank?
+        commands << database
+        res = system(*commands)
+        ENV["PGPASSWORD"] = nil unless password.blank?
+        res
+      end
+
       def close_connections
         begin
           db = ::Sequel.connect(config)

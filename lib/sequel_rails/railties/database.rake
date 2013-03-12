@@ -50,6 +50,15 @@ namespace :db do
       
       Rake::Task["db:structure:dump"].reenable
     end
+
+    task :load, [:env] => :environment do |t, args|
+      args.with_defaults(:env => Rails.env)
+      
+      filename = ENV['DB_STRUCTURE'] || File.join(Rails.root, "db", "structure.sql")
+      unless SequelRails::Storage.load_environment args.env, filename
+        abort "Could not load structure for #{args.env}."
+      end
+    end
   end
   
   namespace :create do

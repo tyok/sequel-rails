@@ -29,6 +29,10 @@ module SequelRails
       adapter_for(config_or_env).dump(filename)
     end
 
+    def self.load_environment(config_or_env, filename)
+      adapter_for(config_or_env).load(filename)
+    end
+
     def self.close_all_connections
       with_all_repositories { |config| close_connections_environment(config) }
     end
