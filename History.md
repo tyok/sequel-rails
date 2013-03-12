@@ -1,5 +1,5 @@
-0.4.1 - dev
-===========
+0.4.1 (2013-03-12)
+==================
 
 * DRY config in rake task and fix usage under JRUBY (Ed Ruder)
 * Enable JRuby in TravisCI
