@@ -30,15 +30,12 @@ describe SequelRails::Configuration do
       "bogus" => {},
     }
   end
+  let(:is_jruby) { false }
 
   before do
     SequelRails.configuration.stub(:raw).and_return environments
     SequelRails.configuration.instance_variable_set('@environments', nil)
-    ENV['RUBY_VERSION'], @_ruby_version = ruby_version, ENV['RUBY_VERSION']
-  end
-
-  after do
-    ENV['RUBY_VERSION'] = @_ruby_version
+    SequelRails.stub(:jruby?).and_return is_jruby
   end
 
   subject { SequelRails.setup(environment) }
@@ -51,8 +48,6 @@ describe SequelRails::Configuration do
 
       context "in C-Ruby" do
 
-        let(:ruby_version) { 'ruby-1.9.3' }
-
         it "produces a sane config without url" do
           ::Sequel.should_receive(:connect) do |hash|
             hash['adapter'].should == 'postgres'
@@ -63,7 +58,7 @@ describe SequelRails::Configuration do
 
       context "in JRuby" do
 
-        let(:ruby_version) { 'jruby-1.7.3' }
+        let(:is_jruby) { true }
 
         it "produces an adapter config with a url" do
           ::Sequel.should_receive(:connect) do |url, hash|
@@ -82,8 +77,6 @@ describe SequelRails::Configuration do
 
       context "in C-Ruby" do
 
-        let(:ruby_version) { 'ruby-1.9.3' }
-
         it "produces a config without url" do
           ::Sequel.should_receive(:connect) do |hash|
             hash['adapter'].should == 'mysql'
@@ -94,7 +87,7 @@ describe SequelRails::Configuration do
 
       context "in JRuby" do
 
-        let(:ruby_version) { 'jruby-1.7.3' }
+        let(:is_jruby) { true }
 
         it "produces a jdbc mysql config" do
           ::Sequel.should_receive(:connect) do |url, hash|

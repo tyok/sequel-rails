@@ -6,4 +6,6 @@ end
 
 Bundler::GemHelper.install_tasks
 
+require "sequel_rails"
+
 FileList['tasks/**/*.rake'].each { |task| import task }

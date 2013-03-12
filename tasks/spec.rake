@@ -18,10 +18,6 @@ begin
       end
     end
 
-    def jdbc?
-      ENV['RUBY_VERSION'].to_s =~ /jruby/
-    end
-
     desc "Run specs for postgresql adapter"
     task :postgresql do
       clean_env
@@ -42,7 +38,7 @@ begin
 
     desc "Run specs for mysql2 adapter"
     task :mysql2 do
-      if jdbc?
+      if SequelRails.jruby?
         warn "No mysql2 adapter for jdbc"
       else
         clean_env
@@ -57,7 +53,7 @@ begin
     task :sqlite3 do
       clean_env
       Rake::Task["spec"].reenable
-      ENV["TEST_ADAPTER"] = jdbc? ? "sqlite" : "sqlite3"
+      ENV["TEST_ADAPTER"] = "sqlite3"
       ENV["TEST_DATABASE"] = ":memory:"
       Rake::Task["spec"].invoke
     end
@@ -65,9 +61,9 @@ begin
     desc "Run specs for all adapters"
     task :all do
       res = [
-        "spec:postgresql", 
-        "spec:mysql", 
-        "spec:mysql2", 
+        "spec:postgresql",
+        "spec:mysql",
+        "spec:mysql2",
         "spec:sqlite3"
       ].map do |task_name|
         Rake::Task[task_name].invoke
