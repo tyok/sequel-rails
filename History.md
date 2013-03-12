@@ -1,6 +1,8 @@
 0.4.2 - dev
 ===========
 
+* Improve detection of JRuby (Ed Ruder)
+
 0.4.1 (2013-03-12)
 ==================
 
