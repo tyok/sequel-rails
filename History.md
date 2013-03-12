@@ -1,10 +1,11 @@
 0.4.1 - dev
 ===========
 
+* DRY config in rake task and fix usage under JRUBY (Ed Ruder)
 * Enable JRuby in TravisCI
 * Run JDBC specs when jruby is detected
 * Fix problems with JDBC support when running in 1.9 mode
-* Fix JDBC support for mysql and postgresql and add specs on 
+* Fix JDBC support for mysql and postgresql and add specs on
   `SequelRails::Configuration` (Jack Danger Canty)
 * Rescue exception when dropping database [#20](https://github.com/TalentBox/sequel-rails/issues/20)
 
@@ -16,14 +17,14 @@
 * Do not add any Sequel plugin by default anymore. Plugins could not be removed
   so it is safer to let the user add them via an initializer. Furthermore, we
   were changing the default Sequel behaviour related to 'raise on save'.
-  All the previous plugins/behaviours of sequel-rails can be restored by 
+  All the previous plugins/behaviours of sequel-rails can be restored by
   creating an initializer with:
 
   ```ruby
   require "sequel_rails/railties/legacy_model_config"
   ```
 
-  Thanks to @dlee, for raising concerns about this behaviour in 
+  Thanks to @dlee, for raising concerns about this behaviour in
   [#11](https://github.com/TalentBox/sequel-rails/pull/11)
 
 0.4.0.pre2
@@ -32,7 +33,7 @@
 * Remove `rake db:forward` and `rake db:rollback` as it makes not much sense
   when using the TimeStampMigration which is how this gem generates migrations
 * Ensure rake tasks returns appropriate code on errors
-* Ensure PostgreSQL adapter passes the right options to both create and drop 
+* Ensure PostgreSQL adapter passes the right options to both create and drop
   database (Sascha Cunz)
 
 0.4.0.pre1
@@ -48,14 +49,14 @@
 * **BIG CHANGE** rename `Rails::Sequel` module as `SequelRails`, this becomes
   the namespace for all sequel-rails related classes.
 * Split `Rails::Sequel::Storage` class in multiple adapter for each db
-* Only log queries if logger level is set to :debug (matching ActiveRecord 
+* Only log queries if logger level is set to :debug (matching ActiveRecord
   default).
 * Correctly display time spent in models in controller logs.
-* Add simple `ActiveSupport::Notification` support to Sequel using logger 
+* Add simple `ActiveSupport::Notification` support to Sequel using logger
   facility. This is done by monkey patching `Sequel::Database#log_yield`, so
   it does not yield directly if no loggers configured and instrument the yield
   call. Note that this does not allow to know from which class the query comes
-  from. So it still does not display the `Sequel::Model` subclass like 
+  from. So it still does not display the `Sequel::Model` subclass like
   `ActiveRecord` does (eg: User load).
 * Add spec for Sequel::Railties::LogSubscriber
 * Add initial specs for railtie setup
@@ -100,7 +101,7 @@
   - `db:drop` don't drop the test db automatically
   - `db:test:prepare` don't depend on `db:reset` which was loading `db:seed` (Sean Kirby)
 * Make `rake db:setup` load schema instead of running migrations (Markus Fenske)
-* Depends on `railties` instead of `rails` to not pull `active_record` 
+* Depends on `railties` instead of `rails` to not pull `active_record`
   as dependency (Markus Fenske)
 
 0.3.5
@@ -115,11 +116,11 @@
   and uses db types instead of ruby equivalents. This ensure loading the schema
   file will result in a correct db
 
-* Map some Sequel specific exceptions to `ActiveRecord` equivalents, in 
+* Map some Sequel specific exceptions to `ActiveRecord` equivalents, in
   `config.action_dispatch.rescue_responses`. This allows controllers to behave
   more like `ActiveRecord` when Sequel raises exceptions. (Joshua Hansen)
- 
-* New Sequel plugin added to all `Sequel::Model` which allows to use 
+
+* New Sequel plugin added to all `Sequel::Model` which allows to use
   `Sequel::Model#find!` which will raise an exception if record does not exists.
   This method is an alias to `Sequel::Model#[]` method. (Joshua Hansen)
 
