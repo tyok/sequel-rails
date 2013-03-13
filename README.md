@@ -126,6 +126,7 @@ Improvements has been made by those awesome contributors:
 * Brian Donovan (eventualbuddha)
 * Jack Danger Canty (JackDanger)
 * Ed Ruder (edruder)
+* Rafał Rzepecki (dividedmind)
 
 Credits
 =======

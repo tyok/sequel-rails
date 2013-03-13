@@ -1,6 +1,13 @@
 0.4.2 - dev
 ===========
 
+* Add schema dump format option and sql dump/load for Postgresql (Rafał Rzepecki)
+
+  To make `rake db:dump` and `rake db:load` use sql format for schema instead
+  of the default ruby version, put in your `config/application.rb`:
+  ```ruby
+  config.sequel.schema_format = :sql
+  ```
 * Improve detection of JRuby (Ed Ruder)
 
 0.4.1 (2013-03-12)
