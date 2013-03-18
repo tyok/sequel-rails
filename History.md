@@ -1,5 +1,5 @@
-0.4.2 - dev
-===========
+0.4.2 (2013-03-18)
+==================
 
 * Add schema dump format option and sql dump/load for Postgresql (Rafał Rzepecki)
 
