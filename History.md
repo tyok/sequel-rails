@@ -1,5 +1,5 @@
-0.4.3.dev
-=========
+0.4.3 (2013-04-03)
+==================
 
 * Handle `Sequel::NoMatchingRow` exception to return a `404`.
 
