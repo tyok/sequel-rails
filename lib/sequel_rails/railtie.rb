@@ -31,7 +31,7 @@ module SequelRails
       "Sequel::Plugins::RailsExtensions::ModelNotFound" => :not_found,
       "Sequel::NoMatchingRow" => :not_found,
       "Sequel::ValidationFailed" => :unprocessable_entity,
-      "Sequel::NoExistingObject" => :unprocessable_entity,
+      "Sequel::NoExistingObject" => :unprocessable_entity
     )
 
     config.sequel = ActiveSupport::OrderedOptions.new
