@@ -29,10 +29,11 @@ module SequelRails
 
     config.action_dispatch.rescue_responses.merge!(
       "Sequel::Plugins::RailsExtensions::ModelNotFound" => :not_found,
+      "Sequel::NoMatchingRow" => :not_found,
       "Sequel::ValidationFailed" => :unprocessable_entity,
-      "Sequel::NoExistingObject" => :unprocessable_entity
+      "Sequel::NoExistingObject" => :unprocessable_entity,
     )
-    
+
     config.sequel = ActiveSupport::OrderedOptions.new
 
     rake_tasks do

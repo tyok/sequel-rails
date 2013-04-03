@@ -32,6 +32,10 @@ describe SequelRails::Railtie do
       rescue_responses["Sequel::Plugins::RailsExtensions::ModelNotFound"].should == :not_found
     end
 
+    it "to handle Sequel::NoMatchingRow with :not_found" do
+      rescue_responses["Sequel::NoMatchingRow"].should == :not_found
+    end
+
     it "to handle Sequel::ValidationFailed with :unprocessable_entity" do
       rescue_responses["Sequel::ValidationFailed"].should == :unprocessable_entity
     end

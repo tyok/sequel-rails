@@ -1,6 +1,13 @@
 0.4.3.dev
 =========
 
+* Handle `Sequel::NoMatchingRow` exception to return a `404`.
+
+  As of `Sequel` `3.46.0`, this new standard exception class has been added.
+  The main use case is when no row is found when using the new `Dataset#first!`
+  method, this new method raise an exception instead of returning `nil` like
+  `Dataset#first`.
+
 * Ensure migration tasks points to migration directory's full path (Sean Sorrell)
 
 0.4.2 (2013-03-18)
