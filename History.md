@@ -1,3 +1,8 @@
+0.4.3.dev
+=========
+
+* Ensure migration tasks points to migration directory's full path (Sean Sorrell)
+
 0.4.2 (2013-03-18)
 ==================
 
