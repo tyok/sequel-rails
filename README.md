@@ -127,6 +127,7 @@ Improvements has been made by those awesome contributors:
 * Jack Danger Canty (JackDanger)
 * Ed Ruder (edruder)
 * Rafał Rzepecki (dividedmind)
+* Sean Sorrell (rudle)
 
 Credits
 =======
