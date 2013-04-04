@@ -38,6 +38,7 @@ module SequelRails
   private
 
     def initialize(root, database_yml_hash)
+      super()
       @root, @raw = root, database_yml_hash
     end
 
@@ -74,7 +75,7 @@ module SequelRails
 
       # override max connections if requested in app configuration
       config['max_connections'] = max_connections if max_connections
-      
+
       # some adapters only support an url
       if config['adapter'] && config['adapter'] =~ /^(jdbc|do):/
         params = {}
