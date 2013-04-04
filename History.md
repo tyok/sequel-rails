@@ -1,3 +1,8 @@
+0.4.4.dev
+=========
+
+* Add support for configuring max connections in app config (Rafał Rzepecki)
+
 0.4.3 (2013-04-03)
 ==================
 
