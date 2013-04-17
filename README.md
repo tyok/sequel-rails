@@ -128,6 +128,7 @@ Improvements has been made by those awesome contributors:
 * Ed Ruder (edruder)
 * Rafał Rzepecki (dividedmind)
 * Sean Sorrell (rudle)
+* Saulius Grigaliunas (sauliusg)
 
 Credits
 =======
