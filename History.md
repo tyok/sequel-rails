@@ -1,5 +1,5 @@
-0.4.4.dev
-=========
+0.4.4 (2013-06-06)
+==================
 
 * Fix schema_dumper extension inclusion to remove deprecation warning in
   Sequel 3.48 (Jacques Crocker)
