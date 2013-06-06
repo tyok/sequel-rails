@@ -129,6 +129,7 @@ Improvements has been made by those awesome contributors:
 * Rafał Rzepecki (dividedmind)
 * Sean Sorrell (rudle)
 * Saulius Grigaliunas (sauliusg)
+* Jacques Crocker (railsjedi)
 
 Credits
 =======

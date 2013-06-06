@@ -1,6 +1,8 @@
 0.4.4.dev
 =========
 
+* Fix schema_dumper extension inclusion to remove deprecation warning in
+  Sequel 3.48 (Jacques Crocker)
 * Add support for dumping/loading sql schema for MySQL (Saulius Grigaliunas)
 * Add support for configuring max connections in app config (Rafał Rzepecki)
 
