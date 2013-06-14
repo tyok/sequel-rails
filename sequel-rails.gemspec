@@ -24,6 +24,6 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "rake", ">= 0.8.7"
   s.add_development_dependency "rspec", "~> 2.7.0"
-  s.add_development_dependency "combustion", "~> 0.3.1"
+  s.add_development_dependency "combustion", "~> 0.5.0"
   s.add_development_dependency "generator_spec", "~> 0.8.7"
 end
