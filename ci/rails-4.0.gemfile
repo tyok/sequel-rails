@@ -1,0 +1,22 @@
+source "http://rubygems.org"
+
+gem "railties", "~> 4.0.0"
+
+gemspec :path => "../"
+
+gem "fakefs", :require => "fakefs/safe"
+
+# MRI/Rubinius Adapter Dependencies
+platform :ruby do
+  gem "pg"
+  gem "mysql"
+  gem "mysql2"
+  gem "sqlite3"
+end
+
+# JRuby Adapter Dependencies
+platform :jruby do
+  gem "jdbc-sqlite3"
+  gem "jdbc-mysql"
+  gem "jdbc-postgres"
+end
