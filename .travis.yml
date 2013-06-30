@@ -20,6 +20,12 @@ matrix:
     - rvm: jruby-18mode
       env: "TEST_ADAPTER=mysql2 TEST_USERNAME=root TEST_ENCODING=utf8"
       gemfile: ci/rails-4.0.gemfile
+    - rvm: jruby-18mode
+      env: "TEST_ADAPTER=postgresql TEST_OWNER=postgres TEST_USERNAME=postgres"
+      gemfile: ci/rails-4.0.gemfile
+    - rvm: jruby-18mode
+      env: "TEST_ADAPTER=sqlite3 TEST_DATABASE=':memory:'"
+      gemfile: ci/rails-4.0.gemfile
     - rvm: jruby-19mode
       env: "TEST_ADAPTER=mysql2 TEST_USERNAME=root TEST_ENCODING=utf8"
       gemfile: ci/rails-3.2.gemfile
