@@ -4,6 +4,8 @@ gem "railties", "~> 4.0.0"
 
 gemspec :path => "../"
 
+gem "sequel", "#{ENV["sequel_version"]}"
+
 gem "fakefs", :require => "fakefs/safe"
 
 # MRI/Rubinius Adapter Dependencies

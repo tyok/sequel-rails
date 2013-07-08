@@ -1,6 +1,7 @@
 0.4.5.dev
 =========
 
+* Loosen dependency to allow `Sequel` versions `~> 4.0.0`
 * Add ruby 2.0.0 to TravisCI
 
 0.4.4 (2013-06-06)
