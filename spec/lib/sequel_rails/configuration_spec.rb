@@ -42,32 +42,21 @@ describe SequelRails::Configuration do
 
   describe ".setup" do
     
-    shared_context "max_connections" do
-      let(:max_connections) { 31337 }
-      before do
-        environments[environment]["max_connections"] = 7
-        SequelRails.configuration.max_connections = max_connections
-      end
-    end
-    
-    shared_examples "max_connections_c" do
+    shared_examples "max_connections" do
       context "with max_connections config option" do
-        include_context "max_connections"
-        it "overrides the option from the configuration" do
-          ::Sequel.should_receive(:connect) do |hash|
-              hash['max_connections'].should == max_connections
-          end
-          subject
+        let(:max_connections) { 31337 }
+        before do
+          environments[environment]["max_connections"] = 7
+          SequelRails.configuration.max_connections = max_connections
         end
-      end
-    end
 
-    shared_examples "max_connections_j" do
-      context "with max_connections config option" do
-        include_context "max_connections"
         it "overrides the option from the configuration" do
-          ::Sequel.should_receive(:connect) do |url, hash|
-            url.should include("max_connections=#{max_connections}")
+          ::Sequel.should_receive(:connect) do |hash_or_url, *_|
+            if hash_or_url.is_a? Hash
+              hash_or_url['max_connections'].should == max_connections
+            else
+              hash_or_url.should include("max_connections=#{max_connections}")
+            end
           end
           subject
         end
@@ -80,7 +69,7 @@ describe SequelRails::Configuration do
 
       context "in C-Ruby" do
         
-        include_examples "max_connections_c"
+        include_examples "max_connections"
 
         it "produces a sane config without url" do
           ::Sequel.should_receive(:connect) do |hash|
@@ -93,7 +82,7 @@ describe SequelRails::Configuration do
 
       context "in JRuby" do
         
-        include_examples "max_connections_j"
+        include_examples "max_connections"
 
         let(:is_jruby) { true }
 
@@ -114,7 +103,7 @@ describe SequelRails::Configuration do
 
       context "in C-Ruby" do
 
-        include_examples "max_connections_c"
+        include_examples "max_connections"
 
         it "produces a config without url" do
           ::Sequel.should_receive(:connect) do |hash|
@@ -126,7 +115,7 @@ describe SequelRails::Configuration do
 
       context "in JRuby" do
         
-        include_examples "max_connections_j"
+        include_examples "max_connections"
 
         let(:is_jruby) { true }
 
