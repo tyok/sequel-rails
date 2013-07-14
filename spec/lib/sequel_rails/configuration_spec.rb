@@ -65,11 +65,33 @@ describe SequelRails::Configuration do
 
     context "for a postgres connection" do
       
+      shared_examples "search_path" do
+        context "with search_path config option" do
+          let(:search_path) { ['secret', 'private', 'public'] }
+          before do
+            environments[environment]["search_path"] = "private, public"
+            SequelRails.configuration.search_path = search_path
+          end
+
+          it "overrides the option from the configuration" do
+            ::Sequel.should_receive(:connect) do |hash_or_url, *_|
+              if hash_or_url.is_a? Hash
+                hash_or_url['search_path'].should == search_path
+              else
+                hash_or_url.should include("search_path=secret,private,public")
+              end
+            end
+            subject
+          end
+        end
+      end
+
       let(:environment) { 'development' }
 
       context "in C-Ruby" do
         
         include_examples "max_connections"
+        include_examples "search_path"
 
         it "produces a sane config without url" do
           ::Sequel.should_receive(:connect) do |hash|
@@ -83,6 +105,7 @@ describe SequelRails::Configuration do
       context "in JRuby" do
         
         include_examples "max_connections"
+        include_examples "search_path"
 
         let(:is_jruby) { true }
 
