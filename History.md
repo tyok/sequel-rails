@@ -1,7 +1,7 @@
 0.5.1.dev
 =========
 
-* Allow setting the search path in app config (Rafał Rzepecki) [#36]
+* Allow setting the search path in app config (Rafał Rzepecki) [#36](https://github.com/TalentBox/sequel-rails/issues/36)
 
 0.5.0 (2013-07-08)
 ==================
