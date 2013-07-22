@@ -19,9 +19,11 @@ namespace :db do
     desc "Create a db/schema.rb file that can be portably used against any DB supported by Sequel"
     task :dump => :environment do
       db_for_current_env.extension :schema_dumper
-      File.open(ENV['SCHEMA'] || "#{Rails.root}/db/schema.rb", "w") do |file|
+      filename = ENV['SCHEMA'] || "#{Rails.root}/db/schema.rb"
+      File.open filename, "w" do |file|
         file.write db_for_current_env.dump_schema_migration(:same_db => true)
       end
+      SequelRails::Storage.dump_schema_information Rails.env, filename
       Rake::Task["db:schema:dump"].reenable
     end
 
@@ -42,26 +44,28 @@ namespace :db do
     desc "Dump the database structure to db/structure.sql. Specify another file with DB_STRUCTURE=db/my_structure.sql"
     task :dump, [:env] => :environment do |t, args|
       args.with_defaults(:env => Rails.env)
-      
+
       filename = ENV['DB_STRUCTURE'] || File.join(Rails.root, "db", "structure.sql")
-      unless SequelRails::Storage.dump_environment args.env, filename
+      if SequelRails::Storage.dump_environment args.env, filename
+        SequelRails::Storage.dump_schema_information Rails.env, filename
+      else
         abort "Could not dump structure for #{args.env}."
       end
-      
+
       Rake::Task["db:structure:dump"].reenable
     end
 
     task :load, [:env] => :environment do |t, args|
       args.with_defaults(:env => Rails.env)
-      
+
       filename = ENV['DB_STRUCTURE'] || File.join(Rails.root, "db", "structure.sql")
       unless SequelRails::Storage.load_environment args.env, filename
         abort "Could not load structure for #{args.env}."
       end
     end
   end
-  
-  task dump: :environment do
+
+  task :dump => :environment do
     case (SequelRails.configuration.schema_format ||= :ruby)
     when :ruby
       Rake::Task["db:schema:dump"].invoke
@@ -71,8 +75,8 @@ namespace :db do
       abort "unknown schema format #{SequelRails.configuration.schema_format}"
     end
   end
-  
-  task load: :environment do
+
+  task :load => :environment do
     case (SequelRails.configuration.schema_format ||= :ruby)
     when :ruby
       Rake::Task["db:schema:load"].invoke
@@ -82,7 +86,7 @@ namespace :db do
       abort "unknown schema format #{SequelRails.configuration.schema_format}"
     end
   end
-  
+
   namespace :create do
     desc 'Create all the local databases defined in config/database.yml'
     task :all => :environment do

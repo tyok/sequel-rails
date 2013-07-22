@@ -25,8 +25,8 @@ module SequelRails
         ENV["PGPASSWORD"] = nil unless password.blank?
         res
       end
-      
-      def _dump filename
+
+      def _dump(filename)
         ENV["PGPASSWORD"] = password unless password.blank?
         commands = %w(pg_dump -i -s -x -O)
         commands << "-f" << filename
@@ -39,7 +39,7 @@ module SequelRails
         res
       end
 
-      def _load filename
+      def _load(filename)
         ENV["PGPASSWORD"] = password unless password.blank?
         commands = %w(psql)
         commands << "-f" << filename
@@ -63,8 +63,8 @@ module SequelRails
             WHERE datname = '#{database}';
           SQL
         rescue => _
-          # Will raise an error as it kills existing process running this 
-          # command. Seems to be only way to ensure *all* test connections 
+          # Will raise an error as it kills existing process running this
+          # command. Seems to be only way to ensure *all* test connections
           # are closed
         end
       end

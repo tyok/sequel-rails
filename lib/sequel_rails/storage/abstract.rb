@@ -21,16 +21,47 @@ module SequelRails
         res
       end
 
-      def dump filename
+      def dump(filename)
         res = _dump filename
         puts "[sequel] Dumped structure of database '#{database}' to '#{filename}'" if res
         res
       end
 
-      def load filename
+      def load(filename)
         res = _load filename
         puts "[sequel] Loaded structure of database '#{database}' from '#{filename}'" if res
         res
+      end
+
+      def dump_schema_information(filename, opts={})
+        sql = opts.fetch :sql
+
+        res = false
+        if File.exists? filename
+          res = _dump_schema_information filename, :sql => sql
+          puts "[sequel] Dumped current schema information of database '#{database}' to '#{filename}'" if res
+        end
+        res
+      end
+
+      def _dump_schema_information(filename, opts={})
+        sql = opts.fetch :sql
+
+        ::File.open(filename, "a") do |file|
+          db = ::Sequel.connect config
+          migrator = ::Sequel::TimestampMigrator.new db, "db/migrate"
+
+          inserts = migrator.applied_migrations.map do |migration_name|
+            insert = migrator.ds.insert_sql(migrator.column => migration_name)
+            sql ? insert : "    self << #{insert.inspect}"
+          end
+
+          if inserts.any?
+            file << "Sequel.migration do\n  change do\n" unless sql
+            file << inserts.join("\n")
+            file << "\n  end\nend\n" unless sql
+          end
+        end
       end
 
       # To be overriden by subclasses
