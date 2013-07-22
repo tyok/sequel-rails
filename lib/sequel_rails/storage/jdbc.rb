@@ -42,7 +42,7 @@ module SequelRails
       def _drop
         if _is_sqlite?
           return if in_memory?
-          ::Sequel.connect config['url']
+          FileUtils.rm db_name if File.exists? db_name
         elsif _is_mysql?
           ::Sequel.connect("#{_root_url}#{_params}") do |db|
             db.execute("DROP DATABASE IF EXISTS `#{db_name}`")

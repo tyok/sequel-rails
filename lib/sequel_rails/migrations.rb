@@ -15,6 +15,25 @@ module SequelRails
         return false unless File.exists?(Rails.root.join("db/migrate"))
         !::Sequel::Migrator.is_current?(::Sequel::Model.db, Rails.root.join("db/migrate"))
       end
+
+      def dump_schema_information(opts={})
+        sql = opts.fetch :sql
+        db = ::Sequel::Model.db
+        migrator = ::Sequel::TimestampMigrator.new db, "db/migrate"
+
+        inserts = migrator.applied_migrations.map do |migration_name|
+          insert = migrator.ds.insert_sql(migrator.column => migration_name)
+          sql ? insert : "    self << #{insert.inspect}"
+        end
+
+        res = ""
+        if inserts.any?
+          res << "Sequel.migration do\n  change do\n" unless sql
+          res << inserts.join("\n")
+          res << "\n  end\nend\n" unless sql
+        end
+        res
+      end
     end
   end
 end

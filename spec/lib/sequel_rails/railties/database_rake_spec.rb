@@ -26,8 +26,7 @@ describe "Database rake tasks" do
 
     it "append the migration schema information if any" do
       Dir.chdir app_root do
-        `rake db:migrate`
-        `rake db:schema:dump`
+        `rake db:migrate db:schema:dump`
         sql = Sequel::Model.db.from(:schema_migrations).
           insert_sql(:filename => "1273253849_add_twitter_handle_to_users.rb")
         File.read(schema).should include <<-EOS
@@ -41,7 +40,7 @@ EOS
     end
   end
 
-  describe "db:structure:dump" do
+  describe "db:structure:dump", :skip_jdbc do
     let(:schema) { "#{app_root}/db/structure.sql" }
 
     it "dumps the schema in 'db/structure.sql'" do
@@ -53,8 +52,7 @@ EOS
 
     it "append the migration schema information if any" do
       Dir.chdir app_root do
-        `rake db:migrate`
-        `rake db:structure:dump`
+        `rake db:migrate db:structure:dump`
 
         sql = Sequel::Model.db.from(:schema_migrations).
           insert_sql(:filename => "1273253849_add_twitter_handle_to_users.rb")

@@ -9,7 +9,12 @@ Combustion.initialize! "sequel_rails"
 # Load support files
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
+rspec_exclusions = {}
+rspec_exclusions[:skip_jdbc] = true if SequelRails.jruby?
+
 RSpec.configure do |config|
+  config.treat_symbols_as_metadata_keys_with_true_values = true
+  config.filter_run_excluding rspec_exclusions
   config.around :each do |example|
     Sequel::Model.db.transaction(:rollback => :always) do
       example.run

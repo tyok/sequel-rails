@@ -21,9 +21,9 @@ namespace :db do
       db_for_current_env.extension :schema_dumper
       filename = ENV['SCHEMA'] || "#{Rails.root}/db/schema.rb"
       File.open filename, "w" do |file|
-        file.write db_for_current_env.dump_schema_migration(:same_db => true)
+        file << db_for_current_env.dump_schema_migration(:same_db => true)
+        file << SequelRails::Migrations.dump_schema_information(:sql => false)
       end
-      SequelRails::Storage.dump_schema_information Rails.env, filename
       Rake::Task["db:schema:dump"].reenable
     end
 
@@ -47,7 +47,9 @@ namespace :db do
 
       filename = ENV['DB_STRUCTURE'] || File.join(Rails.root, "db", "structure.sql")
       if SequelRails::Storage.dump_environment args.env, filename
-        SequelRails::Storage.dump_schema_information_sql Rails.env, filename
+        ::File.open filename, "a" do |file|
+          file << SequelRails::Migrations.dump_schema_information(:sql => false)
+        end
       else
         abort "Could not dump structure for #{args.env}."
       end

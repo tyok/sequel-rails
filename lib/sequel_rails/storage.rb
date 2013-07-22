@@ -33,14 +33,6 @@ module SequelRails
       adapter_for(config_or_env).load(filename)
     end
 
-    def self.dump_schema_information(config_or_env, filename)
-      adapter_for(config_or_env).dump_schema_information(filename, :sql => false)
-    end
-
-    def self.dump_schema_information_sql(config_or_env, filename)
-      adapter_for(config_or_env).dump_schema_information(filename, :sql => true)
-    end
-
     def self.close_all_connections
       with_all_repositories { |config| close_connections_environment(config) }
     end
