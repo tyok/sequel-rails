@@ -54,7 +54,7 @@ begin
       clean_env
       Rake::Task["spec"].reenable
       ENV["TEST_ADAPTER"] = "sqlite3"
-      ENV["TEST_DATABASE"] = ":memory:"
+      ENV["TEST_DATABASE"] = "db/database.sqlite3"
       Rake::Task["spec"].invoke
     end
 

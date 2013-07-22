@@ -26,7 +26,7 @@ begin
   end
 
   require 'sequel/extensions/migration'
-  load "#{Rails.root}/db/schema.rb"
+  load "#{Rails.root}/db/schema.rb.init"
   Sequel::Migration.descendants.first.apply Sequel::Model.db, :up
 rescue Sequel::DatabaseConnectionError => e
   puts "Database connection error: #{e.message}"

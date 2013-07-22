@@ -11,6 +11,16 @@ module SequelRails
         path.unlink if path.file?
       end
 
+      def _dump(filename)
+        return if in_memory?
+        system "sqlite3 \"#{path.to_s}\" .schema > \"#{filename}\""
+      end
+
+      def _load(filename)
+        return if in_memory?
+        system "sqlite3 \"#{path.to_s}\" < \"#{filename}\""
+      end
+
       private
 
       def in_memory?

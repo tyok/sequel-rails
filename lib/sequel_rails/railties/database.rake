@@ -47,7 +47,7 @@ namespace :db do
 
       filename = ENV['DB_STRUCTURE'] || File.join(Rails.root, "db", "structure.sql")
       if SequelRails::Storage.dump_environment args.env, filename
-        SequelRails::Storage.dump_schema_information Rails.env, filename
+        SequelRails::Storage.dump_schema_information_sql Rails.env, filename
       else
         abort "Could not dump structure for #{args.env}."
       end

@@ -1,6 +1,7 @@
 0.5.1.dev
 =========
 
+* Allow `rake db:dump` and `rake db:load` to work on `sqlite3` [#31](https://github.com/TalentBox/sequel-rails/issues/31)
 * Append migrations schema information to `schema.rb` and `structure.sql` [#31](https://github.com/TalentBox/sequel-rails/issues/31)
 * Allow setting the search path in app config (Rafał Rzepecki) [#36](https://github.com/TalentBox/sequel-rails/issues/36)
 
