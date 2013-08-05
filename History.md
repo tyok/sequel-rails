@@ -1,5 +1,5 @@
-0.5.1.dev
-=========
+0.5.1 (2013-08-05)
+==================
 
 * Allow setting if schema should be dumped (Rafał Rzepecki) [#37](https://github.com/TalentBox/sequel-rails/issues/37)
 * Allow `rake db:dump` and `rake db:load` to work on `sqlite3` [#31](https://github.com/TalentBox/sequel-rails/issues/31)
