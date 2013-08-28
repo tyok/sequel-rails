@@ -1,6 +1,7 @@
 0.5.2.dev
 =========
 
+* Loosen the Sequel dependencies to `< 5.0` (Joshua Hansen) [#39](https://github.com/TalentBox/sequel-rails/pull/39)
 * Fix regexp to extract root url when using JDBC (Eric Strathmeyer) [#40](https://github.com/TalentBox/sequel-rails/pull/40)
 
 0.5.1 (2013-08-05)
