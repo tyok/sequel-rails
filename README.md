@@ -148,6 +148,7 @@ Improvements has been made by those awesome contributors:
 * Sean Sorrell (rudle)
 * Saulius Grigaliunas (sauliusg)
 * Jacques Crocker (railsjedi)
+* Eric Strathmeyer (strathmeyer)
 
 Credits
 =======

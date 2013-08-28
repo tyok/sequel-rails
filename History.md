@@ -1,6 +1,8 @@
 0.5.2.dev
 =========
 
+* Fix regexp to extract root url when using JDBC (Eric Strathmeyer) [#40](https://github.com/TalentBox/sequel-rails/pull/40)
+
 0.5.1 (2013-08-05)
 ==================
 
