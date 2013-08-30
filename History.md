@@ -1,4 +1,4 @@
-0.5.2.dev
+0.6.0.dev
 =========
 
 * Add setting to allow disabling database's rake tasks to be loaded [#41](https://github.com/TalentBox/sequel-rails/issues/41)
