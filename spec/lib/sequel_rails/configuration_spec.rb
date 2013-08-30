@@ -168,7 +168,7 @@ describe SequelRails::Configuration do
         subject.schema_dump.should be_true
       end
       it "can be set from merging another hash" do
-        subject.merge! schema_dump: true
+        subject.merge!(:schema_dump => true)
         subject.schema_dump.should be_true
       end
     end
@@ -183,7 +183,7 @@ describe SequelRails::Configuration do
         subject.schema_dump.should be_true
       end
       it "can be set from merging another hash" do
-        subject.merge! schema_dump: true
+        subject.merge!(:schema_dump => true)
         subject.schema_dump.should be_true
       end
     end
@@ -198,7 +198,7 @@ describe SequelRails::Configuration do
         subject.schema_dump.should be_false
       end
       it "can be set from merging another hash" do
-        subject.merge! schema_dump: false
+        subject.merge!(:schema_dump => false)
         subject.schema_dump.should be_false
       end
     end
@@ -215,7 +215,7 @@ describe SequelRails::Configuration do
       subject.load_database_tasks.should be_false
     end
     it "can be set from merging another hash" do
-      subject.merge! load_database_tasks: false
+      subject.merge!(:load_database_tasks => false)
       subject.load_database_tasks.should be_false
     end
   end
