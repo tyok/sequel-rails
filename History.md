@@ -1,6 +1,7 @@
 0.6.0.dev
 =========
 
+* Do not try to construct `url` from config if data config already contains one `url` [#35](https://github.com/TalentBox/sequel-rails/issues/41)
 * Add setting to allow disabling database's rake tasks to be loaded [#41](https://github.com/TalentBox/sequel-rails/issues/41)
 * Loosen the Sequel dependencies to `< 5.0` (Joshua Hansen) [#39](https://github.com/TalentBox/sequel-rails/pull/39)
 * Fix regexp to extract root url when using JDBC (Eric Strathmeyer) [#40](https://github.com/TalentBox/sequel-rails/pull/40)

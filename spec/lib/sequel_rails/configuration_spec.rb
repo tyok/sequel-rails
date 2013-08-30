@@ -29,6 +29,10 @@ describe SequelRails::Configuration do
           "host" => "10.0.0.1",
           "database" => "sequel_rails_test_storage_production",
         },
+        "url_already_constructed" => {
+          "adapter" => "adapter_name",
+          "url" => "jdbc:adapter_name://HOST/DB?user=U&password=P&ssl=true&sslfactory=sslFactoryOption"
+        },
         "bogus" => {},
       }
     end
@@ -117,6 +121,20 @@ describe SequelRails::Configuration do
           end
           subject
         end
+
+        context "when url is already given" do
+
+          let(:environment) { "url_already_constructed" }
+
+          it "does not change the url" do
+            ::Sequel.should_receive(:connect) do |url, hash|
+              url.should == "jdbc:adapter_name://HOST/DB?user=U&password=P&ssl=true&sslfactory=sslFactoryOption"
+              hash['adapter'].should == 'jdbc:adapter_name'
+            end
+            subject
+          end
+
+        end
       end
     end
 
@@ -149,6 +167,20 @@ describe SequelRails::Configuration do
             hash['database'].should == 'sequel_rails_test_storage_remote'
           end
           subject
+        end
+
+        context "when url is already given" do
+
+          let(:environment) { "url_already_constructed" }
+
+          it "does not change the url" do
+            ::Sequel.should_receive(:connect) do |url, hash|
+              url.should == "jdbc:adapter_name://HOST/DB?user=U&password=P&ssl=true&sslfactory=sslFactoryOption"
+              hash['adapter'].should == 'jdbc:adapter_name'
+            end
+            subject
+          end
+
         end
       end
     end

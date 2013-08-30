@@ -90,7 +90,7 @@ module SequelRails
       config['search_path'] = search_path if search_path
 
       # some adapters only support an url
-      if config['adapter'] && config['adapter'] =~ /^(jdbc|do):/
+      if config['adapter'] && config['adapter'] =~ /^(jdbc|do):/ && !config.has_key?('url')
         params = {}
         config.each do |k, v|
           next if ['adapter', 'host', 'port', 'database'].include?(k)
@@ -102,7 +102,7 @@ module SequelRails
         end
         params_str = params.map { |k, v| "#{k}=#{v}" }.join('&')
         port = config['port'] ? ":#{config['port']}" : ''
-        config['url'] = case config['adapter']
+        config['url'] ||= case config['adapter']
         when /sqlite/
           "%s:%s" % [config['adapter'], config['database']]
         else
