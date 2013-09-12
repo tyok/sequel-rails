@@ -1,5 +1,5 @@
-0.6.0.dev
-=========
+0.6.0 (2013-09-12)
+==================
 
 * Do not try to construct `url` from config if data config already contains one `url` [#35](https://github.com/TalentBox/sequel-rails/issues/41)
 * Add setting to allow disabling database's rake tasks to be loaded [#41](https://github.com/TalentBox/sequel-rails/issues/41)
