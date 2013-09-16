@@ -1,5 +1,5 @@
-0.6.1.dev
-=========
+0.6.1 (2013-09-16)
+==================
 
 * Use a `SequelRails::Configuration` from the start in `app.config.sequel` [#44](https://github.com/TalentBox/sequel-rails/issues/41)
 
