@@ -34,7 +34,7 @@ module SequelRails
       "Sequel::NoExistingObject" => :unprocessable_entity
     )
 
-    config.sequel = ActiveSupport::OrderedOptions.new
+    config.sequel = ::SequelRails::Configuration.new
 
     rake_tasks do |app|
       if app.config.sequel.load_database_tasks
@@ -65,9 +65,11 @@ module SequelRails
 
     # Support overwriting crucial steps in subclasses
     def configure_sequel(app)
-      app.config.sequel = ::SequelRails::Configuration.for(
-        ::Rails.root, app.config.database_configuration
-      ).merge!(app.config.sequel)
+      app.config.sequel.merge!(
+        :root => ::Rails.root,
+        :raw => app.config.database_configuration
+      )
+      ::SequelRails.configuration = app.config.sequel
     end
 
     def setup_i18n_support(app)

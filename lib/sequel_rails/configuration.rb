@@ -16,16 +16,22 @@ module SequelRails
   class Configuration < ActiveSupport::OrderedOptions
 
     def self.for(root, database_yml_hash)
-      ::SequelRails.configuration ||= new(root, database_yml_hash)
+      ::SequelRails.configuration ||= begin
+        config = new
+        config.root = root
+        config.raw = database_yml_hash
+        config
+      end
     end
 
-    attr_reader :root, :raw
-    attr_accessor :logger
-    attr_accessor :migration_dir
-
-    def initialize(root, database_yml_hash)
-      super()
-      @root, @raw = root, database_yml_hash
+    def initialize(*)
+      super
+      self.root = Rails.root
+      self.raw = nil
+      self.logger = Rails.logger
+      self.migration_dir = nil
+      self.schema_dump = default_schema_dump
+      self.load_database_tasks = true
     end
 
     def environment_for(name)
@@ -38,14 +44,6 @@ module SequelRails
         normalized[name] = normalize_repository_config(config)
         normalized
       end
-    end
-
-    def schema_dump
-      super.nil? ? (schema_dump = default_schema_dump) : super
-    end
-
-    def load_database_tasks
-      super.nil? ? (load_database_tasks = true) : super
     end
 
   private

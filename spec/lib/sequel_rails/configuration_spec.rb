@@ -39,7 +39,8 @@ describe SequelRails::Configuration do
     let(:is_jruby) { false }
 
     before do
-      SequelRails.configuration.stub(:raw).and_return environments
+      SequelRails.configuration = described_class.new
+      SequelRails.configuration.raw = environments
       SequelRails.configuration.instance_variable_set('@environments', nil)
       SequelRails.stub(:jruby?).and_return is_jruby
     end
@@ -188,7 +189,7 @@ describe SequelRails::Configuration do
 
   describe "#schema_dump" do
     before{ Rails.stub(:env).and_return environment }
-    subject { SequelRails::Configuration.new("path/to/app", {}) }
+    subject{ described_class.new }
 
     context "in test environment" do
       let(:environment) { "test" }
@@ -237,7 +238,7 @@ describe SequelRails::Configuration do
   end
 
   describe "#load_database_tasks" do
-    subject { SequelRails::Configuration.new("path/to/app", {}) }
+    subject{ described_class.new }
 
     it "defaults to true" do
       subject.load_database_tasks.should be_true
