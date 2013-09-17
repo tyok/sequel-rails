@@ -268,6 +268,7 @@ describe SequelRails::Configuration do
     describe "after connect hook" do
       let(:hook) { double }
       let(:environment) { "development" }
+      before { SequelRails.unstub :jruby? }
 
       it "runs hook if provided" do
         subject.after_connect = hook
