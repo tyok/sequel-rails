@@ -4,7 +4,7 @@ require 'sequel_rails/storage'
 namespace :db do
   def db_for_current_env
     @db_for_current_env ||= {}
-    @db_for_current_env[Rails.env] ||= ::SequelRails.setup(Rails.env, Rails.application)
+    @db_for_current_env[Rails.env] ||= ::SequelRails.setup(Rails.env)
   end
 
   # desc "Raises an error if there are pending migrations"

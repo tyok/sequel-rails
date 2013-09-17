@@ -4,18 +4,8 @@ module SequelRails
 
   mattr_accessor :configuration
 
-  def self.setup(environment, app)
-    config = configuration.environment_for(environment.to_s)
-    db = if config['url']
-      ::Sequel.connect config['url'], config
-    else
-      ::Sequel.connect config
-    end
-
-    callback = app.config.sequel.after_connect
-    callback.call if callback.respond_to?(:call)
-
-    db
+  def self.setup(environment)
+    configuration.connect environment
   end
 
   class Configuration < ActiveSupport::OrderedOptions
@@ -37,6 +27,7 @@ module SequelRails
       self.migration_dir = nil
       self.schema_dump = default_schema_dump
       self.load_database_tasks = true
+      self.after_connect = nil
     end
 
     def environment_for(name)
@@ -49,6 +40,17 @@ module SequelRails
         normalized[name] = normalize_repository_config(config)
         normalized
       end
+    end
+
+    def connect(environment)
+      normalized_config = environment_for environment
+      db = if normalized_config['url']
+        ::Sequel.connect normalized_config['url'], normalized_config
+      else
+        ::Sequel.connect normalized_config
+      end
+      after_connect.call if after_connect.respond_to?(:call)
+      db
     end
 
   private
