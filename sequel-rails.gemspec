@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.extra_rdoc_files = ["LICENSE", "README.md"]
   s.rdoc_options = ["--charset=UTF-8"]
+  s.license = "MIT"
 
   s.add_runtime_dependency "sequel", [">= 3.28", "< 5.0"]
   s.add_runtime_dependency "railties", ">= 3.2.0"

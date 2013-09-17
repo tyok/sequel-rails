@@ -1,6 +1,8 @@
 0.6.2.dev
 =========
 
+* Update license dates and add license to gemspec [#45](https://github.com/TalentBox/sequel-rails/issues/45)
+
 0.6.1 (2013-09-16)
 ==================
 
