@@ -1,6 +1,7 @@
 0.6.2.dev
 =========
 
+* Add an `after_connect` hook (Jan Berdajs) [#46](https://github.com/TalentBox/sequel-rails/pull/46)
 * Update license dates and add license to gemspec [#45](https://github.com/TalentBox/sequel-rails/issues/45)
 
 0.6.1 (2013-09-16)
