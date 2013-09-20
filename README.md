@@ -171,6 +171,7 @@ Improvements has been made by those awesome contributors:
 * Jacques Crocker (railsjedi)
 * Eric Strathmeyer (strathmeyer)
 * Jan Berdajs (mrbrdo)
+* Robert Payne (robertjpayne)
 
 Credits
 =======

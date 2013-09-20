@@ -1,6 +1,8 @@
 0.6.2.dev
 =========
 
+* Apply all migrations in the schema.rb file when loading it (Robert Payne) [#49](https://github.com/TalentBox/sequel-rails/pull/49)
+* Make dump_schema_information compatible with integer based migration (Robert Payne) [#48](https://github.com/TalentBox/sequel-rails/pull/48) [#47](https://github.com/TalentBox/sequel-rails/issues/47)
 * Add an `after_connect` hook (Jan Berdajs) [#46](https://github.com/TalentBox/sequel-rails/pull/46)
 * Update license dates and add license to gemspec [#45](https://github.com/TalentBox/sequel-rails/issues/45)
 
