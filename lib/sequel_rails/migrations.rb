@@ -23,12 +23,10 @@ module SequelRails
         migrator_class = ::Sequel::Migrator.send(:migrator_class, migrations_dir)
         migrator = migrator_class.new db, migrations_dir
 
-        inserts = []
-        migrator.ds.each do |hash|
-          inserts << migrator.ds.insert_sql(hash)
+        inserts = migrator.ds.map do |hash|
+          insert = migrator.ds.insert_sql(hash)
+          sql ? insert : "    self << #{insert.inspect}"
         end
-        inserts = inserts.map{|i| "    self << #{i.inspect}" } unless sql
-
         res = ""
         if inserts.any?
           res << "Sequel.migration do\n  change do\n" unless sql
