@@ -19,17 +19,13 @@ module SequelRails
       def dump_schema_information(opts={})
         sql = opts.fetch :sql
         db = ::Sequel::Model.db
-        migrations_dir = "db/migrate"
+        migrations_dir = Rails.root.join("db/migrate")
         migrator_class = ::Sequel::Migrator.send(:migrator_class, migrations_dir)
         migrator = migrator_class.new db, migrations_dir
 
         inserts = []
-        if migrator.kind_of?(::Sequel::IntegerMigrator)
-          inserts << migrator.ds.insert_sql(migrator.column => migrator.current)
-        elsif migrator.kind_of?(::Sequel::TimestampMigrator)
-          migrator.applied_migrations.each do |migration_name|
-            inserts << migrator.ds.insert_sql(migrator.column => migration_name)
-          end
+        migrator.ds.each do |hash|
+          inserts << migrator.ds.insert_sql(hash)
         end
         inserts = inserts.map{|i| "    self << #{i.inspect}" } unless sql
 
