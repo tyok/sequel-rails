@@ -6,23 +6,22 @@ module SequelRails
       def migrate(version=nil)
         opts = {}
         opts[:target] = version.to_i if version
-        ::Sequel::Migrator.run(::Sequel::Model.db, Rails.root.join("db/migrate"), opts)
+        ::Sequel::Migrator.run(::Sequel::Model.db, migrations_dir, opts)
       end
       alias_method :migrate_up!, :migrate
       alias_method :migrate_down!, :migrate
 
       def pending_migrations?
-        return false unless File.exists?(Rails.root.join("db/migrate"))
-        !::Sequel::Migrator.is_current?(::Sequel::Model.db, Rails.root.join("db/migrate"))
+        return false unless available_migrations?
+        !::Sequel::Migrator.is_current?(::Sequel::Model.db, migrations_dir)
       end
 
       def dump_schema_information(opts={})
         sql = opts.fetch :sql
         db = ::Sequel::Model.db
-        migrations_dir = Rails.root.join("db/migrate")
         res = ""
 
-        if Dir.exists?(migrations_dir) && Dir[File.join(migrations_dir, '*')].any?
+        if available_migrations?
           migrator_class = ::Sequel::Migrator.send(:migrator_class, migrations_dir)
           migrator = migrator_class.new db, migrations_dir
 
@@ -38,6 +37,14 @@ module SequelRails
           end
         end
         res
+      end
+
+      def migrations_dir
+        Rails.root.join("db/migrate")
+      end
+
+      def available_migrations?
+        Dir.exists?(migrations_dir) && Dir[File.join(migrations_dir, '*')].any?
       end
     end
   end
