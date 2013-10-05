@@ -54,6 +54,24 @@ module SequelRails
         end
       end
 
+      def _dump(filename)
+        if _is_postgres?
+          adapter = ::SequelRails::Storage::Postgres.new(config)
+          adapter._dump(filename)
+        else
+          raise NotImplementedError
+        end
+      end
+
+      def _load(filename)
+        if _is_postgres?
+          adapter = ::SequelRails::Storage::Postgres.new(config)
+          adapter._load(filename)
+        else
+          raise NotImplementedError
+        end
+      end
+
       private
 
       def collation
