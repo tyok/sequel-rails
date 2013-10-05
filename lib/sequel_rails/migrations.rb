@@ -20,18 +20,22 @@ module SequelRails
         sql = opts.fetch :sql
         db = ::Sequel::Model.db
         migrations_dir = Rails.root.join("db/migrate")
-        migrator_class = ::Sequel::Migrator.send(:migrator_class, migrations_dir)
-        migrator = migrator_class.new db, migrations_dir
-
-        inserts = migrator.ds.map do |hash|
-          insert = migrator.ds.insert_sql(hash)
-          sql ? "#{insert};" : "    self << #{insert.inspect}"
-        end
         res = ""
-        if inserts.any?
-          res << "Sequel.migration do\n  change do\n" unless sql
-          res << inserts.join("\n")
-          res << "\n  end\nend\n" unless sql
+
+        if Dir.exists?(migrations_dir) && Dir[File.join(migrations_dir, '*')].any?
+          migrator_class = ::Sequel::Migrator.send(:migrator_class, migrations_dir)
+          migrator = migrator_class.new db, migrations_dir
+
+          inserts = migrator.ds.map do |hash|
+            insert = migrator.ds.insert_sql(hash)
+            sql ? "#{insert};" : "    self << #{insert.inspect}"
+          end
+
+          if inserts.any?
+            res << "Sequel.migration do\n  change do\n" unless sql
+            res << inserts.join("\n")
+            res << "\n  end\nend\n" unless sql
+          end
         end
         res
       end
