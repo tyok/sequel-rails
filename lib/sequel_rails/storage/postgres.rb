@@ -9,7 +9,7 @@ module SequelRails
         commands << "--port" << port.to_s unless port.blank?
         commands << "--host" << host unless host.blank?
         commands << database
-        res = system(*commands)
+        res = `#{commands.join(' ')}`
         ENV["PGPASSWORD"] = nil unless password.blank?
         res
       end
@@ -21,7 +21,7 @@ module SequelRails
         commands << "--port" << port.to_s unless port.blank?
         commands << "--host" << host unless host.blank?
         commands << database
-        res = system(*commands)
+        res = `#{commands.join(' ')}`
         ENV["PGPASSWORD"] = nil unless password.blank?
         res
       end
@@ -34,7 +34,7 @@ module SequelRails
         commands << "--port" << port.to_s unless port.blank?
         commands << "--host" << host unless host.blank?
         commands << database
-        res = system(*commands)
+        res = `#{commands.join(' ')}`
         ENV["PGPASSWORD"] = nil unless password.blank?
         res
       end
@@ -47,7 +47,7 @@ module SequelRails
         commands << "--port" << port.to_s unless port.blank?
         commands << "--host" << host unless host.blank?
         commands << database
-        res = system(*commands)
+        res = `#{commands.join(' ')}`
         ENV["PGPASSWORD"] = nil unless password.blank?
         res
       end
