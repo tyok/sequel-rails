@@ -1,6 +1,7 @@
 0.6.2.dev
 =========
 
+* Fix Postgres rake tasks under JRuby (Kevin Menard, Chris Heisterkamp) [#52](https://github.com/TalentBox/sequel-rails/pull/52) [#38](https://github.com/TalentBox/sequel-rails/pull/38)
 * Fix SQL schema dumps using timestamp migration (Joshua Hansen) [#50](https://github.com/TalentBox/sequel-rails/pull/50)
 * Apply all migrations in the schema.rb file when loading it (Robert Payne) [#49](https://github.com/TalentBox/sequel-rails/pull/49)
 * Make dump_schema_information compatible with integer based migration (Robert Payne) [#48](https://github.com/TalentBox/sequel-rails/pull/48) [#47](https://github.com/TalentBox/sequel-rails/issues/47)

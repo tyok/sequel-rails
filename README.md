@@ -172,6 +172,8 @@ Improvements has been made by those awesome contributors:
 * Eric Strathmeyer (strathmeyer)
 * Jan Berdajs (mrbrdo)
 * Robert Payne (robertjpayne)
+* Kevin Menard (nirvdrum)
+* Chris Heisterkamp (cheister)
 
 Credits
 =======
