@@ -1,6 +1,7 @@
-0.6.2.dev
+0.7.0.dev
 =========
 
+* Allow dumping the schema even if there aren't any migrations to run. (Kevin Menard) [#53](https://github.com/TalentBox/sequel-rails/pull/53)
 * Fix Postgres rake tasks under JRuby (Kevin Menard, Chris Heisterkamp) [#52](https://github.com/TalentBox/sequel-rails/pull/52) [#38](https://github.com/TalentBox/sequel-rails/pull/38)
 * Fix SQL schema dumps using timestamp migration (Joshua Hansen) [#50](https://github.com/TalentBox/sequel-rails/pull/50)
 * Apply all migrations in the schema.rb file when loading it (Robert Payne) [#49](https://github.com/TalentBox/sequel-rails/pull/49)
