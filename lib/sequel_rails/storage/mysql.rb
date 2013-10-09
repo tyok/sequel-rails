@@ -1,49 +1,50 @@
-require 'shellwords'
-
 module SequelRails
   module Storage
     class Mysql < Abstract
+
       def _create
-        execute("CREATE DATABASE IF NOT EXISTS `#{database}` DEFAULT CHARACTER SET #{charset} DEFAULT COLLATE #{collation}")
+        execute "CREATE DATABASE IF NOT EXISTS `#{database}` DEFAULT CHARACTER SET #{charset} DEFAULT COLLATE #{collation}"
       end
 
       def _drop
-        execute("DROP DATABASE IF EXISTS `#{database}`")
+        execute "DROP DATABASE IF EXISTS `#{database}`"
       end
 
       def _dump(filename)
-        commands = %w(mysqldump --no-data)
-        commands << "--user=#{Shellwords.escape(username)}" unless username.blank?
-        commands << "--password=#{Shellwords.escape(password)}" unless password.blank?
-        commands << "--host=#{host}" unless host.blank?
-        commands << "--result-file" << filename
+        commands = ["mysqldump"]
+        add_connection_settings commands
+        add_flag commands, "--no-data"
+        add_option commands, "--result-file", filename
         commands << database
-        system(*commands)
+        safe_exec commands
       end
 
       def _load(filename)
-        commands = %w(mysql)
-        commands << "--user=#{Shellwords.escape(username)}" unless username.blank?
-        commands << "--password=#{Shellwords.escape(password)}" unless password.blank?
-        commands << "--host=#{host}" unless host.blank?
-        commands << '--execute' << %{SET FOREIGN_KEY_CHECKS = 0; SOURCE #{filename}; SET FOREIGN_KEY_CHECKS = 1}
-        commands << '--database' << database
-        system(*commands)
+        commands = ["mysql"]
+        add_connection_settings commands
+        add_option commands, "--database", database
+        add_option commands, "--execute", %{SET FOREIGN_KEY_CHECKS = 0; SOURCE #{filename}; SET FOREIGN_KEY_CHECKS = 1}
+        safe_exec commands
+      end
+
+      def collation
+        @collation ||= super || "utf8_unicode_ci"
       end
 
       private
 
-      def execute(statement)
-        commands = ["mysql"]
-        commands << "--user=#{Shellwords.escape(username)}" unless username.blank?
-        commands << "--password=#{Shellwords.escape(password)}" unless password.blank?
-        commands << "--host=#{host}" unless host.blank?
-        commands << "-e" << statement
-        system(*commands)
+      def add_connection_settings(commands)
+        add_option commands, "--user", username
+        add_option commands, "--password", password
+        add_option commands, "--host", host
+        add_option commands, "--port", port.to_s
       end
 
-      def collation
-        @collation ||= config['collation'] || ENV['COLLATION'] || 'utf8_unicode_ci'
+      def execute(statement)
+        commands = ["mysql"]
+        add_connection_settings commands
+        add_option commands, "--execute", statement
+        safe_exec commands
       end
 
     end

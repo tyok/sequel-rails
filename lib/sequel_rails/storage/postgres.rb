@@ -1,55 +1,55 @@
 module SequelRails
   module Storage
     class Postgres < Abstract
+
       def _create
-        ENV["PGPASSWORD"] = password unless password.blank?
-        commands = ["createdb", "--encoding", charset]
-        commands << "--username" << username unless username.blank?
-        commands << "--owner" << owner unless owner.blank?
-        commands << "--port" << port.to_s unless port.blank?
-        commands << "--host" << host unless host.blank?
-        commands << database
-        res = safe_exec(commands)
-        ENV["PGPASSWORD"] = nil unless password.blank?
-        res
+        with_pgpassword do
+          commands = ["createdb"]
+          add_connection_settings commands
+          add_option commands, "--maintenance-db", maintenance_db
+          add_option commands, "--encoding", encoding
+          add_option commands, "--locale", locale
+          add_option commands, "--lc-collate", collation
+          add_option commands, "--lc-ctype", ctype
+          add_option commands, "--template", template
+          add_option commands, "--tablespace", tablespace
+          add_option commands, "--owner", owner
+          commands << database
+          safe_exec commands
+        end
       end
 
       def _drop
-        ENV["PGPASSWORD"] = password unless password.blank?
-        commands = ["dropdb"]
-        commands << "-U" << username unless username.blank?
-        commands << "--port" << port.to_s unless port.blank?
-        commands << "--host" << host unless host.blank?
-        commands << database
-        res = safe_exec(commands)
-        ENV["PGPASSWORD"] = nil unless password.blank?
-        res
+        with_pgpassword do
+          commands = ["dropdb"]
+          add_connection_settings commands
+          commands << database
+          safe_exec commands
+        end
       end
 
       def _dump(filename)
-        ENV["PGPASSWORD"] = password unless password.blank?
-        commands = %w(pg_dump -i -s -x -O)
-        commands << "-f" << filename
-        commands << "-U" << username unless username.blank?
-        commands << "--port" << port.to_s unless port.blank?
-        commands << "--host" << host unless host.blank?
-        commands << database
-        res = safe_exec(commands)
-        ENV["PGPASSWORD"] = nil unless password.blank?
-        res
+        with_pgpassword do
+          commands = ["pg_dump"]
+          add_connection_settings commands
+          add_flag commands, "-i"
+          add_flag commands, "-s"
+          add_flag commands, "-x"
+          add_flag commands, "-O"
+          add_option commands, "--file", filename
+          commands << database
+          safe_exec commands
+        end
       end
 
       def _load(filename)
-        ENV["PGPASSWORD"] = password unless password.blank?
-        commands = %w(psql)
-        commands << "-f" << filename
-        commands << "-U" << username unless username.blank?
-        commands << "--port" << port.to_s unless port.blank?
-        commands << "--host" << host unless host.blank?
-        commands << database
-        res = safe_exec(commands)
-        ENV["PGPASSWORD"] = nil unless password.blank?
-        res
+        with_pgpassword do
+          commands = ["psql"]
+          add_connection_settings commands
+          add_option commands, "--file", filename
+          commands << database
+          safe_exec commands
+        end
       end
 
       def close_connections
@@ -69,18 +69,45 @@ module SequelRails
         end
       end
 
-      def safe_exec(args)
-        begin
-          require 'shellwords'
-
-          `#{Shellwords.join(args)}`
-
-          # Evaluate command status as a boolean like `system` does.
-          $?.exitstatus == 0
-        rescue LoadError
-          system(args)
-        end
+      def encoding
+        @encoding ||= config["encoding"] || charset
       end
+
+      def locale
+        @locale ||= config["locale"] || ""
+      end
+
+      def template
+        @template ||= config["template"] || ""
+      end
+
+      def ctype
+        @ctype ||= config["ctype"] || ""
+      end
+
+      def tablespace
+        @tablespace ||= config["tablespace"] || ""
+      end
+
+      def maintenance_db
+        @maintenance_db ||= config["maintenance_db"] || ""
+      end
+
+      private
+
+      def with_pgpassword
+        ENV["PGPASSWORD"] = password unless password.blank?
+        yield
+      ensure
+        ENV["PGPASSWORD"] = nil unless password.blank?
+      end
+
+      def add_connection_settings(commands)
+        add_option commands, "--username", username
+        add_option commands, "--host", host
+        add_option commands, "--port", port.to_s
+      end
+
     end
   end
 end

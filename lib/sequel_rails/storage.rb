@@ -1,3 +1,4 @@
+require "sequel_rails/shellwords"
 require "sequel_rails/storage/abstract"
 require "sequel_rails/storage/sqlite"
 require "sequel_rails/storage/mysql"

@@ -1,6 +1,8 @@
 0.7.0.dev
 =========
 
+* Refactor storage shell command construction/execution/escaping [#55](https://github.com/TalentBox/sequel-rails/issues/55)
+* Handle more options from database.yml for PostgreSQL when creating/dropping/loading/dumping database [#55](https://github.com/TalentBox/sequel-rails/issues/55)
 * Allow dumping the schema even if there aren't any migrations to run. (Kevin Menard) [#53](https://github.com/TalentBox/sequel-rails/pull/53)
 * Fix Postgres rake tasks under JRuby (Kevin Menard, Chris Heisterkamp) [#52](https://github.com/TalentBox/sequel-rails/pull/52) [#38](https://github.com/TalentBox/sequel-rails/pull/38)
 * Fix SQL schema dumps using timestamp migration (Joshua Hansen) [#50](https://github.com/TalentBox/sequel-rails/pull/50)

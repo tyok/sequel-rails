@@ -39,31 +39,59 @@ module SequelRails
       end
 
       def database
-        @database ||= config['database'] || config['path']
+        @database ||= config["database"] || config["path"]
       end
 
       def username
-        @username ||= config['username'] || config['user'] || ''
+        @username ||= config["username"] || config["user"] || ""
       end
 
       def password
-        @password ||= config['password'] || ''
+        @password ||= config["password"] || ""
       end
 
       def host
-        @host ||= config['host'] || ''
+        @host ||= config["host"] || ""
       end
 
       def port
-        @port ||= config['port'] || ''
+        @port ||= config["port"] || ""
       end
 
       def owner
-        @owner ||= config['owner'] || ''
+        @owner ||= config["owner"] || ""
       end
 
       def charset
-        @charset ||= config['charset'] || ENV['CHARSET'] || 'utf8'
+        @charset ||= config["charset"] || ENV["CHARSET"] || "utf8"
+      end
+
+      def collation
+        @collation ||= config["collation"] || ENV["COLLATION"]
+      end
+
+      private
+
+      def add_option(commands, name, value)
+        if value.present?
+          separator = name[0,2]=="--" ? "=" : " "
+          commands << "#{name}#{separator}#{value}"
+        end
+      end
+
+      def add_flag(commands, flag)
+        commands << flag
+      end
+
+      def exec(escaped_command)
+        `#{escaped_command}`
+
+        # Evaluate command status as a boolean like `system` does.
+        $?.exitstatus == 0
+      end
+
+      def safe_exec(args)
+        exec SequelRails::Shellwords.join(Array(args))
       end
 
     end

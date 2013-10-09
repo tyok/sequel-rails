@@ -13,12 +13,16 @@ module SequelRails
 
       def _dump(filename)
         return if in_memory?
-        system "sqlite3 \"#{path.to_s}\" .schema > \"#{filename}\""
+        escaped_path = SequelRails::Shellwords.shellescape(path.to_s)
+        escaped_filename = SequelRails::Shellwords.shellescape(filename)
+        exec "sqlite3 #{escaped_path} .schema > #{escaped_filename}"
       end
 
       def _load(filename)
         return if in_memory?
-        system "sqlite3 \"#{path.to_s}\" < \"#{filename}\""
+        escaped_path = SequelRails::Shellwords.shellescape(path.to_s)
+        escaped_filename = SequelRails::Shellwords.shellescape(filename)
+        exec "sqlite3 #{escaped_path} < #{escaped_filename}"
       end
 
       private
