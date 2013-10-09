@@ -75,7 +75,7 @@ module SequelRails
       private
 
       def collation
-        @collation ||= config['collation'] || ENV['COLLATION'] || 'utf8_unicode_ci'
+        @collation ||= super || "utf8_unicode_ci"
       end
 
       def in_memory?

@@ -40,7 +40,7 @@ EOS
     end
   end
 
-  describe "db:structure:dump" do
+  describe "db:structure:dump", :skip_jdbc do
     let(:schema) { "#{app_root}/db/structure.sql" }
 
     it "dumps the schema in 'db/structure.sql'" do

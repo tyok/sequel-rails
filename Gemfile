@@ -3,6 +3,7 @@ source "http://rubygems.org"
 gemspec
 
 gem "fakefs", :require => "fakefs/safe"
+gem "pry"
 
 # MRI/Rubinius Adapter Dependencies
 platform :ruby do

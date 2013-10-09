@@ -10,6 +10,7 @@ Combustion.initialize! "sequel_rails"
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
 rspec_exclusions = {}
+rspec_exclusions[:skip_jdbc] = true if SequelRails.jruby?
 rspec_exclusions[:postgres] = true unless ENV["TEST_ADAPTER"]=="postgresql"
 rspec_exclusions[:mysql] = true unless ["mysql", "mysql2"].include? ENV["TEST_ADAPTER"]
 rspec_exclusions[:sqlite] = true unless ENV["TEST_ADAPTER"]=="sqlite3"
