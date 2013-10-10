@@ -4,18 +4,27 @@ sequel-rails
 [![Build Status](https://travis-ci.org/TalentBox/sequel-rails.png?branch=master)](https://travis-ci.org/TalentBox/sequel-rails)
 [![Code Climate](https://codeclimate.com/github/TalentBox/sequel-rails.png)](https://codeclimate.com/github/TalentBox/sequel-rails)
 
-This gem provides the railtie that allows [sequel](http://github.com/jeremyevans/sequel) to hook into [rails3](http://github.com/rails/rails) and thus behave like a rails framework component. Just like activerecord does in rails, [sequel-rails](http://github.com/talentbox/sequel-rails) uses the railtie API to hook into rails. The two are actually hooked into rails almost identically.
+This gem provides the railtie that allows
+[sequel](http://github.com/jeremyevans/sequel) to hook into
+[Rails (3.x and 4.x)](http://github.com/rails/rails) and thus behave like a
+rails framework component. Just like activerecord does in rails,
+[sequel-rails](http://github.com/talentbox/sequel-rails) uses the railtie API to
+hook into rails. The two are actually hooked into rails almost identically.
 
-The code for this gem was initially taken from the excellent [dm-rails](http://github.com/datamapper/dm-rails) project.
+The code for this gem was initially taken from the excellent
+[dm-rails](http://github.com/datamapper/dm-rails) project.
 
-This was originally a fork of [brasten](https://github.com/brasten)'s [sequel-rails](https://github.com/brasten/sequel-rails) that has been updated to support newer versions of rails.
+This was originally a fork of [brasten](https://github.com/brasten)'s
+[sequel-rails](https://github.com/brasten/sequel-rails) that has been updated to
+support newer versions of rails.
 
-Since January 2013, we've became the official maintainers of the gem after [brasten](https://github.com/brasten) proposed us.
+Since January 2013, we've became the official maintainers of the gem after
+[brasten](https://github.com/brasten) proposed us.
 
 Using sequel-rails
 ==================
 
-Using sequel with rails3 requires a couple minor changes.
+Using sequel with Rails (3.x or 4.x) requires a couple minor changes.
 
 First, add the following to your Gemfile (after the `Rails` lines):
 
@@ -30,7 +39,9 @@ gem "sequel-rails"
 
 ... be sure to run "bundle install" if needed!
 
-Secondly, you'll need to require the different Rails components separately in your `config/application.rb` file, and not require `ActiveRecord`.  The top of your `config/application.rb` will probably look something like:
+Secondly, you'll need to require the different Rails components separately in
+your `config/application.rb` file, and not require `ActiveRecord`.
+The top of your `config/application.rb` will probably look something like:
 
 ```ruby
 # require 'rails/all'
@@ -44,7 +55,8 @@ require "sprockets/railtie"
 
 Starting with sequel-rails 0.4.0.pre3 we don't change default Sequel behaviour
 nor include any plugin by default, if you want to get back the previous
-behaviour, you can create a new initializer (eg: `config/initializers/sequel.rb`) with content:
+behaviour, you can create a new initializer (eg: `config/initializers/sequel.rb`)
+with content:
 
 ```ruby
 require "sequel_rails/railties/legacy_model_config"
@@ -52,8 +64,62 @@ require "sequel_rails/railties/legacy_model_config"
 
 After those changes, you should be good to go!
 
+Features `sequel-rails` gives you once installed and configured
+===============================================================
+
+1. Connection management:
+
+   `sequel-rails` will initiate the `Sequel` connection mechanism based on your
+   configuration in `database.yml`.
+
+2. Generators:
+
+   You can use them just like `ActiveRecord`'s ones:
+
+   Migration:
+
+   ```ruby
+   rails generate migration create_admin_users
+   # Or
+   rails generate migration CreateAdminUsers
+   ```
+
+   Model:
+
+   ```ruby
+   rails generate model User email:string
+   ```
+
+   Observer:
+
+   ```ruby
+   rails generate observer User
+   ```
+
+3. Rake tasks similar to `ActiveRecord`, see
+   [Available sequel specific rake tasks](#available-sequel-specific-rake-tasks)
+
+4. Add some `Sequel` and `sequel-rails` specific exceptions to `ActionDispatch`'s `rescue_responses`
+
+   `Sequel::Plugins::RailsExtensions::ModelNotFound` is mapped to `:not_found`
+
+   `Sequel::NoMatchingRow` is mapped to `:not_found`
+
+   `Sequel::ValidationFailed` is mapped to `:unprocessable_entity`
+
+   `Sequel::NoExistingObject` is mapped to `:unprocessable_entity`
+
+5. Add a `i18n_scope` method to `Sequel::Model` which respond with `"sequel"`.
+   This is used by `ActiveModel`.
+
+6. Adding `Sequel` to `ActiveSupport::LogSubscriber`. This is what allows you to
+   see SQL queries in the log and also allows us to implement the next item.
+
+7. Add a hook in `ActionController::Base` so that the sum of SQL queries time
+   for the current action is reported as `DB` for the controller's line in logs.
+
 Configuration
-====================================
+=============
 You can configure some options with the usual rails mechanism, in
 `config/application.rb` and/or in `config/environments/*.rb`.
 

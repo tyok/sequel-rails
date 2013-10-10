@@ -1,6 +1,7 @@
 0.7.0.dev
 =========
 
+* Add more information in the README, related to features of SequelRails [#54](https://github.com/TalentBox/sequel-rails/issues/54)
 * Refactor storage shell command construction/execution/escaping [#55](https://github.com/TalentBox/sequel-rails/issues/55)
 * Handle more options from database.yml for PostgreSQL when creating/dropping/loading/dumping database [#55](https://github.com/TalentBox/sequel-rails/issues/55)
 * Allow dumping the schema even if there aren't any migrations to run. (Kevin Menard) [#53](https://github.com/TalentBox/sequel-rails/pull/53)
