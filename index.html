@@ -95,7 +95,8 @@ with content:</p>
 <p>After those changes, you should be good to go!</p>
 
 <h1>
-<a name="features-sequel-rails-gives-you-once-installed-and-configured" class="anchor" href="#features-sequel-rails-gives-you-once-installed-and-configured"><span class="octicon octicon-link"></span></a>Features <code>sequel-rails</code> gives you once installed and configured</h1>
+<a name="features-provided-by-sequel-rails" class="anchor" href="#features-provided-by-sequel-rails"><span class="octicon octicon-link"></span></a>Features provided by <code>sequel-rails</code>
+</h1>
 
 <ol>
 <li>
@@ -173,52 +174,56 @@ expected to be similar to <code>ActiveRecord</code>'s format.</p>
 <p>Here's some examples:</p>
 
 <ol>
-<li>For PostgreSQL:</li>
-</ol><div class="highlight highlight-yaml"><pre><span class="l-Scalar-Plain">development</span><span class="p-Indicator">:</span>
-  <span class="l-Scalar-Plain">adapter</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">postgresql</span>
-  <span class="l-Scalar-Plain">database</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">a_database_name</span>
-  <span class="l-Scalar-Plain">user</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">user_name</span> <span class="c1"># Also accept 'username' as key, if both are present 'username' is used</span>
-  <span class="l-Scalar-Plain">password</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">password</span>
-  <span class="l-Scalar-Plain">host</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">10.0.0.2</span> <span class="c1"># Optional</span>
-  <span class="l-Scalar-Plain">port</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">5432</span> <span class="c1"># Optional</span>
-  <span class="l-Scalar-Plain">owner</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">owner_name</span> <span class="c1"># Optional</span>
-  <span class="l-Scalar-Plain">encoding</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">utf8</span> <span class="c1"># Optional, also accept 'charset' as key, if both are present 'encoding' is used (defaults to 'utf8')</span>
-  <span class="l-Scalar-Plain">maintenance_db</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">template2</span> <span class="c1"># Optional</span>
-  <span class="l-Scalar-Plain">locale</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">en_US.UTF-8</span> <span class="c1"># Optional, equivalent to setting 'collation' and 'ctype' to the same value</span>
-  <span class="l-Scalar-Plain">collation</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">en_US.UTF-8</span> <span class="c1"># Optional</span>
-  <span class="l-Scalar-Plain">ctype</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">en_US.UTF-8</span> <span class="c1"># Optional</span>
-  <span class="l-Scalar-Plain">template</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">template1</span> <span class="c1"># Optional</span>
-  <span class="l-Scalar-Plain">tablespace</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">non_default_tablespace_name</span> <span class="c1"># Optional</span>
-</pre></div>
+<li>
+<p>For PostgreSQL:</p>
 
-<ol>
-<li>For MySQL:</li>
-</ol><div class="highlight highlight-yaml"><pre><span class="l-Scalar-Plain">development</span><span class="p-Indicator">:</span>
-  <span class="l-Scalar-Plain">adapter</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">mysql</span> <span class="c1"># Also accept mysql2</span>
-  <span class="l-Scalar-Plain">database</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">a_database_name</span>
-  <span class="l-Scalar-Plain">user</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">user_name</span> <span class="c1"># Also accept 'username' as key, if both are present 'username' is used</span>
-  <span class="l-Scalar-Plain">password</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">password</span>
-  <span class="l-Scalar-Plain">host</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">10.0.0.2</span> <span class="c1"># Optional</span>
-  <span class="l-Scalar-Plain">port</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">5432</span> <span class="c1"># Optional</span>
-  <span class="l-Scalar-Plain">charset</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">latin1</span> <span class="c1"># Optional (defaults to 'utf8')</span>
-  <span class="l-Scalar-Plain">collation</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">latin1_general_ci</span> <span class="c1"># Optional (defaults to 'utf8_unicode_ci')</span>
+<div class="highlight highlight-yaml"><pre><span class="l-Scalar-Plain">development</span><span class="p-Indicator">:</span>
+<span class="l-Scalar-Plain">adapter</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">postgresql</span>
+<span class="l-Scalar-Plain">database</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">a_database_name</span>
+<span class="l-Scalar-Plain">user</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">user_name</span> <span class="c1"># Also accept 'username' as key, if both are present 'username' is used</span>
+<span class="l-Scalar-Plain">password</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">password</span>
+<span class="l-Scalar-Plain">host</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">10.0.0.2</span> <span class="c1"># Optional</span>
+<span class="l-Scalar-Plain">port</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">5432</span> <span class="c1"># Optional</span>
+<span class="l-Scalar-Plain">owner</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">owner_name</span> <span class="c1"># Optional</span>
+<span class="l-Scalar-Plain">encoding</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">utf8</span> <span class="c1"># Optional, also accept 'charset' as key, if both are present 'encoding' is used (defaults to 'utf8')</span>
+<span class="l-Scalar-Plain">maintenance_db</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">template2</span> <span class="c1"># Optional</span>
+<span class="l-Scalar-Plain">locale</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">en_US.UTF-8</span> <span class="c1"># Optional, equivalent to setting 'collation' and 'ctype' to the same value</span>
+<span class="l-Scalar-Plain">collation</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">en_US.UTF-8</span> <span class="c1"># Optional</span>
+<span class="l-Scalar-Plain">ctype</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">en_US.UTF-8</span> <span class="c1"># Optional</span>
+<span class="l-Scalar-Plain">template</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">template1</span> <span class="c1"># Optional</span>
+<span class="l-Scalar-Plain">tablespace</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">non_default_tablespace_name</span> <span class="c1"># Optional</span>
 </pre></div>
+</li>
+<li>
+<p>For MySQL:</p>
 
-<ol>
-<li>For SQLite:</li>
-</ol><div class="highlight highlight-yaml"><pre><span class="l-Scalar-Plain">development</span><span class="p-Indicator">:</span>
-  <span class="l-Scalar-Plain">adapter</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">sqlite</span> <span class="c1"># Also accept sqlite3</span>
-  <span class="l-Scalar-Plain">database</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">db/mydatabase.sqlite</span> <span class="c1"># Path to db relative to Rails root</span>
+<div class="highlight highlight-yaml"><pre><span class="l-Scalar-Plain">development</span><span class="p-Indicator">:</span>
+<span class="l-Scalar-Plain">adapter</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">mysql</span> <span class="c1"># Also accept mysql2</span>
+<span class="l-Scalar-Plain">database</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">a_database_name</span>
+<span class="l-Scalar-Plain">user</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">user_name</span> <span class="c1"># Also accept 'username' as key, if both are present 'username' is used</span>
+<span class="l-Scalar-Plain">password</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">password</span>
+<span class="l-Scalar-Plain">host</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">10.0.0.2</span> <span class="c1"># Optional</span>
+<span class="l-Scalar-Plain">port</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">5432</span> <span class="c1"># Optional</span>
+<span class="l-Scalar-Plain">charset</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">latin1</span> <span class="c1"># Optional (defaults to 'utf8')</span>
+<span class="l-Scalar-Plain">collation</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">latin1_general_ci</span> <span class="c1"># Optional (defaults to 'utf8_unicode_ci')</span>
+</pre></div>
+</li>
+<li>
+<p>For SQLite:</p>
+
+<div class="highlight highlight-yaml"><pre><span class="l-Scalar-Plain">development</span><span class="p-Indicator">:</span>
+<span class="l-Scalar-Plain">adapter</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">sqlite</span> <span class="c1"># Also accept sqlite3</span>
+<span class="l-Scalar-Plain">database</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">db/mydatabase.sqlite</span> <span class="c1"># Path to db relative to Rails root</span>
 </pre></div>
 
 <p>For in memory testing:</p>
 
 <div class="highlight highlight-yaml"><pre><span class="l-Scalar-Plain">development</span><span class="p-Indicator">:</span>
-  <span class="l-Scalar-Plain">adapter</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">sqlite</span> <span class="c1"># Also accept sqlite3</span>
-  <span class="l-Scalar-Plain">database</span><span class="p-Indicator">:</span> <span class="s">":memory:"</span>
+<span class="l-Scalar-Plain">adapter</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">sqlite</span> <span class="c1"># Also accept sqlite3</span>
+<span class="l-Scalar-Plain">database</span><span class="p-Indicator">:</span> <span class="s">":memory:"</span>
 </pre></div>
-
-<h1>
+</li>
+</ol><h1>
 <a name="enabling-plugins" class="anchor" href="#enabling-plugins"><span class="octicon octicon-link"></span></a>Enabling plugins</h1>
 
 <p>If you want to enable plugins for all your models, you should use the
