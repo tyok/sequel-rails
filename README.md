@@ -64,8 +64,8 @@ require "sequel_rails/railties/legacy_model_config"
 
 After those changes, you should be good to go!
 
-Features `sequel-rails` gives you once installed and configured
-===============================================================
+Features provided by `sequel-rails`
+===================================
 
 1. Connection management:
 
@@ -147,53 +147,53 @@ Here's some examples:
 
 1. For PostgreSQL:
 
-```yaml
-development:
-  adapter: postgresql
-  database: a_database_name
-  user: user_name # Also accept 'username' as key, if both are present 'username' is used
-  password: password
-  host: 10.0.0.2 # Optional
-  port: 5432 # Optional
-  owner: owner_name # Optional
-  encoding: utf8 # Optional, also accept 'charset' as key, if both are present 'encoding' is used (defaults to 'utf8')
-  maintenance_db: template2 # Optional
-  locale: en_US.UTF-8 # Optional, equivalent to setting 'collation' and 'ctype' to the same value
-  collation: en_US.UTF-8 # Optional
-  ctype: en_US.UTF-8 # Optional
-  template: template1 # Optional
-  tablespace: non_default_tablespace_name # Optional
-```
+  ```yaml
+  development:
+    adapter: postgresql
+    database: a_database_name
+    user: user_name # Also accept 'username' as key, if both are present 'username' is used
+    password: password
+    host: 10.0.0.2 # Optional
+    port: 5432 # Optional
+    owner: owner_name # Optional
+    encoding: utf8 # Optional, also accept 'charset' as key, if both are present 'encoding' is used (defaults to 'utf8')
+    maintenance_db: template2 # Optional
+    locale: en_US.UTF-8 # Optional, equivalent to setting 'collation' and 'ctype' to the same value
+    collation: en_US.UTF-8 # Optional
+    ctype: en_US.UTF-8 # Optional
+    template: template1 # Optional
+    tablespace: non_default_tablespace_name # Optional
+  ```
 
 2. For MySQL:
 
-```yaml
-development:
-  adapter: mysql # Also accept mysql2
-  database: a_database_name
-  user: user_name # Also accept 'username' as key, if both are present 'username' is used
-  password: password
-  host: 10.0.0.2 # Optional
-  port: 5432 # Optional
-  charset: latin1 # Optional (defaults to 'utf8')
-  collation: latin1_general_ci # Optional (defaults to 'utf8_unicode_ci')
-```
+  ```yaml
+  development:
+    adapter: mysql # Also accept mysql2
+    database: a_database_name
+    user: user_name # Also accept 'username' as key, if both are present 'username' is used
+    password: password
+    host: 10.0.0.2 # Optional
+    port: 5432 # Optional
+    charset: latin1 # Optional (defaults to 'utf8')
+    collation: latin1_general_ci # Optional (defaults to 'utf8_unicode_ci')
+  ```
 
 2. For SQLite:
 
-```yaml
-development:
-  adapter: sqlite # Also accept sqlite3
-  database: db/mydatabase.sqlite # Path to db relative to Rails root
-```
+  ```yaml
+  development:
+    adapter: sqlite # Also accept sqlite3
+    database: db/mydatabase.sqlite # Path to db relative to Rails root
+  ```
 
-For in memory testing:
+  For in memory testing:
 
-```yaml
-development:
-  adapter: sqlite # Also accept sqlite3
-  database: ":memory:"
-```
+  ```yaml
+  development:
+    adapter: sqlite # Also accept sqlite3
+    database: ":memory:"
+  ```
 
 Enabling plugins
 ================
