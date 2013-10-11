@@ -10,8 +10,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Brasten Sager (brasten)", "Jonathan TRON"]
   s.email       = ["brasten@gmail.com", "jonathan.tron@metrilio.com"]
   s.homepage    = "http://talentbox.github.io/sequel-rails/"
-  s.description = "Integrate Sequel with Rails 3"
-  s.summary     = "Use Sequel with Rails 3"
+  s.description = "Integrate Sequel with Rails (3.x and 4.x)"
+  s.summary     = "Use Sequel with Rails (3.x and 4.x)"
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
