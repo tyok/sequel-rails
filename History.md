@@ -1,5 +1,5 @@
-0.7.0.dev
-=========
+0.7.0 (2013-10-11)
+==================
 
 * Add more information in the README, related to features of SequelRails [#54](https://github.com/TalentBox/sequel-rails/issues/54)
 * Refactor storage shell command construction/execution/escaping [#55](https://github.com/TalentBox/sequel-rails/issues/55)
