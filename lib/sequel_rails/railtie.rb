@@ -20,6 +20,8 @@ require "sequel_rails/sequel/database/active_support_notification"
 
 module SequelRails
 
+  autoload :SessionStore, "sequel_rails/session_store"
+
   class Railtie < Rails::Railtie
 
     ::SequelRails::Railties::LogSubscriber.attach_to :sequel

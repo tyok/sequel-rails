@@ -1,6 +1,8 @@
 0.7.1.dev
 =========
 
+* Add session_migration generator and cleanup old code [#56](https://github.com/TalentBox/sequel-rails/issues/56)
+
 0.7.0 (2013-10-11)
 ==================
 

@@ -6,41 +6,10 @@ module SequelRails
 
   class SessionStore < ActionDispatch::Session::AbstractStore
 
-    class Session < ::Sequel::Model
-
-      # property :id,         Serial
-      # property :session_id, String,   :required => true, :unique => true, :unique_index => true
-      # property :data,       Object,   :required => true, :default => ActiveSupport::Base64.encode64(Marshal.dump({}))
-      # property :updated_at, DateTime, :required => false, :index => true
-
-      class << self
-        
-        def auto_migrate!
-          self.db.create_table :sessions do
-            primary_key :id
-            column :session_id, String, 
-                   :null    => false, 
-                   :unique  => true, 
-                   :index   => true
-
-            column :data, :text, 
-                   :null => false 
-                   
-            column :updated_at, DateTime, 
-                   :null => true, 
-                   :index => true
-          end
-        end
-        
-      end
-
-      def self.name
-        'session'
-      end
-
+    class Session < ::Sequel::Model(:sessions)
     end
 
-    SESSION_RECORD_KEY = 'rack.session.record'.freeze
+    SESSION_RECORD_KEY = "rack.session.record".freeze
 
     cattr_accessor :session_class
     self.session_class = Session
@@ -71,7 +40,7 @@ module SequelRails
 
     def find_session(sid)
       klass = self.class.session_class
-      
+
       klass.where(:session_id => sid).first || klass.new(:session_id => sid)
     end
 
