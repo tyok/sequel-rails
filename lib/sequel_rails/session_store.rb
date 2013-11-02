@@ -6,13 +6,12 @@ module SequelRails
 
   class SessionStore < ActionDispatch::Session::AbstractStore
 
-    class Session < ::Sequel::Model(:sessions)
-    end
-
     SESSION_RECORD_KEY = "rack.session.record".freeze
 
     cattr_accessor :session_class
-    self.session_class = Session
+    def self.session_class
+      @@session_class ||= Class.new(Sequel::Model(:sessions))
+    end
 
     private
 
