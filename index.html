@@ -126,6 +126,11 @@ configuration in <code>database.yml</code>.</p>
 
 <div class="highlight highlight-ruby"><pre><span class="n">rails</span> <span class="n">generate</span> <span class="n">observer</span> <span class="no">User</span>
 </pre></div>
+
+<p>Session:</p>
+
+<div class="highlight highlight-ruby"><pre><span class="n">rails</span> <span class="n">generate</span> <span class="n">session_migration</span>
+</pre></div>
 </li>
 <li><p>Rake tasks similar to <code>ActiveRecord</code>, see
 <a href="#available-sequel-specific-rake-tasks">Available sequel specific rake tasks</a></p></li>
@@ -146,6 +151,8 @@ This is used by <code>ActiveModel</code>.</p></li>
 see SQL queries in the log and also allows us to implement the next item.</p></li>
 <li><p>Add a hook in <code>ActionController::Base</code> so that the sum of SQL queries time
 for the current action is reported as <code>DB</code> for the controller's line in logs.</p></li>
+<li><p>Provide a <code>SequelRails::SessionStore</code> similar to the <code>ActiveRecord</code> one, which stores
+sessions in database backed by a <code>Sequel</code> model.</p></li>
 </ol><h1>
 <a name="configuration" class="anchor" href="#configuration"><span class="octicon octicon-link"></span></a>Configuration</h1>
 
@@ -218,9 +225,9 @@ expected to be similar to <code>ActiveRecord</code>'s format.</p>
 
 <p>For in memory testing:</p>
 
-<div class="highlight highlight-yaml"><pre><span class="l-Scalar-Plain">development</span><span class="p-Indicator">:</span>
-  <span class="l-Scalar-Plain">adapter</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">sqlite</span> <span class="c1"># Also accept sqlite3</span>
-  <span class="l-Scalar-Plain">database</span><span class="p-Indicator">:</span> <span class="s">":memory:"</span>
+<div class="highlight highlight-yaml"><pre>  <span class="l-Scalar-Plain">development</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">adapter</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">sqlite</span> <span class="c1"># Also accept sqlite3</span>
+    <span class="l-Scalar-Plain">database</span><span class="p-Indicator">:</span> <span class="s">":memory:"</span>
 </pre></div>
 </li>
 </ol><h1>
@@ -238,6 +245,29 @@ after_connect configuration option in <code>config/application.rb</code> (0.6.2+
 loaded. Loading plugins into <code>Sequel::Model</code> after subclasses are already
 created is not supported by Sequel. You can also load extensions in
 <code>after_connect</code> or perform any custom actions that you need.</p>
+
+<h1>
+<a name="using-the-sequelrailssessionstore-to-store-session-in-database" class="anchor" href="#using-the-sequelrailssessionstore-to-store-session-in-database"><span class="octicon octicon-link"></span></a>Using the <code>SequelRails::SessionStore</code> to store session in database</h1>
+
+<p>If you want to store your session in the database you can use the provided
+session store backed by a <code>Sequel</code> model. Edit your
+<code>config/initializers/session.rb</code> file and replace the existing code with:</p>
+
+<div class="highlight highlight-ruby"><pre><span class="ss">YourAppName</span><span class="p">:</span><span class="ss">:Application</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">session_store</span> <span class="ss">SequelRails</span><span class="p">:</span><span class="ss">:SessionStore</span>
+</pre></div>
+
+<p>You can then generate a migration for the session table using the provided
+generator:</p>
+
+<div class="highlight highlight-bash"><pre>rails generate session_migration
+rake db:migrate
+</pre></div>
+
+<p>Optionally if you want to use your own <code>Sequel</code> model to handle the session,
+you can do so in your <code>config/initializers/session.rb</code>:</p>
+
+<div class="highlight highlight-ruby"><pre><span class="ss">SequelRails</span><span class="p">:</span><span class="ss">:SessionStore</span><span class="o">.</span><span class="n">session_class</span> <span class="o">=</span> <span class="no">MyCustomSessionModelClass</span>
+</pre></div>
 
 <h1>
 <a name="available-sequel-specific-rake-tasks" class="anchor" href="#available-sequel-specific-rake-tasks"><span class="octicon octicon-link"></span></a>Available sequel specific rake tasks</h1>
