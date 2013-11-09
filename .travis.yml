@@ -1,66 +1,38 @@
 language: ruby
 rvm:
+  - ree
+  - 1.8.7
   - 1.9.3
   - 2.0.0
   - jruby-18mode
   - jruby-19mode
+  - jruby-20mode
 env:
-  - "TEST_ADAPTER=postgresql TEST_OWNER=postgres TEST_USERNAME=postgres SEQUEL='~> 3.28'"
-  - "TEST_ADAPTER=mysql TEST_USERNAME=root TEST_ENCODING=utf8 SEQUEL='~> 3.28'"
-  - "TEST_ADAPTER=mysql2 TEST_USERNAME=root TEST_ENCODING=utf8 SEQUEL='~> 3.28'"
-  - "TEST_ADAPTER=sqlite3 TEST_DATABASE='db/database.sqlite3' SEQUEL='~> 3.28'"
-  - "TEST_ADAPTER=postgresql TEST_OWNER=postgres TEST_USERNAME=postgres SEQUEL='~> 4.0.0'"
-  - "TEST_ADAPTER=mysql TEST_USERNAME=root TEST_ENCODING=utf8 SEQUEL='~> 4.0.0'"
-  - "TEST_ADAPTER=mysql2 TEST_USERNAME=root TEST_ENCODING=utf8 SEQUEL='~> 4.0.0'"
-  - "TEST_ADAPTER=sqlite3 TEST_DATABASE='db/database.sqlite3' SEQUEL='~> 4.0.0'"
+  - SEQUEL='~> 3.0'
+  - SEQUEL='~> 4.0'
 gemfile:
   - ci/rails-3.2.gemfile
   - ci/rails-4.0.gemfile
 matrix:
   exclude:
-    - rvm: jruby-18mode
-      env: "TEST_ADAPTER=mysql2 TEST_USERNAME=root TEST_ENCODING=utf8 SEQUEL='~> 3.28'"
-      gemfile: ci/rails-3.2.gemfile
-    - rvm: jruby-18mode
-      env: "TEST_ADAPTER=mysql TEST_USERNAME=root TEST_ENCODING=utf8 SEQUEL='~> 3.28'"
+    - rvm: ree
       gemfile: ci/rails-4.0.gemfile
+      env: SEQUEL='~> 3.0'
+    - rvm: ree
+      gemfile: ci/rails-4.0.gemfile
+      env: SEQUEL='~> 4.0'
+    - rvm: 1.8.7
+      gemfile: ci/rails-4.0.gemfile
+      env: SEQUEL='~> 3.0'
+    - rvm: 1.8.7
+      gemfile: ci/rails-4.0.gemfile
+      env: SEQUEL='~> 4.0'
     - rvm: jruby-18mode
-      env: "TEST_ADAPTER=mysql2 TEST_USERNAME=root TEST_ENCODING=utf8 SEQUEL='~> 3.28'"
       gemfile: ci/rails-4.0.gemfile
+      env: SEQUEL='~> 3.0'
     - rvm: jruby-18mode
-      env: "TEST_ADAPTER=postgresql TEST_OWNER=postgres TEST_USERNAME=postgres SEQUEL='~> 3.28'"
       gemfile: ci/rails-4.0.gemfile
-    - rvm: jruby-18mode
-      env: "TEST_ADAPTER=sqlite3 TEST_DATABASE='db/database.sqlite3' SEQUEL='~> 3.28'"
-      gemfile: ci/rails-4.0.gemfile
-    - rvm: jruby-19mode
-      env: "TEST_ADAPTER=mysql2 TEST_USERNAME=root TEST_ENCODING=utf8 SEQUEL='~> 3.28'"
-      gemfile: ci/rails-3.2.gemfile
-    - rvm: jruby-19mode
-      env: "TEST_ADAPTER=mysql2 TEST_USERNAME=root TEST_ENCODING=utf8 SEQUEL='~> 3.28'"
-      gemfile: ci/rails-4.0.gemfile
-    - rvm: jruby-18mode
-      env: "TEST_ADAPTER=mysql2 TEST_USERNAME=root TEST_ENCODING=utf8 SEQUEL='~> 4.0.0'"
-      gemfile: ci/rails-3.2.gemfile
-    - rvm: jruby-18mode
-      env: "TEST_ADAPTER=mysql TEST_USERNAME=root TEST_ENCODING=utf8 SEQUEL='~> 4.0.0'"
-      gemfile: ci/rails-4.0.gemfile
-    - rvm: jruby-18mode
-      env: "TEST_ADAPTER=mysql2 TEST_USERNAME=root TEST_ENCODING=utf8 SEQUEL='~> 4.0.0'"
-      gemfile: ci/rails-4.0.gemfile
-    - rvm: jruby-18mode
-      env: "TEST_ADAPTER=postgresql TEST_OWNER=postgres TEST_USERNAME=postgres SEQUEL='~> 4.0.0'"
-      gemfile: ci/rails-4.0.gemfile
-    - rvm: jruby-18mode
-      env: "TEST_ADAPTER=sqlite3 TEST_DATABASE='db/database.sqlite3' SEQUEL='~> 4.0.0'"
-      gemfile: ci/rails-4.0.gemfile
-    - rvm: jruby-19mode
-      env: "TEST_ADAPTER=mysql2 TEST_USERNAME=root TEST_ENCODING=utf8 SEQUEL='~> 4.0.0'"
-      gemfile: ci/rails-3.2.gemfile
-    - rvm: jruby-19mode
-      env: "TEST_ADAPTER=mysql2 TEST_USERNAME=root TEST_ENCODING=utf8 SEQUEL='~> 4.0.0'"
-      gemfile: ci/rails-4.0.gemfile
-script: "rake spec"
+      env: SEQUEL='~> 4.0'
 notifications:
   email:
     - jonathan.tron@metrilio.com
