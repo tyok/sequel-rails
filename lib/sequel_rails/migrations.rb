@@ -3,7 +3,7 @@ require 'sequel/extensions/migration'
 module SequelRails
   class Migrations
     class << self
-      def migrate(version=nil)
+      def migrate(version = nil)
         opts = {}
         opts[:target] = version.to_i if version
         ::Sequel::Migrator.run(::Sequel::Model.db, migrations_dir, opts)
@@ -16,10 +16,10 @@ module SequelRails
         !::Sequel::Migrator.is_current?(::Sequel::Model.db, migrations_dir)
       end
 
-      def dump_schema_information(opts={})
+      def dump_schema_information(opts = {})
         sql = opts.fetch :sql
         db = ::Sequel::Model.db
-        res = ""
+        res = ''
 
         if available_migrations?
           migrator_class = ::Sequel::Migrator.send(:migrator_class, migrations_dir)
@@ -40,7 +40,7 @@ module SequelRails
       end
 
       def migrations_dir
-        Rails.root.join("db/migrate")
+        Rails.root.join('db/migrate')
       end
 
       def available_migrations?

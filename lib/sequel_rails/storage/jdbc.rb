@@ -1,21 +1,20 @@
 module SequelRails
   module Storage
     class Jdbc < Abstract
-
       def _is_mysql?
-        config['adapter'].match(/^jdbc:mysql/)
+        config['adapter'].start_with?('jdbc:mysql')
       end
 
       def _is_postgres?
-        config['adapter'].match(/^jdbc:postgresql/)
+        config['adapter'].start_with?('jdbc:postgresql')
       end
 
       def _is_sqlite?
-        config['adapter'].match(/^jdbc:sqlite/)
+        config['adapter'].start_with?('jdbc:sqlite')
       end
 
       def _root_url
-        config['url'].scan(/^jdbc:mysql:\/\/[\w\.]*:?\d*/).first
+        config['url'].scan(%r{^jdbc:mysql://[\w\.]*:?\d*}).first
       end
 
       def db_name
@@ -59,7 +58,7 @@ module SequelRails
           adapter = ::SequelRails::Storage::Postgres.new(config)
           adapter._dump(filename)
         else
-          raise NotImplementedError
+          fail NotImplementedError
         end
       end
 
@@ -68,21 +67,20 @@ module SequelRails
           adapter = ::SequelRails::Storage::Postgres.new(config)
           adapter._load(filename)
         else
-          raise NotImplementedError
+          fail NotImplementedError
         end
       end
 
       private
 
       def collation
-        @collation ||= super || "utf8_unicode_ci"
+        @collation ||= super || 'utf8_unicode_ci'
       end
 
       def in_memory?
         return false unless _is_sqlite?
-        database == ":memory:"
+        database == ':memory:'
       end
-
     end
   end
 end

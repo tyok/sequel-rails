@@ -1,15 +1,14 @@
-require "sequel/database/logging"
-require "active_support/notifications"
+require 'sequel/database/logging'
+require 'active_support/notifications'
 
 module Sequel
   class Database
-
-    def log_yield(sql, args=nil)
+    def log_yield(sql, args = nil)
       sql_for_log = args ? "#{sql}; #{args.inspect}" : sql
       start = Time.now
       begin
         ::ActiveSupport::Notifications.instrument(
-          "sql.sequel",
+          'sql.sequel',
           :sql => sql,
           :name => self.class,
           :binds => args
@@ -23,6 +22,5 @@ module Sequel
         log_duration(Time.now - start, sql_for_log) unless e || @loggers.empty?
       end
     end
-
   end
 end

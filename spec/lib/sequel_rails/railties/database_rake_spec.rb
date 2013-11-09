@@ -1,6 +1,6 @@
-require "spec_helper"
+require 'spec_helper'
 
-describe "Database rake tasks" do
+describe 'Database rake tasks' do
 
   let(:app) { Combustion::Application }
   let(:app_root) { app.root }
@@ -14,7 +14,7 @@ describe "Database rake tasks" do
     end
   end
 
-  describe "db:schema:dump" do
+  describe 'db:schema:dump' do
     let(:schema) { "#{app_root}/db/schema.rb" }
 
     it "dumps the schema in 'db/schema.rb'" do
@@ -24,11 +24,12 @@ describe "Database rake tasks" do
       end
     end
 
-    it "append the migration schema information if any" do
+    it 'append the migration schema information if any' do
       Dir.chdir app_root do
         `rake db:migrate db:schema:dump`
-        sql = Sequel::Model.db.from(:schema_migrations).
-          insert_sql(:filename => "1273253849_add_twitter_handle_to_users.rb")
+        sql = Sequel::Model.db.from(
+          :schema_migrations
+        ).insert_sql(:filename => '1273253849_add_twitter_handle_to_users.rb')
         expect(File.read(schema)).to include <<-EOS
 Sequel.migration do
   change do
@@ -40,7 +41,7 @@ EOS
     end
   end
 
-  describe "db:structure:dump", :skip_jdbc do
+  describe 'db:structure:dump', :skip_jdbc do
     let(:schema) { "#{app_root}/db/structure.sql" }
 
     it "dumps the schema in 'db/structure.sql'" do
@@ -50,15 +51,15 @@ EOS
       end
     end
 
-    it "append the migration schema information if any" do
+    it 'append the migration schema information if any' do
       Dir.chdir app_root do
         `rake db:migrate db:structure:dump`
 
-        sql = Sequel::Model.db.from(:schema_migrations).
-          insert_sql(:filename => "1273253849_add_twitter_handle_to_users.rb")
+        sql = Sequel::Model.db.from(
+          :schema_migrations
+        ).insert_sql(:filename => '1273253849_add_twitter_handle_to_users.rb')
         expect(File.read(schema)).to include sql
       end
     end
   end
-
 end

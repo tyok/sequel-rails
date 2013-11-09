@@ -1,4 +1,4 @@
-require "sequel_rails/sequel/plugins/rails_extensions"
+require 'sequel_rails/sequel/plugins/rails_extensions'
 
 ::Sequel::Model.plugin :active_model
 ::Sequel::Model.plugin :validation_helpers

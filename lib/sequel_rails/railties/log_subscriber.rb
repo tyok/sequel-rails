@@ -1,14 +1,12 @@
 module SequelRails
   module Railties
-
     class LogSubscriber < ActiveSupport::LogSubscriber
-
       def self.runtime=(value)
-        Thread.current["sequel_sql_runtime"] = value
+        Thread.current['sequel_sql_runtime'] = value
       end
 
       def self.runtime
-        Thread.current["sequel_sql_runtime"] ||= 0
+        Thread.current['sequel_sql_runtime'] ||= 0
       end
 
       def self.reset_runtime
@@ -22,14 +20,14 @@ module SequelRails
 
         payload = event.payload
 
-        name = '%s (%.1fms)' % [payload[:name], event.duration]
+        name = sprintf('%s (%.1fms)', payload[:name], event.duration)
         sql  = payload[:sql].squeeze(' ')
         binds = nil
 
         unless (payload[:binds] || []).empty?
-          binds = "  " + payload[:binds].map { |col,v|
+          binds = '  ' + payload[:binds].map do |col, v|
             [col.name, v]
-          }.inspect
+          end.inspect
         end
 
         if odd?
@@ -49,8 +47,6 @@ module SequelRails
       def logger
         ::SequelRails.configuration.logger
       end
-
     end
-
   end
 end

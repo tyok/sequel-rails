@@ -1,12 +1,10 @@
-require "sequel"
+require 'sequel'
 
 # Implements Sequel-specific session store.
 
 module SequelRails
-
   class SessionStore < ActionDispatch::Session::AbstractStore
-
-    SESSION_RECORD_KEY = "rack.session.record".freeze
+    SESSION_RECORD_KEY = 'rack.session.record'.freeze
 
     cattr_accessor :session_class
     def self.session_class
@@ -19,7 +17,7 @@ module SequelRails
       sid ||= generate_sid
       session = find_session(sid)
       env[SESSION_RECORD_KEY] = session
-      [ sid, session.data ]
+      [sid, session.data]
     end
 
     def set_session(env, sid, session_data)
@@ -42,7 +40,5 @@ module SequelRails
 
       klass.where(:session_id => sid).first || klass.new(:session_id => sid)
     end
-
   end
-
 end

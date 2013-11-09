@@ -1,7 +1,6 @@
 require 'active_support/core_ext/class/attribute_accessors'
 
 module SequelRails
-
   mattr_accessor :configuration
 
   def self.setup(environment)
@@ -9,7 +8,6 @@ module SequelRails
   end
 
   class Configuration < ActiveSupport::OrderedOptions
-
     def self.for(root, database_yml_hash)
       ::SequelRails.configuration ||= begin
         config = new
@@ -35,7 +33,7 @@ module SequelRails
     end
 
     def environments
-      @environments ||= raw.inject({}) do |normalized, environment|
+      @environments ||= raw.reduce({}) do |normalized, environment|
         name, config = environment.first, environment.last
         normalized[name] = normalize_repository_config(config)
         normalized
@@ -44,47 +42,45 @@ module SequelRails
 
     def connect(environment)
       normalized_config = environment_for environment
-      db = if normalized_config['url']
+      if normalized_config['url']
         ::Sequel.connect normalized_config['url'], normalized_config
       else
         ::Sequel.connect normalized_config
-      end
-      after_connect.call if after_connect.respond_to?(:call)
-      db
+      end.tap { after_connect.call if after_connect.respond_to?(:call) }
     end
 
-  private
+    private
 
     def default_schema_dump
-      not %w(test production).include? Rails.env
+      !%w(test production).include? Rails.env
     end
 
     def normalize_repository_config(hash)
       config = {}
       hash.each do |key, value|
         config[key.to_s] =
-          if key.to_s == 'port'
-            value.to_i
-          elsif key.to_s == 'adapter' && value == 'sqlite3'
-            'sqlite'
-          elsif key.to_s == 'database' && (hash['adapter'] == 'sqlite3' ||
-                                           hash['adapter'] == 'sqlite'  ||
-                                           hash[:adapter]  == 'sqlite3' ||
-                                           hash[:adapter]  == 'sqlite')
-            value == ':memory:' ? value : File.expand_path((hash['database'] || hash[:database]), root)
-          elsif key.to_s == 'adapter' && value == 'postgresql'
-            'postgres'
-          else
-            value
-          end
+        if key.to_s == 'port'
+          value.to_i
+        elsif key.to_s == 'adapter' && value == 'sqlite3'
+          'sqlite'
+        elsif key.to_s == 'database' && (hash['adapter'] == 'sqlite3' ||
+                                         hash['adapter'] == 'sqlite'  ||
+                                         hash[:adapter]  == 'sqlite3' ||
+                                         hash[:adapter]  == 'sqlite')
+          value == ':memory:' ? value : File.expand_path((hash['database'] || hash[:database]), root)
+        elsif key.to_s == 'adapter' && value == 'postgresql'
+          'postgres'
+        else
+          value
+        end
       end
 
       # always use jdbc when running jruby
       if SequelRails.jruby?
         if config['adapter']
           case config['adapter'].to_sym
-            when :postgres
-              config['adapter'] = :postgresql
+          when :postgres
+            config['adapter'] = :postgresql
           end
           config['adapter'] = "jdbc:#{config['adapter']}"
         end
@@ -95,29 +91,27 @@ module SequelRails
       config['search_path'] = search_path if search_path
 
       # some adapters only support an url
-      if config['adapter'] && config['adapter'] =~ /^(jdbc|do):/ && !config.has_key?('url')
+      if config['adapter'] && config['adapter'] =~ /^(jdbc|do):/ && !config.key?('url')
         params = {}
         config.each do |k, v|
-          next if ['adapter', 'host', 'port', 'database'].include?(k)
+          next if %w(adapter host port database).include?(k)
           if k == 'search_path'
-            v = v.split(',').map &:strip unless v.is_a? Array
-            v = URI::escape(v.join(','))
+            v = v.split(',').map(&:strip) unless v.is_a? Array
+            v = URI.escape(v.join(','))
           end
           params[k] = v
         end
         params_str = params.map { |k, v| "#{k}=#{v}" }.join('&')
         port = config['port'] ? ":#{config['port']}" : ''
-        config['url'] ||= case config['adapter']
-        when /sqlite/
-          "%s:%s" % [config['adapter'], config['database']]
+        config['url'] ||=
+        if config['adapter'].include?('sqlite')
+          sprintf('%s:%s', config['adapter'], config['database'])
         else
-          "%s://%s%s/%s?%s" % [config['adapter'], config['host'], port, config['database'], params_str]
+          sprintf('%s://%s%s/%s?%s', config['adapter'], config['host'], port, config['database'], params_str)
         end
       end
 
       config
     end
-
   end
-
 end

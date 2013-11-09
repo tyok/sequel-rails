@@ -1,27 +1,27 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-gem "railties", "~> 3.2.13"
+gem 'railties', '~> 3.2.13'
 
-gemspec :path => "../"
+gemspec :path => '../'
 
-gem "sequel", "#{ENV["SEQUEL"]}"
+gem 'sequel', "#{ENV["SEQUEL"]}"
 
-gem "fakefs", :require => "fakefs/safe"
+gem 'fakefs', :require => 'fakefs/safe'
 
 # activesupport has an undeclared dependency on tzinfo prior to 4.0.0
-gem "tzinfo"
+gem 'tzinfo'
 
 # MRI/Rubinius Adapter Dependencies
 platform :ruby do
-  gem "pg"
-  gem "mysql"
-  gem "mysql2"
-  gem "sqlite3"
+  gem 'pg'
+  gem 'mysql'
+  gem 'mysql2'
+  gem 'sqlite3'
 end
 
 # JRuby Adapter Dependencies
 platform :jruby do
-  gem "jdbc-sqlite3"
-  gem "jdbc-mysql"
-  gem "jdbc-postgres"
+  gem 'jdbc-sqlite3'
+  gem 'jdbc-mysql'
+  gem 'jdbc-postgres'
 end

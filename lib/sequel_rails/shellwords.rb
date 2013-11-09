@@ -1,6 +1,6 @@
 module SequelRails
   begin
-    require "shellwords"
+    require 'shellwords'
     Shellwords = ::Shellwords
   rescue LoadError
     # Taken from shellwords.rb (Ruby 2.0.0p247)
@@ -16,13 +16,13 @@ module SequelRails
         # Treat multibyte characters as is.  It is caller's responsibility
         # to encode the string in the right encoding for the shell
         # environment.
-        str.gsub!(/([^A-Za-z0-9_\-.,:\/@\n])/, "\\\\\\1")
+        str.gsub!(/([^A-Za-z0-9_\-.,:\/@\n])/, '\\\\\\1')
 
         # A LF cannot be escaped with a backslash because a backslash + LF
         # combo is regarded as line continuation and simply ignored.
         str.gsub!(/\n/, "'\n'")
 
-        return str
+        str
       end
 
       def self.shelljoin(array)
