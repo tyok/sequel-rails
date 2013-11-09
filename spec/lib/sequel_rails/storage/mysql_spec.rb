@@ -25,7 +25,7 @@ describe SequelRails::Storage::Mysql, :mysql do
   describe "#_create" do
     context "with all possible options" do
       it "uses the mysql command" do
-        subject.should_receive(:`).with(
+        expect(subject).to receive(:`).with(
           "mysql --user\\=#{username} --password\\=#{password} --host\\=#{host} --port\\=#{port} --execute\\=CREATE\\ DATABASE\\ IF\\ NOT\\ EXISTS\\ \\`#{database}\\`\\ DEFAULT\\ CHARACTER\\ SET\\ #{charset}\\ DEFAULT\\ COLLATE\\ #{collation}"
         )
         subject._create
@@ -35,7 +35,7 @@ describe SequelRails::Storage::Mysql, :mysql do
 
   describe "#_drop" do
     it "uses the mysql command" do
-      subject.should_receive(:`).with(
+      expect(subject).to receive(:`).with(
         "mysql --user\\=#{username} --password\\=#{password} --host\\=#{host} --port\\=#{port} --execute\\=DROP\\ DATABASE\\ IF\\ EXISTS\\ \\`#{database}\\`"
       )
       subject._drop
@@ -45,7 +45,7 @@ describe SequelRails::Storage::Mysql, :mysql do
   describe "#_dump" do
     let(:dump_file_name) { "dump.sql" }
     it "uses the mysqldump command" do
-      subject.should_receive(:`).with(
+      expect(subject).to receive(:`).with(
         "mysqldump --user\\=#{username} --password\\=#{password} --host\\=#{host} --port\\=#{port} --no-data --result-file\\=#{dump_file_name} #{database}"
       )
       subject._dump dump_file_name
@@ -55,7 +55,7 @@ describe SequelRails::Storage::Mysql, :mysql do
   describe "#_load" do
     let(:dump_file_name) { "dump.sql" }
     it "uses the mysql command" do
-      subject.should_receive(:`).with(
+      expect(subject).to receive(:`).with(
         "mysql --user\\=username --password\\=password --host\\=host --port\\=1234 --database\\=database --execute\\=SET\\ FOREIGN_KEY_CHECKS\\ \\=\\ 0\\;\\ SOURCE\\ dump.sql\\;\\ SET\\ FOREIGN_KEY_CHECKS\\ \\=\\ 1"
       )
       subject._load dump_file_name

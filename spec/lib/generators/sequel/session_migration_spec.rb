@@ -16,7 +16,7 @@ describe Sequel::Generators::SessionMigrationGenerator do
 
   it "creates a new migration for sessions table" do
     run_generator
-    destination_root.should have_structure {
+    expect(destination_root).to have_structure {
       directory "db" do
         directory "migrate" do
           migration "add_sessions_table" do

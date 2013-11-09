@@ -20,7 +20,7 @@ describe "Database rake tasks" do
     it "dumps the schema in 'db/schema.rb'" do
       Dir.chdir app_root do
         `rake db:schema:dump`
-        File.exists?(schema).should be_true
+        expect(File.exists?(schema)).to be_true
       end
     end
 
@@ -29,7 +29,7 @@ describe "Database rake tasks" do
         `rake db:migrate db:schema:dump`
         sql = Sequel::Model.db.from(:schema_migrations).
           insert_sql(:filename => "1273253849_add_twitter_handle_to_users.rb")
-        File.read(schema).should include <<-EOS
+        expect(File.read(schema)).to include <<-EOS
 Sequel.migration do
   change do
     self << #{sql.inspect}
@@ -46,7 +46,7 @@ EOS
     it "dumps the schema in 'db/structure.sql'" do
       Dir.chdir app_root do
         `rake db:structure:dump`
-        File.exists?(schema).should be_true
+        expect(File.exists?(schema)).to be_true
       end
     end
 
@@ -56,7 +56,7 @@ EOS
 
         sql = Sequel::Model.db.from(:schema_migrations).
           insert_sql(:filename => "1273253849_add_twitter_handle_to_users.rb")
-        File.read(schema).should include sql
+        expect(File.read(schema)).to include sql
       end
     end
   end

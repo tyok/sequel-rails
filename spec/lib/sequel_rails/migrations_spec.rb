@@ -6,23 +6,23 @@ describe SequelRails::Migrations do
 
   [:migrate_up!, :migrate_down!].each do |migration_method|
     describe ".#{migration_method}" do
-      let(:result) { mock :result }
+      let(:result) { double(:result) }
       context "with no version specified" do
         let(:opts) { {} }
         it "runs migrations using Sequel::Migrator" do
-          ::Sequel::Migrator.should_receive(:run).with(
+          expect(::Sequel::Migrator).to receive(:run).with(
             db, Rails.root.join("db/migrate"), opts
           ).and_return result
-          described_class.send(migration_method).should be result
+          expect(described_class.send(migration_method)).to be result
         end
       end
       context "with version specified" do
         let(:opts) { {:target => 1} }
         it "runs migrations using Sequel::Migrator" do
-          ::Sequel::Migrator.should_receive(:run).with(
+          expect(::Sequel::Migrator).to receive(:run).with(
             db, Rails.root.join("db/migrate"), opts
           ).and_return result
-          described_class.send(migration_method, 1).should be result
+          expect(described_class.send(migration_method, 1)).to be result
         end
       end
     end
@@ -33,12 +33,12 @@ describe SequelRails::Migrations do
     let(:path) { Rails.root.join("db/migrate") }
 
     it "returns false if no db/migrate directory exists" do
-      described_class.pending_migrations?.should == false
+      expect(described_class.pending_migrations?).to be_false
     end
 
     it "returns false if db/migrate directory exists, but is empty" do
       FileUtils.mkdir_p path
-      described_class.pending_migrations?.should == false
+      expect(described_class.pending_migrations?).to be_false
     end
 
     context "when db/migrate directory exists and contains migrations" do
@@ -48,17 +48,17 @@ describe SequelRails::Migrations do
       end
 
       it "returns true if any pending migration" do
-        ::Sequel::Migrator.should_receive(:is_current?).with(
+        expect(::Sequel::Migrator).to receive(:is_current?).with(
           db, Rails.root.join("db/migrate")
         ).and_return false
-        described_class.pending_migrations?.should == true
+        expect(described_class.pending_migrations?).to be_true
       end
 
       it "returns false if no pending migration" do
-        ::Sequel::Migrator.should_receive(:is_current?).with(
+        expect(::Sequel::Migrator).to receive(:is_current?).with(
           db, Rails.root.join("db/migrate")
         ).and_return true
-        described_class.pending_migrations?.should == false
+        expect(described_class.pending_migrations?).to be_false
       end
     end
   end

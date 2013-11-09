@@ -23,6 +23,12 @@ RSpec.configure do |config|
       example.run
     end
   end
+
+  [:expect_with, :mock_with].each do |method|
+    config.send(method, :rspec) do |c|
+      c.syntax = :expect
+    end
+  end
 end
 
 # Ensure db exists and clean state

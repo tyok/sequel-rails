@@ -15,7 +15,7 @@ describe Sequel::Generators::MigrationGenerator do
       file_name = migration_file_name "db/migrate/#{migration_name}.rb"
       File.basename(file_name).split("_").first
     end
-    first_number.should_not == second_number
+    expect(first_number).to_not eq(second_number)
   end
 
   it "refuses to generate migration with invalid filename" do
@@ -27,7 +27,7 @@ describe Sequel::Generators::MigrationGenerator do
   context "when name starts with create" do
     before { run_generator ["create_authors"] }
     it "creates a new migration using change to create the table" do
-      destination_root.should have_structure {
+      expect(destination_root).to have_structure {
         directory "db" do
           directory "migrate" do
             migration "create_authors" do
@@ -51,7 +51,7 @@ describe Sequel::Generators::MigrationGenerator do
     context "and does not contains _from_" do
       before { run_generator ["drop_author"] }
       it "creates a new migration using up/down to drop the table" do
-        destination_root.should have_structure {
+        expect(destination_root).to have_structure {
           directory "db" do
             directory "migrate" do
               migration "drop_author" do
@@ -76,7 +76,7 @@ describe Sequel::Generators::MigrationGenerator do
     context "and contains _from_" do
       before { run_generator ["drop_salary_from_authors"] }
       it "creates a new migration using up/down to drop the column from table" do
-        destination_root.should have_structure {
+        expect(destination_root).to have_structure {
           directory "db" do
             directory "migrate" do
               migration "drop_salary_from_authors" do
@@ -105,7 +105,7 @@ describe Sequel::Generators::MigrationGenerator do
     context "and does not contains _to_ nor _from_" do
       before { run_generator ["add_new_indexes"] }
       it "creates a new migration using up/down" do
-        destination_root.should have_structure {
+        expect(destination_root).to have_structure {
           directory "db" do
             directory "migrate" do
               migration "add_new_indexes" do
@@ -131,7 +131,7 @@ describe Sequel::Generators::MigrationGenerator do
     context "and contains _to_" do
       before { run_generator ["add_salary_to_authors"] }
       it "creates a new migration using change to add the column to the table" do
-        destination_root.should have_structure {
+        expect(destination_root).to have_structure {
           directory "db" do
             directory "migrate" do
               migration "add_salary_to_authors" do
@@ -152,7 +152,7 @@ describe Sequel::Generators::MigrationGenerator do
     context "and contains _from_" do
       before { run_generator ["add_salary_from_authors"] }
       it "creates a new migration using change to add the column to the table" do
-        destination_root.should have_structure {
+        expect(destination_root).to have_structure {
           directory "db" do
             directory "migrate" do
               migration "add_salary_from_authors" do
@@ -176,7 +176,7 @@ describe Sequel::Generators::MigrationGenerator do
     context "and does not contains _to_ nor _from_" do
       before { run_generator ["remove_new_indexes"] }
       it "creates a new migration using up/down" do
-        destination_root.should have_structure {
+        expect(destination_root).to have_structure {
           directory "db" do
             directory "migrate" do
               migration "remove_new_indexes" do
@@ -202,7 +202,7 @@ describe Sequel::Generators::MigrationGenerator do
     context "and contains _to_" do
       before { run_generator ["remove_salary_to_authors"] }
       it "creates a new migration using up/down to remove the column from the table" do
-        destination_root.should have_structure {
+        expect(destination_root).to have_structure {
           directory "db" do
             directory "migrate" do
               migration "remove_salary_to_authors" do
@@ -228,7 +228,7 @@ describe Sequel::Generators::MigrationGenerator do
     context "and contains _from_" do
       before { run_generator ["remove_salary_from_authors"] }
       it "creates a new migration using change to remove the column from the table" do
-        destination_root.should have_structure {
+        expect(destination_root).to have_structure {
           directory "db" do
             directory "migrate" do
               migration "remove_salary_from_authors" do

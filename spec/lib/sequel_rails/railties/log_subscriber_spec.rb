@@ -16,13 +16,13 @@ describe SequelRails::Railties::LogSubscriber do
   it "logs queries" do
     User.all
     wait
-    @logger.logged(:debug).last.should =~ /SELECT \* FROM ("|`)users("|`)/
+    expect(@logger.logged(:debug).last).to match(/SELECT \* FROM ("|`)users("|`)/)
   end
 
   it "does not log query when logger level is not debug" do
     @logger.level = :info
     User.all
     wait
-    @logger.logged(:debug).should have(:no).line
+    expect(@logger.logged(:debug)).to have(:no).line
   end
 end
