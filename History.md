@@ -1,5 +1,5 @@
-0.7.1.dev
-=========
+0.8.0 (2013-11-10)
+==================
 
 * Simplify and improve TravisCI config (Tamir Duberstein) [#51](https://github.com/TalentBox/sequel-rails/issues/51)
 * Add Rubocop and fix syntax violations (Tamir Duberstein) [#51](https://github.com/TalentBox/sequel-rails/issues/51)
