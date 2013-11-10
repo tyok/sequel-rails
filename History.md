@@ -1,6 +1,9 @@
 0.7.1.dev
 =========
 
+* Simplify and improve TravisCI config (Tamir Duberstein) [#51](https://github.com/TalentBox/sequel-rails/issues/51)
+* Add Rubocop and fix syntax violations (Tamir Duberstein) [#51](https://github.com/TalentBox/sequel-rails/issues/51)
+* Update RSpec and use the new 'expect' syntax (Tamir Duberstein) [#51](https://github.com/TalentBox/sequel-rails/issues/51)
 * Add session_migration generator and cleanup old code [#56](https://github.com/TalentBox/sequel-rails/issues/56)
 
 0.7.0 (2013-10-11)

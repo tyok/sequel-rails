@@ -330,6 +330,7 @@ Improvements has been made by those awesome contributors:
 * Robert Payne (robertjpayne)
 * Kevin Menard (nirvdrum)
 * Chris Heisterkamp (cheister)
+* Tamir Duberstein (tamird)
 
 Credits
 =======
