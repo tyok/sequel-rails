@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe SequelRails::Storage::Jdbc do
   let(:adapter)             { 'jdbc:mysql' }
@@ -26,14 +26,14 @@ describe SequelRails::Storage::Jdbc do
   end
   let(:store) { described_class.new(config) }
 
-  describe "#_root_url" do
+  describe '#_root_url' do
     subject { store._root_url }
     let(:expected) { "jdbc:mysql://#{host}" }
 
     it { should == expected }
 
-    context "with ip addresses" do
-      let(:host) { '127.0.0.1'}
+    context 'with ip addresses' do
+      let(:host) { '127.0.0.1' }
 
       it { should == expected }
     end

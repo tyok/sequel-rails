@@ -34,7 +34,6 @@ module SequelRails
       def path
         @path ||= Pathname(File.expand_path(database, Rails.root))
       end
-
     end
   end
 end

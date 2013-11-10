@@ -1,10 +1,8 @@
-require "active_support/core_ext/module/attr_internal"
+require 'active_support/core_ext/module/attr_internal'
 
 module SequelRails
   module Railties
-
     module ControllerRuntime
-
       extend ActiveSupport::Concern
 
       protected
@@ -25,16 +23,12 @@ module SequelRails
       end
 
       module ClassMethods
-
         def log_process_action(payload)
           messages, db_runtime = super, payload[:db_runtime]
-          messages << ("Models: %.1fms" % db_runtime.to_f) if db_runtime
+          messages << sprintf('Models: %.1fms', db_runtime.to_f) if db_runtime
           messages
         end
-
       end
-
     end
-
   end
 end

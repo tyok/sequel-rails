@@ -1,7 +1,6 @@
 module SequelRails
   module Storage
     class Abstract
-
       attr_reader :config
 
       def initialize(config)
@@ -10,26 +9,26 @@ module SequelRails
 
       def create
         res = _create
-        puts "[sequel] Created database '#{database}'" if res
+        warn "[sequel] Created database '#{database}'" if res
         res
       end
 
       def drop
         ::Sequel::Model.db.disconnect
         res = _drop
-        puts "[sequel] Dropped database '#{database}'" if res
+        warn "[sequel] Dropped database '#{database}'" if res
         res
       end
 
       def dump(filename)
         res = _dump filename
-        puts "[sequel] Dumped structure of database '#{database}' to '#{filename}'" if res
+        warn "[sequel] Dumped structure of database '#{database}' to '#{filename}'" if res
         res
       end
 
       def load(filename)
         res = _load filename
-        puts "[sequel] Loaded structure of database '#{database}' from '#{filename}'" if res
+        warn "[sequel] Loaded structure of database '#{database}' from '#{filename}'" if res
         res
       end
 
@@ -39,42 +38,42 @@ module SequelRails
       end
 
       def database
-        @database ||= config["database"] || config["path"]
+        @database ||= config['database'] || config['path']
       end
 
       def username
-        @username ||= config["username"] || config["user"] || ""
+        @username ||= config['username'] || config['user'] || ''
       end
 
       def password
-        @password ||= config["password"] || ""
+        @password ||= config['password'] || ''
       end
 
       def host
-        @host ||= config["host"] || ""
+        @host ||= config['host'] || ''
       end
 
       def port
-        @port ||= config["port"] || ""
+        @port ||= config['port'] || ''
       end
 
       def owner
-        @owner ||= config["owner"] || ""
+        @owner ||= config['owner'] || ''
       end
 
       def charset
-        @charset ||= config["charset"] || ENV["CHARSET"] || "utf8"
+        @charset ||= config['charset'] || ENV['CHARSET'] || 'utf8'
       end
 
       def collation
-        @collation ||= config["collation"] || ENV["COLLATION"]
+        @collation ||= config['collation'] || ENV['COLLATION']
       end
 
       private
 
       def add_option(commands, name, value)
         if value.present?
-          separator = name[0,2]=="--" ? "=" : " "
+          separator = name[0, 2] == '--' ? '=' : ' '
           commands << "#{name}#{separator}#{value}"
         end
       end
@@ -87,13 +86,12 @@ module SequelRails
         `#{escaped_command}`
 
         # Evaluate command status as a boolean like `system` does.
-        $?.exitstatus == 0
+        $CHILD_STATUS.exitstatus == 0
       end
 
       def safe_exec(args)
         exec SequelRails::Shellwords.join(Array(args))
       end
-
     end
   end
 end

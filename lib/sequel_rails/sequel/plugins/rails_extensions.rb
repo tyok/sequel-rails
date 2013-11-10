@@ -1,4 +1,4 @@
-require "sequel"
+require 'sequel'
 
 module Sequel
   module Plugins
@@ -25,11 +25,10 @@ module Sequel
       module ClassMethods
         def find!(args)
           m = self[args]
-          raise ModelNotFound, "Couldn't find #{self} matching #{args}." unless m
+          fail ModelNotFound, "Couldn't find #{self} matching #{args}." unless m
           m
         end
       end
-
     end
   end
 end

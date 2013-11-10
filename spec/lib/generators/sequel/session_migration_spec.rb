@@ -1,25 +1,25 @@
-require "spec_helper"
-require "generator_spec/test_case"
-require "generators/sequel/session_migration/session_migration_generator"
+require 'spec_helper'
+require 'generator_spec/test_case'
+require 'generators/sequel/session_migration/session_migration_generator'
 
 describe Sequel::Generators::SessionMigrationGenerator do
   include GeneratorSpec::TestCase
-  destination File.expand_path("../../../../internal/tmp", __FILE__)
+  destination File.expand_path('../../../../internal/tmp', __FILE__)
 
   before { prepare_destination }
 
-  it "refuses to generate migration with invalid filename" do
+  it 'refuses to generate migration with invalid filename' do
     expect do
-      run_generator ["add:sessions"]
+      run_generator ['add:sessions']
     end.to raise_error
   end
 
-  it "creates a new migration for sessions table" do
+  it 'creates a new migration for sessions table' do
     run_generator
-    destination_root.should have_structure {
-      directory "db" do
-        directory "migrate" do
-          migration "add_sessions_table" do
+    expect(destination_root).to have_structure {
+      directory 'db' do
+        directory 'migrate' do
+          migration 'add_sessions_table' do
             contains <<-CONTENT.strip_heredoc
             Sequel.migration do
               change do

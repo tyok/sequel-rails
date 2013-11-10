@@ -1,7 +1,7 @@
-require "sequel"
+require 'sequel'
 
-require "rails"
-require "active_model/railtie"
+require 'rails'
+require 'active_model/railtie'
 
 # Comment taken from active_record/railtie.rb
 #
@@ -9,39 +9,35 @@ require "active_model/railtie"
 # rails, so let's make sure that it gets required before
 # here. This is needed for correctly setting up the middleware.
 # In the future, this might become an optional require.
-require "action_controller/railtie"
+require 'action_controller/railtie'
 
-require "sequel_rails/configuration"
-require "sequel_rails/migrations"
-require "sequel_rails/railties/log_subscriber"
-require "sequel_rails/railties/i18n_support"
-require "sequel_rails/railties/controller_runtime"
-require "sequel_rails/sequel/database/active_support_notification"
+require 'sequel_rails/configuration'
+require 'sequel_rails/migrations'
+require 'sequel_rails/railties/log_subscriber'
+require 'sequel_rails/railties/i18n_support'
+require 'sequel_rails/railties/controller_runtime'
+require 'sequel_rails/sequel/database/active_support_notification'
 
 module SequelRails
-
-  autoload :SessionStore, "sequel_rails/session_store"
+  autoload :SessionStore, 'sequel_rails/session_store'
 
   class Railtie < Rails::Railtie
-
     ::SequelRails::Railties::LogSubscriber.attach_to :sequel
 
     config.app_generators.orm :sequel, :migration => true
     config.rails_fancy_pants_logging = true
 
     config.action_dispatch.rescue_responses.merge!(
-      "Sequel::Plugins::RailsExtensions::ModelNotFound" => :not_found,
-      "Sequel::NoMatchingRow" => :not_found,
-      "Sequel::ValidationFailed" => :unprocessable_entity,
-      "Sequel::NoExistingObject" => :unprocessable_entity
+      'Sequel::Plugins::RailsExtensions::ModelNotFound' => :not_found,
+      'Sequel::NoMatchingRow' => :not_found,
+      'Sequel::ValidationFailed' => :unprocessable_entity,
+      'Sequel::NoExistingObject' => :unprocessable_entity
     )
 
     config.sequel = ::SequelRails::Configuration.new
 
     rake_tasks do |app|
-      if app.config.sequel.load_database_tasks
-        load "sequel_rails/railties/database.rake"
-      end
+      load 'sequel_rails/railties/database.rake' if app.config.sequel.load_database_tasks
     end
 
     initializer 'sequel.configuration' do |app|
@@ -86,7 +82,5 @@ module SequelRails
     def setup_logger(app, logger)
       app.config.sequel.logger = logger
     end
-
   end
-
 end

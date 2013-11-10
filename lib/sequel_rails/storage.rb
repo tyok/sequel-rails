@@ -1,10 +1,10 @@
-require "sequel_rails/shellwords"
-require "sequel_rails/storage/abstract"
-require "sequel_rails/storage/sqlite"
-require "sequel_rails/storage/mysql"
-require "sequel_rails/storage/mysql2"
-require "sequel_rails/storage/postgres"
-require "sequel_rails/storage/jdbc"
+require 'sequel_rails/shellwords'
+require 'sequel_rails/storage/abstract'
+require 'sequel_rails/storage/sqlite'
+require 'sequel_rails/storage/mysql'
+require 'sequel_rails/storage/mysql2'
+require 'sequel_rails/storage/postgres'
+require 'sequel_rails/storage/jdbc'
 
 module SequelRails
   module Storage
@@ -59,7 +59,7 @@ module SequelRails
         if config['host'].blank? || %w[ 127.0.0.1 localhost ].include?(config['host'])
           yield config
         else
-          puts "This task only modifies local databases. #{config['database']} is on a remote host."
+          warn "This task only modifies local databases. #{config['database']} is on a remote host."
         end
       end
     end
@@ -72,12 +72,12 @@ module SequelRails
     end
 
     def self.lookup_class(adapter)
-      raise "Adapter not specified in config, please set the :adapter key." unless adapter
+      fail 'Adapter not specified in config, please set the :adapter key.' unless adapter
       return Jdbc if adapter =~ /jdbc/
 
       klass_name = adapter.camelize.to_sym
       unless self.const_defined?(klass_name)
-        raise "Adapter #{adapter} not supported (#{klass_name.inspect})"
+        fail "Adapter #{adapter} not supported (#{klass_name.inspect})"
       end
 
       const_get klass_name

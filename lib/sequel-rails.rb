@@ -1,1 +1,1 @@
-require "sequel_rails"
+require 'sequel_rails'
