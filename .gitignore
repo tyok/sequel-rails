@@ -28,5 +28,6 @@ vendor
 .rvmrc
 *.gem
 Gemfile.lock
+*.gemfile.lock
 
 spec/internal/db/database.sqlite3

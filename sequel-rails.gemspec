@@ -20,11 +20,12 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.license = "MIT"
 
-  s.add_runtime_dependency "sequel", [">= 3.28", "< 5.0"]
+  s.add_runtime_dependency "activemodel"
   s.add_runtime_dependency "railties", ">= 3.2.0"
+  s.add_runtime_dependency "sequel", [">= 3.28", "< 5.0"]
 
-  s.add_development_dependency "rake", ">= 0.8.7"
-  s.add_development_dependency "rspec", "~> 2.7.0"
   s.add_development_dependency "combustion", "~> 0.5.0"
   s.add_development_dependency "generator_spec", "~> 0.9.0"
+  s.add_development_dependency "rake", ">= 0.8.7"
+  s.add_development_dependency "rspec", "~> 2.7.0"
 end
