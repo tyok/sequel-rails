@@ -11,9 +11,11 @@ module ActionDispatch
 
       cattr_accessor :session_class
       def self.session_class
-        @@session_class ||= Class.new(Sequel::Model(:sessions)) do
-          plugin :timestamps, :update_on_create => true
-          plugin :serialization, :marshal, :data
+        @@session_class ||= begin
+          res = Class.new(Sequel::Model(:sessions))
+          res.plugin :timestamps, :update_on_create => true
+          res.plugin :serialization, :marshal, :data
+          res
         end
       end
 
