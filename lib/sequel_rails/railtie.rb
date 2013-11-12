@@ -17,10 +17,9 @@ require 'sequel_rails/railties/log_subscriber'
 require 'sequel_rails/railties/i18n_support'
 require 'sequel_rails/railties/controller_runtime'
 require 'sequel_rails/sequel/database/active_support_notification'
+require 'action_dispatch/middleware/session/sequel_store'
 
 module SequelRails
-  autoload :SessionStore, 'sequel_rails/session_store'
-
   class Railtie < Rails::Railtie
     ::SequelRails::Railties::LogSubscriber.attach_to :sequel
 

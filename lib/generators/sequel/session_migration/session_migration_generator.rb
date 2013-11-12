@@ -19,7 +19,7 @@ module Sequel
       protected
 
       def session_table_name
-        SequelRails::SessionStore.session_class.table_name
+        ActionDispatch::Session::SequelStore.session_class.table_name
       end
 
       def validate_file_name!

@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gemspec
 
+gem 'actionpack'
 gem 'fakefs', :require => 'fakefs/safe'
 gem 'pry'
 

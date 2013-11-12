@@ -124,8 +124,9 @@ Features provided by `sequel-rails`
 7. Add a hook in `ActionController::Base` so that the sum of SQL queries time
    for the current action is reported as `DB` for the controller's line in logs.
 
-8. Provide a `SequelRails::SessionStore` similar to the `ActiveRecord` one, which stores
-   sessions in database backed by a `Sequel` model.
+8. Provide a `ActionDispatch::Session::SequelStore` similar to the
+   `ActiveRecord` one, which stores sessions in database backed by a `Sequel`
+   model.
 
 Configuration
 =============
@@ -221,15 +222,15 @@ loaded. Loading plugins into `Sequel::Model` after subclasses are already
 created is not supported by Sequel. You can also load extensions in
 `after_connect` or perform any custom actions that you need.
 
-Using the `SequelRails::SessionStore` to store session in database
-==================================================================
+Using the `SequelStore` to store session in database
+====================================================
 
 If you want to store your session in the database you can use the provided
 session store backed by a `Sequel` model. Edit your
 `config/initializers/session.rb` file and replace the existing code with:
 
 ```ruby
-YourAppName::Application.config.session_store SequelRails::SessionStore
+YourAppName::Application.config.session_store :sequel_store
 ```
 
 You can then generate a migration for the session table using the provided
@@ -244,7 +245,7 @@ Optionally if you want to use your own `Sequel` model to handle the session,
 you can do so in your `config/initializers/session.rb`:
 
 ```ruby
-SequelRails::SessionStore.session_class = MyCustomSessionModelClass
+ActionDispatch::Session::SequelStore.session_class = MyCustomSessionModelClass
 ```
 
 Available sequel specific rake tasks

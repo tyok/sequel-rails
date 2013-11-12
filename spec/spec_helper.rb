@@ -3,8 +3,11 @@ require 'bundler'
 
 Bundler.require :default, :development, :test
 
-# Combustion initialization has to happend before loading rspec/rails
-Combustion.initialize! 'sequel_rails'
+# Combustion initialization has to happen before loading rspec/rails
+Combustion.initialize! :sequel_rails
+
+require 'rspec/rails'
+require 'rspec/autorun'
 
 # Load support files
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }

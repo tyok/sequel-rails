@@ -1,6 +1,23 @@
 0.8.1.dev
 =========
 
+* Rename `SequelRails::SessionStore` as `ActionDispatch::Session::SequelStore`
+  and fix methods to be compatible with `Rails` >= 3.2.
+
+  Previous sequel session store did not work and should be enabled using:
+
+  ```ruby
+  MyApplication::Application.config.session_store SequelRails::SessionStore
+  ```
+
+  now you can enable it using:
+
+  ```ruby
+  MyApplication::Application.config.session_store :sequel_store
+  ```
+
+  A basic integration spec was added to ensure it works as expected. [#56](https://github.com/TalentBox/sequel-rails/issues/56)
+
 0.8.0 (2013-11-10)
 ==================
 
