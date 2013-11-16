@@ -1,6 +1,8 @@
 0.8.1.dev
 =========
 
+* Add `require 'english'` to ensure we have access to english equivalents of
+  Ruby's special variable [#57](https://github.com/TalentBox/sequel-rails/issues/57)
 * Rename `SequelRails::SessionStore` as `ActionDispatch::Session::SequelStore`
   and fix methods to be compatible with `Rails` >= 3.2.
 
