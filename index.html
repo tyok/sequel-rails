@@ -34,7 +34,8 @@
           <h1>
 <a name="sequel-rails" class="anchor" href="#sequel-rails"><span class="octicon octicon-link"></span></a>sequel-rails</h1>
 
-<p><a href="https://travis-ci.org/TalentBox/sequel-rails"><img src="https://travis-ci.org/TalentBox/sequel-rails.png?branch=master" alt="Build Status"></a>
+<p><a href="https://rubygems.org/gems/sequel-rails"><img src="https://badge.fury.io/rb/sequel-rails.png" alt="Gem Version"></a>
+<a href="http://travis-ci.org/TalentBox/sequel-rails"><img src="https://secure.travis-ci.org/TalentBox/sequel-rails.png?branch=master" alt="Build Status"></a>
 <a href="https://codeclimate.com/github/TalentBox/sequel-rails"><img src="https://codeclimate.com/github/TalentBox/sequel-rails.png" alt="Code Climate"></a></p>
 
 <p>This gem provides the railtie that allows
@@ -151,8 +152,9 @@ This is used by <code>ActiveModel</code>.</p></li>
 see SQL queries in the log and also allows us to implement the next item.</p></li>
 <li><p>Add a hook in <code>ActionController::Base</code> so that the sum of SQL queries time
 for the current action is reported as <code>DB</code> for the controller's line in logs.</p></li>
-<li><p>Provide a <code>SequelRails::SessionStore</code> similar to the <code>ActiveRecord</code> one, which stores
-sessions in database backed by a <code>Sequel</code> model.</p></li>
+<li><p>Provide a <code>ActionDispatch::Session::SequelStore</code> similar to the
+<code>ActiveRecord</code> one, which stores sessions in database backed by a <code>Sequel</code>
+model.</p></li>
 </ol><h1>
 <a name="configuration" class="anchor" href="#configuration"><span class="octicon octicon-link"></span></a>Configuration</h1>
 
@@ -247,13 +249,13 @@ created is not supported by Sequel. You can also load extensions in
 <code>after_connect</code> or perform any custom actions that you need.</p>
 
 <h1>
-<a name="using-the-sequelrailssessionstore-to-store-session-in-database" class="anchor" href="#using-the-sequelrailssessionstore-to-store-session-in-database"><span class="octicon octicon-link"></span></a>Using the <code>SequelRails::SessionStore</code> to store session in database</h1>
+<a name="using-the-sequelstore-to-store-session-in-database" class="anchor" href="#using-the-sequelstore-to-store-session-in-database"><span class="octicon octicon-link"></span></a>Using the <code>SequelStore</code> to store session in database</h1>
 
 <p>If you want to store your session in the database you can use the provided
 session store backed by a <code>Sequel</code> model. Edit your
 <code>config/initializers/session.rb</code> file and replace the existing code with:</p>
 
-<div class="highlight highlight-ruby"><pre><span class="ss">YourAppName</span><span class="p">:</span><span class="ss">:Application</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">session_store</span> <span class="ss">SequelRails</span><span class="p">:</span><span class="ss">:SessionStore</span>
+<div class="highlight highlight-ruby"><pre><span class="ss">YourAppName</span><span class="p">:</span><span class="ss">:Application</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">session_store</span> <span class="ss">:sequel_store</span>
 </pre></div>
 
 <p>You can then generate a migration for the session table using the provided
@@ -266,7 +268,7 @@ rake db:migrate
 <p>Optionally if you want to use your own <code>Sequel</code> model to handle the session,
 you can do so in your <code>config/initializers/session.rb</code>:</p>
 
-<div class="highlight highlight-ruby"><pre><span class="ss">SequelRails</span><span class="p">:</span><span class="ss">:SessionStore</span><span class="o">.</span><span class="n">session_class</span> <span class="o">=</span> <span class="no">MyCustomSessionModelClass</span>
+<div class="highlight highlight-ruby"><pre><span class="ss">ActionDispatch</span><span class="p">:</span><span class="ss">:Session</span><span class="o">::</span><span class="no">SequelStore</span><span class="o">.</span><span class="n">session_class</span> <span class="o">=</span> <span class="no">MyCustomSessionModelClass</span>
 </pre></div>
 
 <h1>
@@ -350,6 +352,7 @@ future version unintentionally.</li>
 <li>Robert Payne (robertjpayne)</li>
 <li>Kevin Menard (nirvdrum)</li>
 <li>Chris Heisterkamp (cheister)</li>
+<li>Tamir Duberstein (tamird)</li>
 </ul><h1>
 <a name="credits" class="anchor" href="#credits"><span class="octicon octicon-link"></span></a>Credits</h1>
 
