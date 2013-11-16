@@ -1,8 +1,12 @@
-sequel-rails
-============
+# sequel-rails
 
-[![Build Status](https://travis-ci.org/TalentBox/sequel-rails.png?branch=master)](https://travis-ci.org/TalentBox/sequel-rails)
-[![Code Climate](https://codeclimate.com/github/TalentBox/sequel-rails.png)](https://codeclimate.com/github/TalentBox/sequel-rails)
+[![Gem Version](https://badge.fury.io/rb/sequel-rails.png)][gem]
+[![Build Status](https://secure.travis-ci.org/TalentBox/sequel-rails.png?branch=master)][travis]
+[![Code Climate](https://codeclimate.com/github/TalentBox/sequel-rails.png)][codeclimate]
+
+[gem]: https://rubygems.org/gems/sequel-rails
+[travis]: http://travis-ci.org/TalentBox/sequel-rails
+[codeclimate]: https://codeclimate.com/github/TalentBox/sequel-rails
 
 This gem provides the railtie that allows
 [sequel](http://github.com/jeremyevans/sequel) to hook into
