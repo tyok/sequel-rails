@@ -1,5 +1,5 @@
-0.8.1.dev
-=========
+0.9.0 (2013-11-16)
+==================
 
 * Add `require 'english'` to ensure we have access to english equivalents of
   Ruby's special variable [#57](https://github.com/TalentBox/sequel-rails/issues/57)
