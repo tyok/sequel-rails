@@ -3,7 +3,7 @@ require 'active_support/log_subscriber/test_helper'
 
 describe SequelRails::Railties::LogSubscriber do
   include ActiveSupport::LogSubscriber::TestHelper
-  def set_logger(logger)
+  def set_logger(logger) # rubocop:disable AccessorMethodName
     SequelRails.configuration.logger = logger
     ActiveSupport::LogSubscriber.logger = logger
   end
