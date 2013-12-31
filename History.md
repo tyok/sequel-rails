@@ -1,5 +1,5 @@
-0.9.1.dev
-=========
+0.9.1 (2013-12-31)
+==================
 
 * Map `ActiveRecord`'s `pool` key to `Sequel`'s `max_connections` in YAML
   configuration [#59](https://github.com/TalentBox/sequel-rails/issues/59)
