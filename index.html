@@ -201,6 +201,7 @@ expected to be similar to <code>ActiveRecord</code>'s format.</p>
   <span class="l-Scalar-Plain">ctype</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">en_US.UTF-8</span> <span class="c1"># Optional</span>
   <span class="l-Scalar-Plain">template</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">template1</span> <span class="c1"># Optional</span>
   <span class="l-Scalar-Plain">tablespace</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">non_default_tablespace_name</span> <span class="c1"># Optional</span>
+  <span class="l-Scalar-Plain">max_connections</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">20</span> <span class="c1"># Optional, also accept 'pool' as key, if both are present 'max_connections' is used (default to nil, Sequel default is 4)</span>
 </pre></div>
 </li>
 <li>
@@ -239,7 +240,7 @@ expected to be similar to <code>ActiveRecord</code>'s format.</p>
 after_connect configuration option in <code>config/application.rb</code> (0.6.2+):</p>
 
 <div class="highlight highlight-ruby"><pre>    <span class="n">config</span><span class="o">.</span><span class="n">sequel</span><span class="o">.</span><span class="n">after_connect</span> <span class="o">=</span> <span class="nb">proc</span> <span class="k">do</span>
-      <span class="ss">Sequel</span><span class="p">:</span><span class="ss">:Model</span><span class="o">.</span><span class="n">plugin</span> <span class="ss">:timestamps</span><span class="p">,</span> <span class="n">update_on_create</span><span class="p">:</span> <span class="kp">true</span>
+      <span class="no">Sequel</span><span class="o">::</span><span class="no">Model</span><span class="o">.</span><span class="n">plugin</span> <span class="ss">:timestamps</span><span class="p">,</span> <span class="n">update_on_create</span><span class="p">:</span> <span class="kp">true</span>
     <span class="k">end</span>
 </pre></div>
 
@@ -255,7 +256,7 @@ created is not supported by Sequel. You can also load extensions in
 session store backed by a <code>Sequel</code> model. Edit your
 <code>config/initializers/session.rb</code> file and replace the existing code with:</p>
 
-<div class="highlight highlight-ruby"><pre><span class="ss">YourAppName</span><span class="p">:</span><span class="ss">:Application</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">session_store</span> <span class="ss">:sequel_store</span>
+<div class="highlight highlight-ruby"><pre><span class="no">YourAppName</span><span class="o">::</span><span class="no">Application</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">session_store</span> <span class="ss">:sequel_store</span>
 </pre></div>
 
 <p>You can then generate a migration for the session table using the provided
@@ -268,7 +269,7 @@ rake db:migrate
 <p>Optionally if you want to use your own <code>Sequel</code> model to handle the session,
 you can do so in your <code>config/initializers/session.rb</code>:</p>
 
-<div class="highlight highlight-ruby"><pre><span class="ss">ActionDispatch</span><span class="p">:</span><span class="ss">:Session</span><span class="o">::</span><span class="no">SequelStore</span><span class="o">.</span><span class="n">session_class</span> <span class="o">=</span> <span class="no">MyCustomSessionModelClass</span>
+<div class="highlight highlight-ruby"><pre><span class="no">ActionDispatch</span><span class="o">::</span><span class="no">Session</span><span class="o">::</span><span class="no">SequelStore</span><span class="o">.</span><span class="n">session_class</span> <span class="o">=</span> <span class="no">MyCustomSessionModelClass</span>
 </pre></div>
 
 <h1>
