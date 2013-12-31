@@ -177,6 +177,7 @@ Here's some examples:
       ctype: en_US.UTF-8 # Optional
       template: template1 # Optional
       tablespace: non_default_tablespace_name # Optional
+      max_connections: 20 # Optional, also accept 'pool' as key, if both are present 'max_connections' is used (default to nil, Sequel default is 4)
     ```
 
 2. For MySQL:

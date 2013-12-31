@@ -142,6 +142,22 @@ describe SequelRails::Configuration do
             subject.connect environment
           end
         end
+
+        context 'with pool configuration key' do
+          before do
+            environments[environment]['pool'] = 7
+          end
+          it 'uses the value' do
+            expect(::Sequel).to receive(:connect) do |hash_or_url, *_|
+              if hash_or_url.is_a? Hash
+                expect(hash_or_url['max_connections']).to eq(7)
+              else
+                expect(hash_or_url).to include('max_connections=7')
+              end
+            end
+            subject.connect environment
+          end
+        end
       end
 
       context 'for a postgres connection' do

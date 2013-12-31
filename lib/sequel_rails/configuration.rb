@@ -87,6 +87,7 @@ module SequelRails
       end
 
       # override max connections if requested in app configuration
+      config['max_connections'] ||= config['pool']
       config['max_connections'] = max_connections if max_connections
       config['search_path'] = search_path if search_path
 
