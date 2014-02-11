@@ -22,3 +22,6 @@ LineLength:
 
 MethodLength:
   Enabled: false
+
+TrailingComma:
+  Enabled: false

@@ -1,6 +1,11 @@
 0.9.2.dev
 =========
 
+* Update SequelRails::Railties::ControllerRuntime to be up-to-date with how
+  ActiveRecord 4.0.x do the DB time calculation. It should fix some
+  inconsistencies with the reported time in logs where View + DB time was
+  sometimes less than Total time.
+
 0.9.1 (2013-12-31)
 ==================
 
