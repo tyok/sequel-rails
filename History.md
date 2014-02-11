@@ -1,5 +1,5 @@
-0.9.2.dev
-=========
+0.9.2 (2014-02-11)
+==================
 
 * Update SequelRails::Railties::ControllerRuntime to be up-to-date with how
   ActiveRecord 4.0.x do the DB time calculation. It should fix some
