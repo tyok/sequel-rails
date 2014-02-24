@@ -103,7 +103,7 @@ Features provided by `sequel-rails`
    Session:
 
    ```ruby
-   rails generate session_migration
+   rails generate sequel:session_migration
    ```
 
 3. Rake tasks similar to `ActiveRecord`, see
@@ -242,7 +242,7 @@ You can then generate a migration for the session table using the provided
 generator:
 
 ```bash
-rails generate session_migration
+rails generate sequel:session_migration
 rake db:migrate
 ```
 
