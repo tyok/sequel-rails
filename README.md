@@ -337,6 +337,7 @@ Improvements has been made by those awesome contributors:
 * Kevin Menard (nirvdrum)
 * Chris Heisterkamp (cheister)
 * Tamir Duberstein (tamird)
+* shelling (shelling)
 
 Credits
 =======
