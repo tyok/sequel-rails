@@ -178,6 +178,8 @@ Here's some examples:
       template: template1 # Optional
       tablespace: non_default_tablespace_name # Optional
       max_connections: 20 # Optional, also accept 'pool' as key, if both are present 'max_connections' is used (default to nil, Sequel default is 4)
+      url: "postgres://myuser:mypass@host/somedatabase" # Optional, if present it's passed to `Sequel.connect` with other config as options
+                                                        # If url is not set in config file, environment variable `DATABASE_URL` is used
     ```
 
 2. For MySQL:
@@ -192,6 +194,8 @@ Here's some examples:
       port: 5432 # Optional
       charset: latin1 # Optional (defaults to 'utf8')
       collation: latin1_general_ci # Optional (defaults to 'utf8_unicode_ci')
+      url: "mysql://myuser:mypass@host/somedatabase" # Optional, if present it's passed to `Sequel.connect` with other config as options
+                                                     # If url is not set in config file, environment variable `DATABASE_URL` is used
     ```
 
 2. For SQLite:

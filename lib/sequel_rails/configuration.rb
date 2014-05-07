@@ -91,6 +91,11 @@ module SequelRails
       config['max_connections'] = max_connections if max_connections
       config['search_path'] = search_path if search_path
 
+      # Allow to set the URL from environment directly
+      if url = ENV['DATABASE_URL']
+        config['url'] ||= url
+      end
+
       # some adapters only support an url
       if config['adapter'] && config['adapter'] =~ /^(jdbc|do):/ && !config.key?('url')
         params = {}

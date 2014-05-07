@@ -160,6 +160,42 @@ describe SequelRails::Configuration do
         end
       end
 
+      shared_examples 'with DATABASE_URL in ENV' do
+        let(:database_url) { 'adapter://user:pass@host/db' }
+        def with_database_url_env
+          previous, ENV["DATABASE_URL"] = ENV["DATABASE_URL"], database_url
+          yield
+          ENV["DATABASE_URL"] = previous
+        end
+        context 'without url set in config' do
+          around do |example|
+            with_database_url_env{ example.call }
+          end
+          it 'uses DATABASE_URL' do
+            expect(::Sequel).to receive(:connect) do |url, hash|
+              expect(url).to eq database_url
+            end
+            subject.connect environment
+          end
+        end
+
+        context 'with url set in config' do
+          let(:config_url) { 'another_adapter://user:pass@host/db' }
+          around do |example|
+            with_database_url_env do
+              environments[environment]['url'] = config_url
+              example.call
+            end
+          end
+          it 'uses url from config' do
+            expect(::Sequel).to receive(:connect) do |url, hash|
+              expect(url).to eq config_url
+            end
+            subject.connect environment
+          end
+        end
+      end
+
       context 'for a postgres connection' do
 
         shared_examples 'search_path' do
@@ -189,6 +225,7 @@ describe SequelRails::Configuration do
 
           include_examples 'max_connections'
           include_examples 'search_path'
+          include_examples 'with DATABASE_URL in ENV'
 
           let(:is_jruby) { false }
 
@@ -205,6 +242,7 @@ describe SequelRails::Configuration do
 
           include_examples 'max_connections'
           include_examples 'search_path'
+          include_examples 'with DATABASE_URL in ENV'
 
           let(:is_jruby) { true }
 
@@ -240,6 +278,7 @@ describe SequelRails::Configuration do
         context 'in C-Ruby' do
 
           include_examples 'max_connections'
+          include_examples 'with DATABASE_URL in ENV'
 
           let(:is_jruby) { false }
 
@@ -254,6 +293,7 @@ describe SequelRails::Configuration do
         context 'in JRuby' do
 
           include_examples 'max_connections'
+          include_examples 'with DATABASE_URL in ENV'
 
           let(:is_jruby) { true }
 
