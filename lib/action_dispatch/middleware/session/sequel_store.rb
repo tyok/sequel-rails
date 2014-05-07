@@ -28,7 +28,7 @@ module ActionDispatch
         [sid, session.data]
       end
 
-      def set_session(env, sid, session_data, options)
+      def set_session(env, sid, session_data, _options)
         session      = get_session_model(env, sid)
         session.data = session_data
         session.save(:raise_on_failure => false) && sid

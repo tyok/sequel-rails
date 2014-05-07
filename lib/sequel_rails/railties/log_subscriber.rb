@@ -20,7 +20,7 @@ module SequelRails
 
         payload = event.payload
 
-        name = sprintf('%s (%.1fms)', payload[:name], event.duration)
+        name = format('%s (%.1fms)', payload[:name], event.duration)
         sql  = payload[:sql].squeeze(' ')
         binds = nil
 

@@ -1,15 +1,12 @@
 source 'https://rubygems.org'
 
-gem 'railties', '~> 3.2.13'
+gem 'railties', '~> 4.1.0'
 
 gemspec :path => '../'
 
 gem 'sequel', "#{ENV['SEQUEL']}"
 
 gem 'fakefs', :require => 'fakefs/safe'
-
-# activesupport has an undeclared dependency on tzinfo prior to 4.0.0
-gem 'tzinfo'
 
 # MRI/Rubinius Adapter Dependencies
 platform :ruby do

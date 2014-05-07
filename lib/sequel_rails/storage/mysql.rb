@@ -22,7 +22,7 @@ module SequelRails
         commands = ['mysql']
         add_connection_settings commands
         add_option commands, '--database', database
-        add_option commands, '--execute', %{SET FOREIGN_KEY_CHECKS = 0; SOURCE #{filename}; SET FOREIGN_KEY_CHECKS = 1}
+        add_option commands, '--execute', %(SET FOREIGN_KEY_CHECKS = 0; SOURCE #{filename}; SET FOREIGN_KEY_CHECKS = 1)
         safe_exec commands
       end
 

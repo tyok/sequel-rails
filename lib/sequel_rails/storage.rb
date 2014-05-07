@@ -56,7 +56,7 @@ module SequelRails
     def self.with_local_repositories
       ::SequelRails.configuration.environments.each_value do |config|
         next if config['database'].blank? || config['adapter'].blank?
-        if config['host'].blank? || %w[ 127.0.0.1 localhost ].include?(config['host'])
+        if config['host'].blank? || %w( 127.0.0.1 localhost ).include?(config['host'])
           yield config
         else
           warn "This task only modifies local databases. #{config['database']} is on a remote host."

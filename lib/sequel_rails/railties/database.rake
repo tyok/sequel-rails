@@ -30,7 +30,7 @@ namespace :db do
     desc 'Load a schema.rb file into the database'
     task :load => :environment do
       file = ENV['SCHEMA'] || "#{Rails.root}/db/schema.rb"
-      if File.exists?(file)
+      if File.exist?(file)
         require 'sequel/extensions/migration'
         load(file)
         ::Sequel::Migration.descendants.each { |m| m.apply(db_for_current_env, :up) }
@@ -42,7 +42,7 @@ namespace :db do
 
   namespace :structure do
     desc 'Dump the database structure to db/structure.sql'
-    task :dump, [:env] => :environment do |t, args|
+    task :dump, [:env] => :environment do |_t, args|
       args.with_defaults(:env => Rails.env)
 
       filename = ENV['DB_STRUCTURE'] || File.join(Rails.root, 'db', 'structure.sql')
@@ -57,7 +57,7 @@ namespace :db do
       Rake::Task['db:structure:dump'].reenable
     end
 
-    task :load, [:env] => :environment do |t, args|
+    task :load, [:env] => :environment do |_t, args|
       args.with_defaults(:env => Rails.env)
 
       filename = ENV['DB_STRUCTURE'] || File.join(Rails.root, 'db', 'structure.sql')
@@ -97,7 +97,7 @@ namespace :db do
   end
 
   desc 'Create the database defined in config/database.yml for the current Rails.env'
-  task :create, [:env] => :environment do |t, args|
+  task :create, [:env] => :environment do |_t, args|
     args.with_defaults(:env => Rails.env)
 
     unless SequelRails::Storage.create_environment(args.env)
@@ -113,7 +113,7 @@ namespace :db do
   end
 
   desc 'Drop the database defined in config/database.yml for the current Rails.env'
-  task :drop, [:env] => :environment do |t, args|
+  task :drop, [:env] => :environment do |_t, args|
     args.with_defaults(:env => Rails.env)
 
     unless SequelRails::Storage.drop_environment(args.env)
@@ -126,7 +126,7 @@ namespace :db do
       require 'sequel_rails/migrations'
     end
 
-    desc  'Rollbacks the database one migration and re migrate up. If you want to rollback more than one step, define STEP=x. Target specific version with VERSION=x.'
+    desc 'Rollbacks the database one migration and re migrate up. If you want to rollback more than one step, define STEP=x. Target specific version with VERSION=x.'
     task :redo => :load do
       if ENV['VERSION']
         Rake::Task['db:migrate:down'].invoke
@@ -176,7 +176,7 @@ namespace :db do
   task :reset => %w(db:drop db:setup)
 
   desc 'Forcibly close any open connections to the current env database (PostgreSQL specific)'
-  task :force_close_open_connections, [:env] => :environment do |t, args|
+  task :force_close_open_connections, [:env] => :environment do |_t, args|
     args.with_defaults(:env => Rails.env)
     SequelRails::Storage.close_connections_environment(args.env)
   end

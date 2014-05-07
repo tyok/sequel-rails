@@ -47,16 +47,16 @@ module SequelRails
       setup_logger app, ::Rails.logger
     end
 
-    initializer 'sequel.i18n_support' do |app|
-      setup_i18n_support app
+    initializer 'sequel.i18n_support' do |_app|
+      setup_i18n_support
     end
 
     # Expose database runtime to controller for logging.
-    initializer 'sequel.log_runtime' do |app|
-      setup_controller_runtime app
+    initializer 'sequel.log_runtime' do |_app|
+      setup_controller_runtime
     end
 
-    initializer 'sequel.connect' do |app|
+    initializer 'sequel.connect' do |_app|
       ::SequelRails.setup ::Rails.env
     end
 
@@ -69,11 +69,11 @@ module SequelRails
       ::SequelRails.configuration = app.config.sequel
     end
 
-    def setup_i18n_support(app)
+    def setup_i18n_support
       ::Sequel::Model.send :include, ::SequelRails::I18nSupport
     end
 
-    def setup_controller_runtime(app)
+    def setup_controller_runtime
       require 'sequel_rails/railties/controller_runtime'
       ActionController::Base.send :include, SequelRails::Railties::ControllerRuntime
     end

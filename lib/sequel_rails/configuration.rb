@@ -92,9 +92,8 @@ module SequelRails
       config['search_path'] = search_path if search_path
 
       # Allow to set the URL from environment directly
-      if url = ENV['DATABASE_URL']
-        config['url'] ||= url
-      end
+      url = ENV['DATABASE_URL']
+      config['url'] ||= url if url
 
       # some adapters only support an url
       if config['adapter'] && config['adapter'] =~ /^(jdbc|do):/ && !config.key?('url')
@@ -111,9 +110,9 @@ module SequelRails
         port = config['port'] ? ":#{config['port']}" : ''
         config['url'] ||=
         if config['adapter'].include?('sqlite')
-          sprintf('%s:%s', config['adapter'], config['database'])
+          format('%s:%s', config['adapter'], config['database'])
         else
-          sprintf('%s://%s%s/%s?%s', config['adapter'], config['host'], port, config['database'], params_str)
+          format('%s://%s%s/%s?%s', config['adapter'], config['host'], port, config['database'], params_str)
         end
       end
 

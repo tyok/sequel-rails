@@ -1,11 +1,13 @@
 AllCops:
-  Includes:
-    - Gemfile
-    - config.ru
-    - Rakefile
-    - '*.rake'
-    - '*.gemfile'
-    - '*.gemspec'
+  Include:
+    - '**/Gemfile'
+    - '**/config.ru'
+    - '**/Rakefile'
+    - '**/*.rake'
+    - '**/*.gemfile'
+    - '**/*.gemspec'
+  Exclude:
+    - 'lib/sequel-rails.rb'
 
 HashSyntax:
   EnforcedStyle: hash_rockets

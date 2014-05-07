@@ -163,16 +163,16 @@ describe SequelRails::Configuration do
       shared_examples 'with DATABASE_URL in ENV' do
         let(:database_url) { 'adapter://user:pass@host/db' }
         def with_database_url_env
-          previous, ENV["DATABASE_URL"] = ENV["DATABASE_URL"], database_url
+          previous, ENV['DATABASE_URL'] = ENV['DATABASE_URL'], database_url
           yield
-          ENV["DATABASE_URL"] = previous
+          ENV['DATABASE_URL'] = previous
         end
         context 'without url set in config' do
           around do |example|
-            with_database_url_env{ example.call }
+            with_database_url_env { example.call }
           end
           it 'uses DATABASE_URL' do
-            expect(::Sequel).to receive(:connect) do |url, hash|
+            expect(::Sequel).to receive(:connect) do |url, _hash|
               expect(url).to eq database_url
             end
             subject.connect environment
@@ -188,7 +188,7 @@ describe SequelRails::Configuration do
             end
           end
           it 'uses url from config' do
-            expect(::Sequel).to receive(:connect) do |url, hash|
+            expect(::Sequel).to receive(:connect) do |url, _hash|
               expect(url).to eq config_url
             end
             subject.connect environment

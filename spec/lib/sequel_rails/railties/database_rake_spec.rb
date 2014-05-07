@@ -7,10 +7,10 @@ describe 'Database rake tasks' do
 
   around do |example|
     begin
-      FileUtils.rm schema if File.exists? schema
+      FileUtils.rm schema if File.exist? schema
       example.run
     ensure
-      FileUtils.rm schema if File.exists? schema
+      FileUtils.rm schema if File.exist? schema
     end
   end
 
@@ -20,7 +20,7 @@ describe 'Database rake tasks' do
     it "dumps the schema in 'db/schema.rb'" do
       Dir.chdir app_root do
         `rake db:schema:dump`
-        expect(File.exists?(schema)).to be_true
+        expect(File.exist?(schema)).to be_true
       end
     end
 
@@ -47,7 +47,7 @@ EOS
     it "dumps the schema in 'db/structure.sql'" do
       Dir.chdir app_root do
         `rake db:structure:dump`
-        expect(File.exists?(schema)).to be_true
+        expect(File.exist?(schema)).to be_true
       end
     end
 

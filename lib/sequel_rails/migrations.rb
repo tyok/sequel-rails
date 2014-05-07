@@ -44,7 +44,7 @@ module SequelRails
       end
 
       def available_migrations?
-        File.exists?(migrations_dir) && Dir[File.join(migrations_dir, '*')].any?
+        File.exist?(migrations_dir) && Dir[File.join(migrations_dir, '*')].any?
       end
     end
   end
