@@ -7,7 +7,6 @@ rvm:
   - 2.1
   - jruby-18mode
   - jruby-19mode
-  - jruby-20mode
 env:
   - SEQUEL='~> 3.0'
   - SEQUEL='~> 4.0'
