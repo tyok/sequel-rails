@@ -10,7 +10,7 @@ namespace :db do
   # desc "Raises an error if there are pending migrations"
   task :abort_if_pending_migrations => [:environment, 'db:migrate:load'] do
     if SequelRails::Migrations.pending_migrations?
-      puts 'You have pending migrations:'
+      warn 'You have pending migrations:'
       abort 'Run `rake db:migrate` to update your database then try again.'
     end
   end

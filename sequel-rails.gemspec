@@ -30,5 +30,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake', '>= 0.8.7'
   s.add_development_dependency 'rspec', '~> 2.14'
   s.add_development_dependency 'rspec-rails', '~> 2.14'
-  s.add_development_dependency 'rubocop' unless RUBY_VERSION < '1.9.2'
+  s.add_development_dependency 'rubocop', '~> 0.20.1' unless RUBY_VERSION < '1.9.2'
 end

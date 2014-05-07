@@ -1,7 +1,7 @@
 begin
   require 'bundler/setup'
 rescue LoadError
-  puts 'You must `gem install bundler` and `bundle install` to run rake tasks'
+  warn 'You must `gem install bundler` and `bundle install` to run rake tasks'
 end
 Bundler.require :default, :development, :test
 
