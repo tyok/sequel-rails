@@ -1,5 +1,5 @@
-0.9.3.dev
-=========
+0.9.3 (2014-05-18)
+==================
 
 * Use `ENV['DATABASE_URL']` for connection if set [#66](https://github.com/TalentBox/sequel-rails/issues/66)
 
