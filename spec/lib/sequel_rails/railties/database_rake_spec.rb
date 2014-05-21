@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Database rake tasks', no_transaction: true do
+describe 'Database rake tasks', :no_transaction => true do
 
   let(:app) { Combustion::Application }
   let(:app_root) { app.root }
@@ -68,8 +68,8 @@ EOS
         begin
           expect do
             `rake db:rollback`
-          end.to change{ SequelRails::Migrations.current_migration }.from(
-            "1273253849_add_twitter_handle_to_users.rb"
+          end.to change { SequelRails::Migrations.current_migration }.from(
+            '1273253849_add_twitter_handle_to_users.rb'
           ).to(nil)
         ensure
           SequelRails::Migrations.migrate_up!
@@ -84,7 +84,7 @@ EOS
         SequelRails::Migrations.migrate_up!
         expect do
           `rake db:migrate:redo`
-        end.not_to change{ SequelRails::Migrations.current_migration }
+        end.not_to change { SequelRails::Migrations.current_migration }
       end
     end
   end

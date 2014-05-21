@@ -61,9 +61,9 @@ module SequelRails
         migrator_class = ::Sequel::Migrator.send(:migrator_class, migrations_dir)
         migrator = migrator_class.new ::Sequel::Model.db, migrations_dir
         if migrator.respond_to?(:applied_migrations)
-          migrator.applied_migrations[-2] || "0"
+          migrator.applied_migrations[-2] || '0'
         elsif migrator.respond_to?(:current_version)
-          migrator.current_version-1
+          migrator.current_version - 1
         end
       end
 

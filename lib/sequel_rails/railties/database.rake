@@ -166,10 +166,10 @@ namespace :db do
   desc 'Rollback the latest migration file or down to specified VERSION=x'
   task :rollback => 'migrate:load' do
     version = if ENV['VERSION']
-      ENV['VERSION'].to_i
-    else
-      SequelRails::Migrations.previous_migration
-    end
+                ENV['VERSION'].to_i
+              else
+                SequelRails::Migrations.previous_migration
+              end
     SequelRails::Migrations.migrate_down! version
     Rake::Task['db:dump'].invoke if SequelRails.configuration.schema_dump
   end
