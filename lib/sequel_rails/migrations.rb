@@ -43,6 +43,30 @@ module SequelRails
         Rails.root.join('db/migrate')
       end
 
+      def current_migration
+        return unless available_migrations?
+
+        migrator_class = ::Sequel::Migrator.send(:migrator_class, migrations_dir)
+        migrator = migrator_class.new ::Sequel::Model.db, migrations_dir
+        if migrator.respond_to?(:applied_migrations)
+          migrator.applied_migrations.last
+        elsif migrator.respond_to?(:current_version)
+          migrator.current_version
+        end
+      end
+
+      def previous_migration
+        return unless available_migrations?
+
+        migrator_class = ::Sequel::Migrator.send(:migrator_class, migrations_dir)
+        migrator = migrator_class.new ::Sequel::Model.db, migrations_dir
+        if migrator.respond_to?(:applied_migrations)
+          migrator.applied_migrations[-2] || "0"
+        elsif migrator.respond_to?(:current_version)
+          migrator.current_version-1
+        end
+      end
+
       def available_migrations?
         File.exist?(migrations_dir) && Dir[File.join(migrations_dir, '*')].any?
       end

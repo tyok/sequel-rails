@@ -163,6 +163,17 @@ namespace :db do
     Rake::Task['db:dump'].invoke if SequelRails.configuration.schema_dump
   end
 
+  desc 'Rollback the latest migration file or down to specified VERSION=x'
+  task :rollback => 'migrate:load' do
+    version = if ENV['VERSION']
+      ENV['VERSION'].to_i
+    else
+      SequelRails::Migrations.previous_migration
+    end
+    SequelRails::Migrations.migrate_down! version
+    Rake::Task['db:dump'].invoke if SequelRails.configuration.schema_dump
+  end
+
   desc 'Load the seed data from db/seeds.rb'
   task :seed => :abort_if_pending_migrations do
     seed_file = File.join(Rails.root, 'db', 'seeds.rb')

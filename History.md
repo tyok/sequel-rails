@@ -1,6 +1,8 @@
 0.9.4.dev
 =========
 
+* Implements `rake db:rollback` and fix `rake db:migrate:redo` [#67](https://github.com/TalentBox/sequel-rails/issues/66)
+
 0.9.3 (2014-05-18)
 ==================
 
