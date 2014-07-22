@@ -1,12 +1,16 @@
 0.9.4.dev
 =========
 
-* Implements `rake db:rollback` and fix `rake db:migrate:redo` [#67](https://github.com/TalentBox/sequel-rails/issues/66)
+* Put a note in README about plugins which could not be added to `Sequel::Model`
+  (Thanks to Dave Myron) [#68](https://github.com/TalentBox/sequel-rails/issues/68)
+* Implements `rake db:rollback` and fix `rake db:migrate:redo`
+  [#67](https://github.com/TalentBox/sequel-rails/issues/67)
 
 0.9.3 (2014-05-18)
 ==================
 
-* Use `ENV['DATABASE_URL']` for connection if set [#66](https://github.com/TalentBox/sequel-rails/issues/66)
+* Use `ENV['DATABASE_URL']` for connection if set
+  [#66](https://github.com/TalentBox/sequel-rails/issues/66)
 
 0.9.2 (2014-02-11)
 ==================

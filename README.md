@@ -231,6 +231,10 @@ loaded. Loading plugins into `Sequel::Model` after subclasses are already
 created is not supported by Sequel. You can also load extensions in
 `after_connect` or perform any custom actions that you need.
 
+Please note: some plugins require a `dataset` to work, which means they can't
+be added via `Sequel::Model.plugin`, they need to be added to a `Sequel::Model`
+subclass whose underlying table exists.
+
 Using the `SequelStore` to store session in database
 ====================================================
 
