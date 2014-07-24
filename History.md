@@ -1,5 +1,5 @@
-0.9.4.dev
-=========
+0.9.4 (2014-07-24)
+==================
 
 * Put a note in README about plugins which could not be added to `Sequel::Model`
   (Thanks to Dave Myron) [#68](https://github.com/TalentBox/sequel-rails/issues/68)
