@@ -1,6 +1,8 @@
 0.9.5 (dev)
 ===========
 
+* Fix spelling error in README (a3gis) [#70](https://github.com/TalentBox/sequel-rails/pull/70)
+
 0.9.4 (2014-07-24)
 ==================
 

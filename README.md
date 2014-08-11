@@ -346,6 +346,7 @@ Improvements has been made by those awesome contributors:
 * Chris Heisterkamp (cheister)
 * Tamir Duberstein (tamird)
 * shelling (shelling)
+* a3gis (a3gis)
 
 Credits
 =======
