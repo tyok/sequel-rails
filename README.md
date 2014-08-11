@@ -22,7 +22,7 @@ This was originally a fork of [brasten](https://github.com/brasten)'s
 [sequel-rails](https://github.com/brasten/sequel-rails) that has been updated to
 support newer versions of rails.
 
-Since January 2013, we've became the official maintainers of the gem after
+Since January 2013, we've become the official maintainers of the gem after
 [brasten](https://github.com/brasten) proposed us.
 
 Using sequel-rails
