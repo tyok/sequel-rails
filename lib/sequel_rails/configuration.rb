@@ -33,7 +33,10 @@ module SequelRails
     end
 
     def environments
-      @environments ||= raw.reduce({}) do |normalized, environment|
+      @environments ||= raw.reduce(
+        # default config - use just the environment variable
+        Hash.new normalize_repository_config({})
+      ) do |normalized, environment|
         name, config = environment.first, environment.last
         normalized[name] = normalize_repository_config(config)
         normalized
