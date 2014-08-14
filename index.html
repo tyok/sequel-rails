@@ -4,9 +4,9 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -52,7 +52,7 @@ hook into rails. The two are actually hooked into rails almost identically.</p>
 <a href="https://github.com/brasten/sequel-rails">sequel-rails</a> that has been updated to
 support newer versions of rails.</p>
 
-<p>Since January 2013, we've became the official maintainers of the gem after
+<p>Since January 2013, we've become the official maintainers of the gem after
 <a href="https://github.com/brasten">brasten</a> proposed us.</p>
 
 <h1>
@@ -130,7 +130,7 @@ configuration in <code>database.yml</code>.</p>
 
 <p>Session:</p>
 
-<div class="highlight highlight-ruby"><pre><span class="n">rails</span> <span class="n">generate</span> <span class="n">session_migration</span>
+<div class="highlight highlight-ruby"><pre><span class="n">rails</span> <span class="n">generate</span> <span class="ss">sequel</span><span class="p">:</span><span class="n">session_migration</span>
 </pre></div>
 </li>
 <li><p>Rake tasks similar to <code>ActiveRecord</code>, see
@@ -202,6 +202,8 @@ expected to be similar to <code>ActiveRecord</code>'s format.</p>
   <span class="l-Scalar-Plain">template</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">template1</span> <span class="c1"># Optional</span>
   <span class="l-Scalar-Plain">tablespace</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">non_default_tablespace_name</span> <span class="c1"># Optional</span>
   <span class="l-Scalar-Plain">max_connections</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">20</span> <span class="c1"># Optional, also accept 'pool' as key, if both are present 'max_connections' is used (default to nil, Sequel default is 4)</span>
+  <span class="l-Scalar-Plain">url</span><span class="p-Indicator">:</span> <span class="s">"postgres://myuser:mypass@host/somedatabase"</span> <span class="c1"># Optional, if present it's passed to `Sequel.connect` with other config as options</span>
+                                                    <span class="c1"># If url is not set in config file, environment variable `DATABASE_URL` is used</span>
 </pre></div>
 </li>
 <li>
@@ -216,6 +218,8 @@ expected to be similar to <code>ActiveRecord</code>'s format.</p>
   <span class="l-Scalar-Plain">port</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">5432</span> <span class="c1"># Optional</span>
   <span class="l-Scalar-Plain">charset</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">latin1</span> <span class="c1"># Optional (defaults to 'utf8')</span>
   <span class="l-Scalar-Plain">collation</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">latin1_general_ci</span> <span class="c1"># Optional (defaults to 'utf8_unicode_ci')</span>
+  <span class="l-Scalar-Plain">url</span><span class="p-Indicator">:</span> <span class="s">"mysql://myuser:mypass@host/somedatabase"</span> <span class="c1"># Optional, if present it's passed to `Sequel.connect` with other config as options</span>
+                                                 <span class="c1"># If url is not set in config file, environment variable `DATABASE_URL` is used</span>
 </pre></div>
 </li>
 <li>
@@ -240,7 +244,7 @@ expected to be similar to <code>ActiveRecord</code>'s format.</p>
 after_connect configuration option in <code>config/application.rb</code> (0.6.2+):</p>
 
 <div class="highlight highlight-ruby"><pre>    <span class="n">config</span><span class="o">.</span><span class="n">sequel</span><span class="o">.</span><span class="n">after_connect</span> <span class="o">=</span> <span class="nb">proc</span> <span class="k">do</span>
-      <span class="no">Sequel</span><span class="o">::</span><span class="no">Model</span><span class="o">.</span><span class="n">plugin</span> <span class="ss">:timestamps</span><span class="p">,</span> <span class="n">update_on_create</span><span class="p">:</span> <span class="kp">true</span>
+      <span class="no">Sequel</span><span class="o">::</span><span class="no">Model</span><span class="o">.</span><span class="n">plugin</span> <span class="ss">:timestamps</span><span class="p">,</span> <span class="ss">update_on_create</span><span class="p">:</span> <span class="kp">true</span>
     <span class="k">end</span>
 </pre></div>
 
@@ -248,6 +252,10 @@ after_connect configuration option in <code>config/application.rb</code> (0.6.2+
 loaded. Loading plugins into <code>Sequel::Model</code> after subclasses are already
 created is not supported by Sequel. You can also load extensions in
 <code>after_connect</code> or perform any custom actions that you need.</p>
+
+<p>Please note: some plugins require a <code>dataset</code> to work, which means they can't
+be added via <code>Sequel::Model.plugin</code>, they need to be added to a <code>Sequel::Model</code>
+subclass whose underlying table exists.</p>
 
 <h1>
 <a name="using-the-sequelstore-to-store-session-in-database" class="anchor" href="#using-the-sequelstore-to-store-session-in-database"><span class="octicon octicon-link"></span></a>Using the <code>SequelStore</code> to store session in database</h1>
@@ -262,7 +270,7 @@ session store backed by a <code>Sequel</code> model. Edit your
 <p>You can then generate a migration for the session table using the provided
 generator:</p>
 
-<div class="highlight highlight-bash"><pre>rails generate session_migration
+<div class="highlight highlight-bash"><pre>rails generate sequel:session_migration
 rake db:migrate
 </pre></div>
 
@@ -354,6 +362,8 @@ future version unintentionally.</li>
 <li>Kevin Menard (nirvdrum)</li>
 <li>Chris Heisterkamp (cheister)</li>
 <li>Tamir Duberstein (tamird)</li>
+<li>shelling (shelling)</li>
+<li>a3gis (a3gis)</li>
 </ul><h1>
 <a name="credits" class="anchor" href="#credits"><span class="octicon octicon-link"></span></a>Credits</h1>
 
