@@ -167,31 +167,46 @@ describe SequelRails::Configuration do
           yield
           ENV['DATABASE_URL'] = previous
         end
-        context 'without url set in config' do
+
+        context 'with DATABASE_URL in ENV' do
           around do |example|
             with_database_url_env { example.call }
           end
-          it 'uses DATABASE_URL' do
-            expect(::Sequel).to receive(:connect) do |url, _hash|
-              expect(url).to eq database_url
-            end
-            subject.connect environment
-          end
-        end
 
-        context 'with url set in config' do
-          let(:config_url) { 'another_adapter://user:pass@host/db' }
-          around do |example|
-            with_database_url_env do
-              environments[environment]['url'] = config_url
-              example.call
+          shared_examples 'uses DATABASE_URL' do
+            it 'uses DATABASE_URL' do
+              expect(::Sequel).to receive(:connect) do |url, _hash|
+                expect(url).to eq database_url
+              end
+              subject.connect environment
             end
           end
-          it 'uses url from config' do
-            expect(::Sequel).to receive(:connect) do |url, _hash|
-              expect(url).to eq config_url
+
+          context 'without url set in config' do
+            include_examples 'uses DATABASE_URL'
+          end
+
+          context 'without config' do
+            before do
+              environments.delete environment
             end
-            subject.connect environment
+            include_examples 'uses DATABASE_URL'
+          end
+
+          context 'with url set in config' do
+            let(:config_url) { 'another_adapter://user:pass@host/db' }
+            around do |example|
+              with_database_url_env do
+                environments[environment]['url'] = config_url
+                example.call
+              end
+            end
+            it 'uses url from config' do
+              expect(::Sequel).to receive(:connect) do |url, _hash|
+                expect(url).to eq config_url
+              end
+              subject.connect environment
+            end
           end
         end
       end
