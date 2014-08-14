@@ -1,5 +1,5 @@
-0.9.5 (dev)
-===========
+0.9.5 (2014-08-14)
+==================
 
 * Use `DATABASE_URL` environment variable even if there's no config (Rafał Rzepecki) [71](https://github.com/TalentBox/sequel-rails/pull/71)
 * Fix spelling error in README (a3gis) [#70](https://github.com/TalentBox/sequel-rails/pull/70)

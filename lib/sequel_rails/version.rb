@@ -1,3 +1,3 @@
 module SequelRails
-  VERSION = '0.9.5.dev'
+  VERSION = '0.9.5'
 end
