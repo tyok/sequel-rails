@@ -37,7 +37,8 @@ module ActionDispatch
       def destroy_session(env, sid, options)
         sid = current_session_id(env)
         if sid
-          get_session_model(env, sid).destroy
+          session = get_session_model(env, sid)
+          session.destroy unless session.new?
           env[SESSION_RECORD_KEY] = nil
         end
 
