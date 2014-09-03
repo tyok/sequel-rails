@@ -1,10 +1,12 @@
 0.9.6 (dev)
 ===========
 
+* Do not attempt to destroy session record if it's not persisted (Andrey Chernih) [#72](https://github.com/TalentBox/sequel-rails/pull/72)
+
 0.9.5 (2014-08-14)
 ==================
 
-* Use `DATABASE_URL` environment variable even if there's no config (Rafał Rzepecki) [71](https://github.com/TalentBox/sequel-rails/pull/71)
+* Use `DATABASE_URL` environment variable even if there's no config (Rafał Rzepecki) [#71](https://github.com/TalentBox/sequel-rails/pull/71)
 * Fix spelling error in README (a3gis) [#70](https://github.com/TalentBox/sequel-rails/pull/70)
 
 0.9.4 (2014-07-24)
