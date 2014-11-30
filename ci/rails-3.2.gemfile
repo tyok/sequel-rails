@@ -6,7 +6,7 @@ gemspec :path => '../'
 
 gem 'sequel', "#{ENV['SEQUEL']}"
 
-gem 'fakefs', :require => 'fakefs/safe'
+gem 'fakefs', '0.5.3', :require => 'fakefs/safe'
 
 # activesupport has an undeclared dependency on tzinfo prior to 4.0.0
 gem 'tzinfo'

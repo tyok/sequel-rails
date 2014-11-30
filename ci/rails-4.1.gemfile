@@ -6,7 +6,7 @@ gemspec :path => '../'
 
 gem 'sequel', "#{ENV['SEQUEL']}"
 
-gem 'fakefs', :require => 'fakefs/safe'
+gem 'fakefs', '0.5.3', :require => 'fakefs/safe'
 
 # MRI/Rubinius Adapter Dependencies
 platform :ruby do

@@ -31,6 +31,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec', '~> 3.1'
   s.add_development_dependency 'rspec-rails', '~> 3.1'
   s.add_development_dependency 'rubocop', '~> 0.20.1' unless RUBY_VERSION < '1.9.2'
-  s.add_development_dependency 'ammeter',  '1.1.2'
-  s.add_development_dependency 'fakefs',  '0.5.3'
+  s.add_development_dependency 'ammeter', '1.1.2'
 end

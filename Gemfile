@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gemspec
 
 gem 'actionpack'
-gem 'fakefs', :require => 'fakefs/safe'
+gem 'fakefs', '0.5.3', :require => 'fakefs/safe'
 gem 'pry'
 
 # MRI/Rubinius Adapter Dependencies
