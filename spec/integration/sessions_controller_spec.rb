@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SessionsController, type: :request do
+describe SessionsController, :type => :request do
   let(:session_class) { ::ActionDispatch::Session::SequelStore.session_class }
 
   def login
