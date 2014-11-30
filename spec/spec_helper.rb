@@ -7,7 +7,7 @@ Bundler.require :default, :development, :test
 Combustion.initialize! :sequel_rails
 
 require 'rspec/rails'
-require 'rspec/autorun'
+require 'ammeter/init'
 
 # Load support files
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
@@ -19,7 +19,6 @@ rspec_exclusions[:mysql] = !%w(mysql mysql2).include?(ENV['TEST_ADAPTER'])
 rspec_exclusions[:sqlite] = ENV['TEST_ADAPTER'] != 'sqlite3'
 
 RSpec.configure do |config|
-  config.treat_symbols_as_metadata_keys_with_true_values = true
   config.filter_run_excluding rspec_exclusions
   config.around :each do |example|
     if example.metadata[:no_transaction]
@@ -41,7 +40,7 @@ end
 # Ensure db exists and clean state
 begin
   require 'sequel_rails/storage'
-  silence(:stdout) do
+  Ammeter::OutputCapturer.capture_stdout do
     SequelRails::Storage.adapter_for(:test).drop
     SequelRails::Storage.adapter_for(:test).create
   end

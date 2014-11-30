@@ -24,45 +24,45 @@ describe SequelRails::Configuration do
     context 'in test environment' do
       let(:environment) { 'test' }
       it 'defaults to false' do
-        expect(subject.schema_dump).to be_false
+        expect(subject.schema_dump).to be false
       end
       it 'can be assigned' do
         subject.schema_dump = true
-        expect(subject.schema_dump).to be_true
+        expect(subject.schema_dump).to be true
       end
       it 'can be set from merging another hash' do
         subject.merge!(:schema_dump => true)
-        expect(subject.schema_dump).to be_true
+        expect(subject.schema_dump).to be true
       end
     end
 
     context 'in production environment' do
       let(:environment) { 'production' }
       it 'defaults to false' do
-        expect(subject.schema_dump).to be_false
+        expect(subject.schema_dump).to be false
       end
       it 'can be assigned' do
         subject.schema_dump = true
-        expect(subject.schema_dump).to be_true
+        expect(subject.schema_dump).to be true
       end
       it 'can be set from merging another hash' do
         subject.merge!(:schema_dump => true)
-        expect(subject.schema_dump).to be_true
+        expect(subject.schema_dump).to be true
       end
     end
 
     context 'in other environments' do
       let(:environment) { 'development' }
       it 'defaults to true' do
-        expect(subject.schema_dump).to be_true
+        expect(subject.schema_dump).to be true
       end
       it 'can be assigned' do
         subject.schema_dump = false
-        expect(subject.schema_dump).to be_false
+        expect(subject.schema_dump).to be false
       end
       it 'can be set from merging another hash' do
         subject.merge!(:schema_dump => false)
-        expect(subject.schema_dump).to be_false
+        expect(subject.schema_dump).to be false
       end
     end
   end
@@ -71,15 +71,15 @@ describe SequelRails::Configuration do
     subject { described_class.new }
 
     it 'defaults to true' do
-      expect(subject.load_database_tasks).to be_true
+      expect(subject.load_database_tasks).to be true
     end
     it 'can be assigned' do
       subject.load_database_tasks = false
-      expect(subject.load_database_tasks).to be_false
+      expect(subject.load_database_tasks).to be false
     end
     it 'can be set from merging another hash' do
       subject.merge!(:load_database_tasks => false)
-      expect(subject.load_database_tasks).to be_false
+      expect(subject.load_database_tasks).to be false
     end
   end
 

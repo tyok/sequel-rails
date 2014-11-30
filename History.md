@@ -1,6 +1,8 @@
 0.9.6 (dev)
 ===========
 
+* Run CI with Rails 4.2.0.rc1
+* Update RSpec to 3.1
 * Do not attempt to destroy session record if it's not persisted (Andrey Chernih) [#72](https://github.com/TalentBox/sequel-rails/pull/72)
 
 0.9.5 (2014-08-14)

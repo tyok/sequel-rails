@@ -39,7 +39,7 @@ describe SequelRails::Storage do
         expect(SequelRails::Storage::Postgres).to receive(:new).with(env).and_return(adapter)
       end
       expect(adapter).to receive(:create).twice
-      capture(:stdout) do
+      Ammeter::OutputCapturer.capture_stdout do
         described_class.create_all
       end
     end
@@ -52,7 +52,7 @@ describe SequelRails::Storage do
       end
       expect(adapter).to receive(:close_connections).twice
       expect(adapter).to receive(:drop).twice
-      capture(:stdout) do
+      Ammeter::OutputCapturer.capture_stdout do
         described_class.drop_all
       end
     end
@@ -81,7 +81,7 @@ describe SequelRails::Storage do
         expect(SequelRails::Storage::Postgres).to receive(:new).with(env).and_return(adapter)
       end
       expect(adapter).to receive(:close_connections).exactly(3).times
-      capture(:stdout) do
+      Ammeter::OutputCapturer.capture_stdout do
         described_class.close_all_connections
       end
     end

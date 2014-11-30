@@ -23,6 +23,6 @@ describe SequelRails::Railties::LogSubscriber do
     @logger.level = :info
     User.all
     wait
-    expect(@logger.logged(:debug)).to have(:no).line
+    expect(@logger.logged(:debug).size).to eq 0
   end
 end

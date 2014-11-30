@@ -38,7 +38,7 @@ describe SequelRails::Migrations do
 
     it 'returns false if db/migrate directory exists, but is empty' do
       FileUtils.mkdir_p path
-      expect(described_class.pending_migrations?).to be_false
+      expect(described_class.pending_migrations?).to be false
     end
 
     context 'when db/migrate directory exists and contains migrations' do

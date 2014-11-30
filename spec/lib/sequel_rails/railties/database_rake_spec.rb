@@ -19,7 +19,7 @@ describe 'Database rake tasks', :no_transaction => true do
     it "dumps the schema in 'db/schema.rb'" do
       Dir.chdir app_root do
         `rake db:schema:dump`
-        expect(File.exist?(schema)).to be_true
+        expect(File.exist?(schema)).to be true
       end
     end
 
@@ -46,7 +46,7 @@ EOS
     it "dumps the schema in 'db/structure.sql'" do
       Dir.chdir app_root do
         `rake db:structure:dump`
-        expect(File.exist?(schema)).to be_true
+        expect(File.exist?(schema)).to be true
       end
     end
 

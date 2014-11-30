@@ -7,8 +7,8 @@ describe SequelRails::Railtie do
     expect(
       ActiveSupport::LogSubscriber.log_subscribers.select do |subscriber|
         subscriber.is_a?(SequelRails::Railties::LogSubscriber)
-      end
-    ).to have(1).item
+      end.size
+    ).to eq 1
   end
 
   context 'configures generator to use Sequel' do
@@ -17,12 +17,12 @@ describe SequelRails::Railtie do
     end
 
     it 'for migrations' do
-      expect(app.config.generators.options[:sequel][:migration]).to be_true
+      expect(app.config.generators.options[:sequel][:migration]).to be true
     end
   end
 
   it 'configures rails to use fancy pants logging' do
-    expect(app.config.rails_fancy_pants_logging).to be_true
+    expect(app.config.rails_fancy_pants_logging).to be true
   end
 
   context "configures action dispatch's rescue responses" do
