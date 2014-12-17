@@ -8,6 +8,7 @@ AllCops:
     - '**/*.gemspec'
   Exclude:
     - 'lib/sequel-rails.rb'
+    - 'ci/*'
 
 HashSyntax:
   EnforcedStyle: hash_rockets
