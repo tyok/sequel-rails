@@ -10,6 +10,9 @@ describe SequelRails::DbConfig do
     it "always uses jdbc adapter" do
       expect(from(adapter: :sqlite)[:adapter]).to eq 'jdbc:sqlite'
     end
+    it "stays with a jdbc adapter if set explicitly" do
+      expect(from(adapter: 'jdbc:sqlite')[:adapter]).to eq 'jdbc:sqlite'
+    end
     it "changes postgres adapter to jdbc:postgresql" do
       expect(from(adapter: :postgres)[:adapter]).to eq 'jdbc:postgresql'
     end

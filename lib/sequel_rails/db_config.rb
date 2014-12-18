@@ -28,7 +28,7 @@ module SequelRails
 
     def normalize_adapter
       self[:adapter] = ADAPTER_MAPPING[adapter.to_s] || adapter.to_s
-      self[:adapter] = jdbcify_adapter if SequelRails.jruby?
+      jdbcify_adapter if SequelRails.jruby?
     end
 
     def jdbcify_adapter
