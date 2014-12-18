@@ -70,7 +70,8 @@ module SequelRails
     end
 
     def setup_i18n_support
-      ::Sequel::Model.send :include, ::SequelRails::I18nSupport
+      ::Sequel::Model.send :extend, ::ActiveModel::Translation
+      ::Sequel::Model.send :extend, ::SequelRails::I18nSupport
     end
 
     def setup_controller_runtime
