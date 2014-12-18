@@ -20,6 +20,16 @@ rspec_exclusions[:sqlite] = ENV['TEST_ADAPTER'] != 'sqlite3'
 
 RSpec.configure do |config|
   config.filter_run_excluding rspec_exclusions
+
+  config.before(:all) do
+    I18n.backend.store_translations(
+      :en,
+      'sequel' => {
+        'models' => {
+          'user' => 'translated user' }
+      })
+  end
+
   config.around :each do |example|
     if example.metadata[:no_transaction]
       example.run

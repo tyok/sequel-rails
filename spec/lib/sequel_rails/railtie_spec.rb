@@ -56,7 +56,9 @@ describe SequelRails::Railtie do
   end
 
   it 'configures Sequel::Model instances for i18n' do
-    expect(User.new.i18n_scope).to be(:sequel)
+    expect(User.i18n_scope).to be(:sequel)
+    expect(User).to respond_to(:lookup_ancestors)
+    expect(User.model_name.human).to eq('translated user')
   end
 
   it 'adds Sequel runtime to controller for logging' do
