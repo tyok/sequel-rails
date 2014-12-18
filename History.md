@@ -1,3 +1,9 @@
+0.9.7 (2014-12-18)
+==================
+
+* Fix ActiveModel I18n integration (Nico Rieck) [#77](https://github.com/TalentBox/sequel-rails/pull/77)
+* Improve CI speed by using docker and caching on Travis
+
 0.9.6 (2014-11-30)
 ==================
 
