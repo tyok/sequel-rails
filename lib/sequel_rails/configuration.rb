@@ -46,6 +46,12 @@ module SequelRails
 
     def connect(environment)
       normalized_config = environment_for environment
+
+      if normalized_config.empty?
+        raise "Database not configured.\n" +
+            "Please create config/database.yml or set DATABASE_URL in environment."
+      end
+
       if normalized_config['url']
         ::Sequel.connect normalized_config['url'], normalized_config
       else

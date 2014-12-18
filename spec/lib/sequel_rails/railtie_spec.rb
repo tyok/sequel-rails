@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'helpers/io'
 
 describe SequelRails::Railtie do
   let(:app) { Combustion::Application }
@@ -71,5 +72,59 @@ describe SequelRails::Railtie do
     expect do
       Sequel::Model.db.test_connection
     end.to_not raise_error
+  end
+
+  context 'when database.yml does not exist' do
+    let :app do
+      Class.new(Combustion::Application).tap do |app|
+        app.config.sequel = ::SequelRails::Configuration.new
+      end
+    end
+
+    let :init_app! do
+      app.configure_for_combustion
+      app.config.eager_load = false # to supress a warning
+      app.initialize!
+    end
+
+    before do
+      pretend_file_not_exists %r(/database.yml$)
+    end
+
+    context "and DATABASE_URL is defined" do
+      let (:database_url) do
+        cfg = Combustion::Application.config.database_configuration['test']
+        url = SequelRails::DbConfig.new(cfg).url
+      end
+
+      around do |ex|
+        orig = ENV['DATABASE_URL']
+        ENV['DATABASE_URL'] = database_url
+        ex.run
+        ENV['DATABASE_URL'] = orig
+      end
+
+      it 'initializing the application uses it' do
+        expect do
+          init_app!
+          Sequel::Model.db.test_connection
+        end.to_not raise_error
+      end
+    end
+
+    context "and DATABASE_URL is not defined" do
+      around do |ex|
+        orig = ENV['DATABASE_URL']
+        ENV.delete 'DATABASE_URL'
+        ex.run
+        ENV['DATABASE_URL'] = orig
+      end
+
+      it 'initializing the application fails' do
+        expect do
+          init_app!
+        end.to raise_error
+      end
+    end
   end
 end
