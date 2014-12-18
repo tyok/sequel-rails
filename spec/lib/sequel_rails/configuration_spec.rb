@@ -110,8 +110,8 @@ describe SequelRails::Configuration do
           'database' => 'sequel_rails_test_storage_production',
         },
         'url_already_constructed' => {
-          'adapter' => 'adapter_name',
-          'url' => 'jdbc:adapter_name://HOST/DB?user=U&password=P&ssl=true&sslfactory=sslFactoryOption'
+          'adapter' => 'adaptername',
+          'url' => 'jdbc:adaptername://HOST/DB?user=U&password=P&ssl=true&sslfactory=sslFactoryOption'
         },
         'bogus' => {},
       }
@@ -226,7 +226,7 @@ describe SequelRails::Configuration do
                 if hash_or_url.is_a? Hash
                   expect(hash_or_url['search_path']).to eq(search_path)
                 else
-                  expect(hash_or_url).to include('search_path=secret,private,public')
+                  expect(hash_or_url).to include('search_path=secret%2Cprivate%2Cpublic')
                 end
               end
               subject.connect environment
@@ -276,8 +276,8 @@ describe SequelRails::Configuration do
 
             it 'does not change the url' do
               expect(::Sequel).to receive(:connect) do |url, hash|
-                expect(url).to eq('jdbc:adapter_name://HOST/DB?user=U&password=P&ssl=true&sslfactory=sslFactoryOption')
-                expect(hash['adapter']).to eq('jdbc:adapter_name')
+                expect(url).to eq('jdbc:adaptername://HOST/DB?user=U&password=P&ssl=true&sslfactory=sslFactoryOption')
+                expect(hash['adapter']).to eq('jdbc:adaptername')
               end
               subject.connect environment
             end
@@ -327,8 +327,8 @@ describe SequelRails::Configuration do
 
             it 'does not change the url' do
               expect(::Sequel).to receive(:connect) do |url, hash|
-                expect(url).to eq('jdbc:adapter_name://HOST/DB?user=U&password=P&ssl=true&sslfactory=sslFactoryOption')
-                expect(hash['adapter']).to eq('jdbc:adapter_name')
+                expect(url).to eq('jdbc:adaptername://HOST/DB?user=U&password=P&ssl=true&sslfactory=sslFactoryOption')
+                expect(hash['adapter']).to eq('jdbc:adaptername')
               end
               subject.connect environment
             end
