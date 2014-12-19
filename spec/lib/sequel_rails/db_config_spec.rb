@@ -66,7 +66,7 @@ describe SequelRails::DbConfig do
   describe '#url' do
     it 'creates plain sqlite URLs' do
       expect(from(:adapter => :sqlite, :database => :some).url).to\
-          eq "sqlite:#{root}/some"
+          eq "sqlite://#{root}/some"
     end
 
     it 'creates opaque sqlite URL for memory' do
@@ -81,6 +81,11 @@ describe SequelRails::DbConfig do
                      :database => :foo, :host => 'bar', :port => 42,
                      :something => 'hi!', :user => 'linus'
         ).url
+    end
+
+    it 'creates triple slash urls when without host' do
+      expect(from(:adapter => :foo, :database => :bar).url).to\
+          eq 'foo:///bar'
     end
 
     it 'creates proper JDBC URLs' do

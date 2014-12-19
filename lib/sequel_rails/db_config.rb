@@ -18,7 +18,10 @@ module SequelRails
     end
 
     def url
-      self[:url] || make_url.to_s
+      # the gsub transforms foo:/bar
+      # (which jdbc doesn't like)
+      # into foo:///bar
+      self[:url] || make_url.to_s.gsub(/:\/(?=\w)/, ':///')
     end
 
     private
