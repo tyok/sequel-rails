@@ -75,16 +75,15 @@ describe SequelRails::Railtie do
   end
 
   context 'when database.yml does not exist' do
-    let :app do
-      Class.new(Combustion::Application).tap do |app|
-        app.config.sequel = ::SequelRails::Configuration.new
-      end
+    before do
+      app.config.sequel = ::SequelRails::Configuration.new
     end
 
-    let :init_app! do
+    let :configure_sequel! do
       app.configure_for_combustion
       app.config.eager_load = false # to supress a warning
-      app.initialize!
+      SequelRails::Railtie.configure_sequel app
+      ::SequelRails.setup ::Rails.env
     end
 
     before do
@@ -106,7 +105,7 @@ describe SequelRails::Railtie do
 
       it 'initializing the application uses it' do
         expect do
-          init_app!
+          configure_sequel!
           Sequel::Model.db.test_connection
         end.to_not raise_error
       end
@@ -122,7 +121,7 @@ describe SequelRails::Railtie do
 
       it 'initializing the application fails' do
         expect do
-          init_app!
+          configure_sequel!
         end.to raise_error
       end
     end

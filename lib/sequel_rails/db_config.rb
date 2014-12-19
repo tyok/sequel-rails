@@ -1,4 +1,5 @@
 require 'active_support/hash_with_indifferent_access.rb'
+require 'uri'
 
 module SequelRails
   class DbConfig < ActiveSupport::HashWithIndifferentAccess
@@ -34,7 +35,7 @@ module SequelRails
     def jdbcify_adapter
        return if adapter =~ /^jdbc:/
        self[:adapter] = 'postgresql' if adapter == 'postgres'
-       adapter.prepend 'jdbc:'
+       self[:adapter] = 'jdbc:' + adapter
     end
 
     def normalize_db root
@@ -49,8 +50,8 @@ module SequelRails
       if adapter =~ /^(jdbc|do):/
         scheme, subadapter = adapter.split ':'
         return URI::Generic.build \
-            scheme: scheme,
-            opaque: build_url(to_hash.merge 'adapter' => subadapter).to_s
+            :scheme => scheme,
+            :opaque => build_url(to_hash.merge 'adapter' => subadapter).to_s
       else
         build_url to_hash
       end
@@ -61,12 +62,12 @@ module SequelRails
           (database = cfg['database']) =~ /^:/
         # magic sqlite databases
         return URI::Generic.build \
-            scheme: adapter,
-            opaque: database
+            :scheme => adapter,
+            :opaque => database
       end
 
       # these four are handled separately
-      params = cfg.reject { |k| %w(adapter host port database).include? k }
+      params = cfg.reject { |k, _| %w(adapter host port database).include? k }
 
       if v = params['search_path']
         # make sure there's no whitespace
@@ -74,18 +75,40 @@ module SequelRails
         params['search_path'] = v.join(',')
       end
 
-      path = cfg['database']
-      path = path.to_s.dup.prepend('/') if path =~ %r(^(?!/))
+      path = cfg['database'].to_s
+      path = "/#{path}" if path =~ %r(^(?!/))
 
       q = URI.encode_www_form(params)
       q = nil if q.empty?
 
       URI::Generic.build \
-          scheme: cfg['adapter'],
-          host: cfg['host'],
-          port: cfg['port'],
-          path: path,
-          query: q
+          :scheme => cfg['adapter'],
+          :host => cfg['host'],
+          :port => cfg['port'],
+          :path => path,
+          :query => q
     end
+  end
+end
+
+unless URI.respond_to? :encode_www_form
+  def URI.encode_www_form(enum)
+    enum.map do |k,v|
+      if v.nil?
+        encode_www_form_component(k)
+      elsif v.respond_to?(:to_ary)
+        v.to_ary.map do |w|
+          str = encode_www_form_component(k)
+          unless w.nil?
+            str << '='
+            str << encode_www_form_component(w)
+          end
+        end.join('&')
+      else
+        str = encode_www_form_component(k)
+        str << '='
+        str << encode_www_form_component(v)
+      end
+    end.join('&')
   end
 end

@@ -66,7 +66,7 @@ module SequelRails
     end
 
     def normalize_repository_config(hash)
-      config = DbConfig.new hash, root: root
+      config = DbConfig.new hash, :root => root
 
       config['max_connections'] = max_connections if max_connections
       config['search_path'] = search_path if search_path
