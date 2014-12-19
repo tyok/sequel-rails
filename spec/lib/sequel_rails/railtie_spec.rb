@@ -87,13 +87,13 @@ describe SequelRails::Railtie do
     end
 
     before do
-      pretend_file_not_exists %r(/database.yml$)
+      pretend_file_not_exists(/\/database.yml$/)
     end
 
-    context "and DATABASE_URL is defined" do
-      let (:database_url) do
+    context 'and DATABASE_URL is defined' do
+      let :database_url do
         cfg = Combustion::Application.config.database_configuration['test']
-        url = SequelRails::DbConfig.new(cfg).url
+        SequelRails::DbConfig.new(cfg).url
       end
 
       around do |ex|
@@ -111,7 +111,7 @@ describe SequelRails::Railtie do
       end
     end
 
-    context "and DATABASE_URL is not defined" do
+    context 'and DATABASE_URL is not defined' do
       around do |ex|
         orig = ENV['DATABASE_URL']
         ENV.delete 'DATABASE_URL'

@@ -3,7 +3,7 @@ require 'uri'
 
 module SequelRails
   class DbConfig < ActiveSupport::HashWithIndifferentAccess
-    def initialize raw, opts = {}
+    def initialize(raw, opts = {})
       merge! raw
       self[:port] = port.to_i if include? :port
       normalize_adapter if include? :adapter
@@ -12,8 +12,8 @@ module SequelRails
     end
 
     # allow easier access
-    def method_missing key, *a
-      return self[key] if a.empty? and include? key
+    def method_missing(key, *a)
+      return self[key] if a.empty? && include?(key)
       super
     end
 
@@ -22,6 +22,7 @@ module SequelRails
     end
 
     private
+
     ADAPTER_MAPPING = {
       'sqlite3' => 'sqlite',
       'postgresql' => 'postgres'
@@ -33,12 +34,12 @@ module SequelRails
     end
 
     def jdbcify_adapter
-       return if adapter =~ /^jdbc:/
-       self[:adapter] = 'postgresql' if adapter == 'postgres'
-       self[:adapter] = 'jdbc:' + adapter
+      return if adapter =~ /^jdbc:/
+      self[:adapter] = 'postgresql' if adapter == 'postgres'
+      self[:adapter] = 'jdbc:' + adapter
     end
 
-    def normalize_db root
+    def normalize_db(root)
       return unless include? :adapter
       if root && adapter.include?('sqlite') && database != ':memory:'
         # sqlite expects path as the database name
@@ -57,7 +58,7 @@ module SequelRails
       end
     end
 
-    def build_url cfg
+    def build_url(cfg)
       if (adapter = cfg['adapter']) =~ /sqlite/ &&
           (database = cfg['database']) =~ /^:/
         # magic sqlite databases
@@ -69,14 +70,14 @@ module SequelRails
       # these four are handled separately
       params = cfg.reject { |k, _| %w(adapter host port database).include? k }
 
-      if v = params['search_path']
+      if (v = params['search_path'])
         # make sure there's no whitespace
         v = v.split(',').map(&:strip) unless v.respond_to? :join
         params['search_path'] = v.join(',')
       end
 
       path = cfg['database'].to_s
-      path = "/#{path}" if path =~ %r(^(?!/))
+      path = "/#{path}" if path =~ /^(?!\/)/
 
       q = URI.encode_www_form(params)
       q = nil if q.empty?
@@ -93,7 +94,7 @@ end
 
 unless URI.respond_to? :encode_www_form
   def URI.encode_www_form(enum)
-    enum.map do |k,v|
+    enum.map do |k, v|
       if v.nil?
         encode_www_form_component(k)
       elsif v.respond_to?(:to_ary)
