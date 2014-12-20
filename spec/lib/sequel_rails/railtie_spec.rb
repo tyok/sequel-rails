@@ -86,6 +86,7 @@ describe SequelRails::Railtie do
       ::SequelRails.setup ::Rails.env
     end
 
+    include IOSpecHelper
     before do
       pretend_file_not_exists(/\/database.yml$/)
     end
