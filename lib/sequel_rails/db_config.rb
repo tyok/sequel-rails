@@ -17,6 +17,10 @@ module SequelRails
       super
     end
 
+    def respond_to_missing?(key, include_private = false)
+      include?(key) || super
+    end
+
     def url
       # the gsub transforms foo:/bar
       # (which jdbc doesn't like)
