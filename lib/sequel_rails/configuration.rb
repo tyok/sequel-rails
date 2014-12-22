@@ -1,4 +1,5 @@
 require 'active_support/core_ext/class/attribute_accessors'
+require 'sequel_rails/db_config'
 
 module SequelRails
   mattr_accessor :configuration
@@ -45,6 +46,12 @@ module SequelRails
 
     def connect(environment)
       normalized_config = environment_for environment
+
+      unless (normalized_config.keys & %w(adapter url)).any?
+        fail "Database not configured.\n" \
+            'Please create config/database.yml or set DATABASE_URL in environment.'
+      end
+
       if normalized_config['url']
         ::Sequel.connect normalized_config['url'], normalized_config
       else
@@ -59,65 +66,16 @@ module SequelRails
     end
 
     def normalize_repository_config(hash)
-      config = {}
-      hash.each do |key, value|
-        config[key.to_s] =
-        if key.to_s == 'port'
-          value.to_i
-        elsif key.to_s == 'adapter' && value == 'sqlite3'
-          'sqlite'
-        elsif key.to_s == 'database' && (hash['adapter'] == 'sqlite3' ||
-                                         hash['adapter'] == 'sqlite'  ||
-                                         hash[:adapter]  == 'sqlite3' ||
-                                         hash[:adapter]  == 'sqlite')
-          value == ':memory:' ? value : File.expand_path((hash['database'] || hash[:database]), root)
-        elsif key.to_s == 'adapter' && value == 'postgresql'
-          'postgres'
-        else
-          value
-        end
-      end
+      config = DbConfig.new hash, :root => root
 
-      # always use jdbc when running jruby
-      if SequelRails.jruby?
-        if config['adapter']
-          case config['adapter'].to_sym
-          when :postgres
-            config['adapter'] = :postgresql
-          end
-          config['adapter'] = "jdbc:#{config['adapter']}"
-        end
-      end
-
-      # override max connections if requested in app configuration
-      config['max_connections'] ||= config['pool']
       config['max_connections'] = max_connections if max_connections
       config['search_path'] = search_path if search_path
 
-      # Allow to set the URL from environment directly
       url = ENV['DATABASE_URL']
       config['url'] ||= url if url
 
-      # some adapters only support an url
-      if config['adapter'] && config['adapter'] =~ /^(jdbc|do):/ && !config.key?('url')
-        params = {}
-        config.each do |k, v|
-          next if %w(adapter host port database).include?(k)
-          if k == 'search_path'
-            v = v.split(',').map(&:strip) unless v.is_a? Array
-            v = URI.escape(v.join(','))
-          end
-          params[k] = v
-        end
-        params_str = params.map { |k, v| "#{k}=#{v}" }.join('&')
-        port = config['port'] ? ":#{config['port']}" : ''
-        config['url'] ||=
-        if config['adapter'].include?('sqlite')
-          format('%s:%s', config['adapter'], config['database'])
-        else
-          format('%s://%s%s/%s?%s', config['adapter'], config['host'], port, config['database'], params_str)
-        end
-      end
+      # create the url if neccessary
+      config['url'] ||= config.url if config['adapter'] =~ /^(jdbc|do):/
 
       config
     end

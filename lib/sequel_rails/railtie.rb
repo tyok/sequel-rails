@@ -62,9 +62,15 @@ module SequelRails
 
     # Support overwriting crucial steps in subclasses
     def configure_sequel(app)
+      rails_db_config = begin
+        app.config.database_configuration
+      rescue Errno::ENOENT
+        {} # will try to use DATABASE_URL
+      end
+
       app.config.sequel.merge!(
         :root => ::Rails.root,
-        :raw => app.config.database_configuration
+        :raw => rails_db_config
       )
       ::SequelRails.configuration = app.config.sequel
     end
