@@ -11,6 +11,8 @@ gem 'fakefs', '0.5.3', :require => 'fakefs/safe'
 # activesupport has an undeclared dependency on tzinfo prior to 4.0.0
 gem 'tzinfo'
 
+gem 'i18n', '< 0.7.0', :platform => :ruby_18
+
 # MRI/Rubinius Adapter Dependencies
 platform :ruby do
   gem 'pg'
