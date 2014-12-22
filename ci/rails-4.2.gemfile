@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'railties', '~> 4.2.0.rc1'
-gem 'activemodel', '~> 4.2.0.rc1' # Remove once 4.2.0 final is release
+gem 'railties', '~> 4.2.0'
 
 gemspec :path => '../'
 
