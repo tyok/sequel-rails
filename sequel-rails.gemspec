@@ -30,6 +30,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake', '>= 0.8.7'
   s.add_development_dependency 'rspec', '~> 3.1'
   s.add_development_dependency 'rspec-rails', '~> 3.1'
-  s.add_development_dependency 'rubocop', '~> 0.20.1' unless RUBY_VERSION < '1.9.2'
+  s.add_development_dependency 'rubocop', '~> 0.28.0' unless RUBY_VERSION < '1.9.2'
   s.add_development_dependency 'ammeter', '1.1.2'
 end
