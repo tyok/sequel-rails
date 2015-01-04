@@ -58,7 +58,7 @@ begin
   begin
     require 'rubocop/rake_task'
 
-    Rubocop::RakeTask.new do |task|
+    RuboCop::RakeTask.new do |task|
       task.patterns = ['-R']
     end
   rescue LoadError
