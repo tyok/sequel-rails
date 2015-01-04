@@ -20,6 +20,16 @@ Gem::Specification.new do |s|
   s.rdoc_options = ['--charset=UTF-8']
   s.license = 'MIT'
 
+  s.post_install_message = <<-NOTE
+
+    !!! sequel-rails
+    NOTE: Support for Ruby < 1.9.3 (this is 1.8.x, 1.9.0, 1.9.2) in sequel-rails
+    is deprecated and will be dropped in the next major release. If you really
+    rely on it please complain at http://git.io/WgfgZQ to delay the inevitable.
+    !!!
+
+  NOTE
+
   s.add_dependency 'activemodel'
   s.add_dependency 'railties', '>= 3.2.0'
   s.add_dependency 'actionpack', '>= 3.2.0'

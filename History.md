@@ -1,6 +1,7 @@
 0.9.8 (dev)
 ===========
 
+* Add Ruby < 1.9.3 deprecation notice via Gem's `post_install_message` [#80](https://github.com/TalentBox/sequel-rails/pull/78)
 * Support running without database.yml, for 12 factor compliance (Rafał Rzepecki) [#78](https://github.com/TalentBox/sequel-rails/pull/78)
 
 0.9.7 (2014-12-18)
