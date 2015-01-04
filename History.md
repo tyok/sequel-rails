@@ -1,3 +1,8 @@
+0.9.9 (2015-01-04)
+==================
+
+* Fix deprecation notice to only be displayed when installed on deprecated Ruby.
+
 0.9.8 (2015-01-04)
 ==================
 
