@@ -1,7 +1,8 @@
-0.9.10 (2015-01-13)
-==================
+dev
+===
 
-* Added option to skip connect after Rails initialize with new option `config.sequel.skip_connect = true`.
+* Added option to skip connect after Rails initialize with new option
+  `config.sequel.skip_connect = true`. (Alexander Birkner) [#83](https://github.com/TalentBox/sequel-rails/pull/83)
 
 0.9.9 (2015-01-04)
 ==================
