@@ -83,6 +83,22 @@ describe SequelRails::Configuration do
     end
   end
 
+  describe '#skip_connect' do
+    subject { described_class.new }
+
+    it 'defaults to nil' do
+      expect(subject.skip_connect).to be nil
+    end
+    it 'can be assigned' do
+      subject.skip_connect = true
+      expect(subject.skip_connect).to be true
+    end
+    it 'can be set from merging another hash' do
+      subject.merge!(:skip_connect => true)
+      expect(subject.skip_connect).to be true
+    end
+  end
+
   describe '#connect' do
     let(:environments) do
       {
@@ -347,5 +363,6 @@ describe SequelRails::Configuration do
         subject.connect environment
       end
     end
+
   end
 end
