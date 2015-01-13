@@ -27,6 +27,7 @@ module SequelRails
       self.schema_dump = default_schema_dump
       self.load_database_tasks = true
       self.after_connect = nil
+      self.skip_connect = nil
     end
 
     def environment_for(name)

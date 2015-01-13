@@ -5,6 +5,10 @@
 *.tmproj
 tmtags
 
+## IntelliJ IDEA
+
+*.iml
+
 ## EMACS
 *~
 \#*

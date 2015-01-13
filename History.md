@@ -1,3 +1,8 @@
+0.9.10 (2015-01-13)
+==================
+
+* Added option to skip connect after Rails initialize with new option `config.sequel.skip_connect = true`.
+
 0.9.9 (2015-01-04)
 ==================
 

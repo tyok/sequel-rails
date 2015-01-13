@@ -56,8 +56,10 @@ module SequelRails
       setup_controller_runtime
     end
 
-    initializer 'sequel.connect' do |_app|
-      ::SequelRails.setup ::Rails.env
+    initializer 'sequel.connect' do |app|
+      unless app.config.sequel[:skip_connect]
+        ::SequelRails.setup ::Rails.env
+      end
     end
 
     # Support overwriting crucial steps in subclasses
