@@ -152,6 +152,9 @@ You can configure some options with the usual rails mechanism, in
     # Configure whether database's rake tasks will be loaded or not
     # Defaults to true
     config.sequel.load_database_tasks = false
+
+    # This setting disabled the automatic connect after Rails init
+    config.sequel.skip_connect = true
 ```
 
 The connection settings are read from the file `config/database.yml` and is
