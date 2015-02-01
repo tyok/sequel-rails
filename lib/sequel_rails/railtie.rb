@@ -39,6 +39,10 @@ module SequelRails
       load 'sequel_rails/railties/database.rake' if app.config.sequel.load_database_tasks
     end
 
+    initializer 'sequel.load_hooks' do |app|
+      ::ActiveSupport.run_load_hooks(:sequel, ::Sequel::Model)
+    end
+
     initializer 'sequel.configuration' do |app|
       configure_sequel app
     end
