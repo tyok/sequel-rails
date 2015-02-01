@@ -127,4 +127,13 @@ describe SequelRails::Railtie do
       end
     end
   end
+
+  it 'run load hooks for :sequel passing ::Sequel::Model' do
+    class_context = nil
+    ::ActiveSupport.on_load :sequel do
+      class_context = self
+    end
+    app
+    expect( class_context ).to be ::Sequel::Model
+  end
 end

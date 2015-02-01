@@ -353,6 +353,7 @@ Improvements has been made by those awesome contributors:
 * Andrey Chernih (andreychernih)
 * Nico Rieck (gix)
 * Alexander Birkner (BirknerAlex)
+* kr3ssh (kressh)
 
 Credits
 =======
