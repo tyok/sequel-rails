@@ -25,7 +25,7 @@ module SequelRails
         if available_migrations?
           migrator_class = ::Sequel::Migrator.send(:migrator_class, migrations_dir)
           migrator = migrator_class.new db, migrations_dir
-          res << adapter.schema_information_inserts(migrator, sql)
+          res << adapter.schema_information_dump(migrator, sql)
         end
         res
       end

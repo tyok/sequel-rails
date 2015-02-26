@@ -73,13 +73,9 @@ module SequelRails
         @search_path ||= config['search_path'] || '"$user", public'
       end
 
-      def schema_information_inserts(migrator, sql_dump)
+      def schema_information_dump(migrator, sql_dump)
         res = ''
-        inserts = migrator.ds.map do |hash|
-          insert = migrator.ds.insert_sql(hash)
-          sql_dump ? "#{insert};" : "    self << #{insert.inspect}"
-        end
-
+        inserts = schema_information_inserts(migrator, sql_dump)
         if inserts.any?
           res << "Sequel.migration do\n  change do\n" unless sql_dump
           res << inserts.join("\n")
@@ -112,13 +108,16 @@ module SequelRails
         exec SequelRails::Shellwords.join(Array(args))
       end
 
-      def schema_information_inserts_with_search_path(migrator, sql_dump)
-        res = ''
-        inserts = migrator.ds.map do |hash|
+      def schema_information_inserts(migrator, sql_dump)
+        migrator.ds.map do |hash|
           insert = migrator.ds.insert_sql(hash)
           sql_dump ? "#{insert};" : "self << #{insert.inspect}"
         end
+      end
 
+      def schema_information_dump_with_search_path(migrator, sql_dump)
+        res = ''
+        inserts = schema_information_inserts(migrator, sql_dump)
         if inserts.any?
           set_search_path_sql = "SET search_path TO #{search_path}"
           res = inserts.join("\n")
