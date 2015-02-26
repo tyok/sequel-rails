@@ -1,5 +1,5 @@
-dev
-===
+0.9.10 (2015-02-26)
+===================
 
 * Set `search_path` on PostgreSQL when dumping migration informations
 [#86](https://github.com/TalentBox/sequel-rails/pull/86)
