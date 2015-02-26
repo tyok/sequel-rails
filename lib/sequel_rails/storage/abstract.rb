@@ -77,9 +77,16 @@ module SequelRails
         res = ''
         inserts = schema_information_inserts(migrator, sql_dump)
         if inserts.any?
-          res << "Sequel.migration do\n  change do\n" unless sql_dump
-          res << inserts.join("\n")
-          res << "\n  end\nend\n" unless sql_dump
+          res = inserts.join("\n")
+          unless sql_dump
+            res = <<-EOS.strip_heredoc
+              Sequel.migration do
+                change do
+                  #{res}
+                end
+              end
+            EOS
+          end
         end
         res
       end
