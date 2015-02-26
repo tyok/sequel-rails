@@ -39,6 +39,7 @@ begin
     configs.each do |adapter, config|
       desc "Run specs for #{adapter} adapter"
       task adapter do
+        puts "running spec:#{adapter}"
         clean_env
         Rake::Task['spec'].reenable
         ENV['TEST_ADAPTER'] = adapter

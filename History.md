@@ -1,6 +1,8 @@
 dev
 ===
 
+* Set `search_path` on PostgreSQL when dumping migration informations
+[#86](https://github.com/TalentBox/sequel-rails/pull/86)
 * Add `ActiveSupport.on_load :sequel` support (kr3ssh) [#85](https://github.com/TalentBox/sequel-rails/pull/85)
 * Added option to skip connect after Rails initialize with new option
   `config.sequel.skip_connect = true`. (Alexander Birkner) [#83](https://github.com/TalentBox/sequel-rails/pull/83)

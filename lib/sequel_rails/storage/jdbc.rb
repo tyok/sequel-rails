@@ -71,6 +71,14 @@ module SequelRails
         end
       end
 
+      def schema_information_inserts(migrator, sql_dump)
+        if _is_postgres?
+          shema_information_inserts_with_search_path(migrator, sql_dump)
+        else
+          super
+        end
+      end
+
       private
 
       def collation

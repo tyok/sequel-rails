@@ -29,13 +29,25 @@ describe 'Database rake tasks', :no_transaction => true do
         sql = Sequel::Model.db.from(
           :schema_migrations
         ).insert_sql(:filename => '1273253849_add_twitter_handle_to_users.rb')
-        expect(File.read(schema)).to include <<-EOS
-Sequel.migration do
-  change do
-    self << #{sql.inspect}
-  end
-end
-EOS
+        content = if ENV['TEST_ADAPTER']=='postgresql'
+          <<-EOS.strip_heredoc
+            Sequel.migration do
+              change do
+                self << "SET search_path TO \\"$user\\", public"
+                self << #{sql.inspect}
+              end
+            end
+          EOS
+        else
+          <<-EOS.strip_heredoc
+            Sequel.migration do
+              change do
+                self << #{sql.inspect}
+              end
+            end
+          EOS
+        end
+        expect(File.read(schema)).to include content
       end
     end
   end

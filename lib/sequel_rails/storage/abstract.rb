@@ -69,6 +69,25 @@ module SequelRails
         @collation ||= config['collation'] || ENV['COLLATION']
       end
 
+      def search_path
+        @search_path ||= config['search_path'] || '"$user", public'
+      end
+
+      def schema_information_inserts(migrator, sql_dump)
+        res = ''
+        inserts = migrator.ds.map do |hash|
+          insert = migrator.ds.insert_sql(hash)
+          sql_dump ? "#{insert};" : "    self << #{insert.inspect}"
+        end
+
+        if inserts.any?
+          res << "Sequel.migration do\n  change do\n" unless sql_dump
+          res << inserts.join("\n")
+          res << "\n  end\nend\n" unless sql_dump
+        end
+        res
+      end
+
       private
 
       def add_option(commands, name, value)
@@ -91,6 +110,32 @@ module SequelRails
 
       def safe_exec(args)
         exec SequelRails::Shellwords.join(Array(args))
+      end
+
+      def schema_information_inserts_with_search_path(migrator, sql_dump)
+        res = ''
+        inserts = migrator.ds.map do |hash|
+          insert = migrator.ds.insert_sql(hash)
+          sql_dump ? "#{insert};" : "self << #{insert.inspect}"
+        end
+
+        if inserts.any?
+          set_search_path_sql = "SET search_path TO #{search_path}"
+          res = inserts.join("\n")
+          if sql_dump
+            res = "#{set_search_path_sql};\n#{res}"
+          else
+            res = <<-EOS.strip_heredoc
+              Sequel.migration do
+                change do
+                  self << #{set_search_path_sql.inspect}
+                  #{res}
+                end
+              end
+            EOS
+          end
+        end
+        res
       end
     end
   end

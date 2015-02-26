@@ -91,6 +91,10 @@ module SequelRails
         @maintenance_db ||= config['maintenance_db'] || ''
       end
 
+      def schema_information_inserts(migrator, sql_dump)
+        schema_information_inserts_with_search_path(migrator, sql_dump)
+      end
+
       private
 
       def with_pgpassword

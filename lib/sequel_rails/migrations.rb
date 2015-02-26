@@ -18,23 +18,14 @@ module SequelRails
 
       def dump_schema_information(opts = {})
         sql = opts.fetch :sql
+        adapter = SequelRails::Storage.adapter_for(Rails.env)
         db = ::Sequel::Model.db
         res = ''
 
         if available_migrations?
           migrator_class = ::Sequel::Migrator.send(:migrator_class, migrations_dir)
           migrator = migrator_class.new db, migrations_dir
-
-          inserts = migrator.ds.map do |hash|
-            insert = migrator.ds.insert_sql(hash)
-            sql ? "#{insert};" : "    self << #{insert.inspect}"
-          end
-
-          if inserts.any?
-            res << "Sequel.migration do\n  change do\n" unless sql
-            res << inserts.join("\n")
-            res << "\n  end\nend\n" unless sql
-          end
+          res << adapter.schema_information_inserts(migrator, sql)
         end
         res
       end
