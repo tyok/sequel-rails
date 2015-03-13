@@ -1,6 +1,7 @@
 Dev
 ===
 
+* Track query count in `SequelRails::Railties::LogSubscriber.count`
 
 0.9.10 (2015-02-26)
 ===================

@@ -14,6 +14,7 @@ module SequelRails
         # because of queries in middleware or in cases we are streaming
         # and it won't be cleaned up by the method below.
         ::SequelRails::Railties::LogSubscriber.reset_runtime
+        ::SequelRails::Railties::LogSubscriber.reset_count
         super
       end
 
@@ -29,6 +30,7 @@ module SequelRails
       def append_info_to_payload(payload)
         super
         payload[:db_runtime] = (db_runtime || 0) + ::SequelRails::Railties::LogSubscriber.reset_runtime
+        payload[:db_query_count] = ::SequelRails::Railties::LogSubscriber.count
       end
 
       module ClassMethods

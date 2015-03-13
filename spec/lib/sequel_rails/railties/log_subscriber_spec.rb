@@ -10,19 +10,29 @@ describe SequelRails::Railties::LogSubscriber do
   before do
     setup
     described_class.attach_to :sequel
+    described_class.reset_runtime
+    described_class.reset_count
   end
   after { teardown }
 
-  it 'logs queries' do
+  it 'logs queries, runtime and count' do
+    expect(described_class.runtime).to eq 0
+    expect(described_class.count).to eq 0
     User.all
     wait
     expect(@logger.logged(:debug).last).to match(/SELECT \* FROM ("|`)users("|`)/)
+    expect(described_class.runtime).to be > 0
+    expect(described_class.count).to be > 0
   end
 
-  it 'does not log query when logger level is not debug' do
+  it 'does not log query when logger level is not debug, but track runtime and count' do
+    expect(described_class.runtime).to eq 0
+    expect(described_class.count).to eq 0
     @logger.level = :info
     User.all
     wait
     expect(@logger.logged(:debug).size).to eq 0
+    expect(described_class.runtime).to be > 0
+    expect(described_class.count).to be > 0
   end
 end

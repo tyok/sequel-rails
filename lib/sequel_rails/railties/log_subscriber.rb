@@ -9,13 +9,27 @@ module SequelRails
         Thread.current['sequel_sql_runtime'] ||= 0
       end
 
+      def self.count=(value)
+        Thread.current['sequel_sql_count'] = value
+      end
+
+      def self.count
+        Thread.current['sequel_sql_count'] ||= 0
+      end
+
       def self.reset_runtime
-        rt, self.runtime = runtime, 0
-        rt
+        previous, self.runtime = runtime, 0
+        previous
+      end
+
+      def self.reset_count
+        previous, self.count = count, 0
+        previous
       end
 
       def sql(event)
         self.class.runtime += event.duration
+        self.class.count += 1
         return unless logger.debug?
 
         payload = event.payload
