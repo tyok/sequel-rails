@@ -149,7 +149,14 @@ You can configure some options with the usual rails mechanism, in
     config.sequel.max_connections = 16
     config.sequel.search_path = %w(mine public)
 
-    # Configure whether database's rake tasks will be loaded or not
+    # Configure whether database's rake tasks will be loaded or not.
+    #
+    # If passed a String or Symbol, this will replace the `db:` namespace for
+    # the database's Rake tasks.
+    #
+    # ex: config.sequel.load_database_tasks = :sequel
+    #     will results in `rake db:migrate` to become `rake sequel:migrate`
+    #
     # Defaults to true
     config.sequel.load_database_tasks = false
 
@@ -354,6 +361,7 @@ Improvements has been made by those awesome contributors:
 * Nico Rieck (gix)
 * Alexander Birkner (BirknerAlex)
 * kr3ssh (kressh)
+* John Anderson (djellemah)
 
 Credits
 =======

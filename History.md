@@ -1,3 +1,8 @@
+Dev
+===
+
+* Allow Rake tasks `db:` namespace to be reconfigured to something else (John Anderson) [#89](https://github.com/TalentBox/sequel-rails/pull/89)
+
 0.9.11 (2015-03-13)
 ===================
 
