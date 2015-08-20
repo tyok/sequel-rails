@@ -54,9 +54,9 @@ module SequelRails
       end
 
       if normalized_config['url']
-        ::Sequel.connect normalized_config['url'], normalized_config
+        ::Sequel.connect normalized_config['url'], normalized_config.deep_symbolize_keys
       else
-        ::Sequel.connect normalized_config
+        ::Sequel.connect normalized_config.deep_symbolize_keys
       end.tap { after_connect.call if after_connect.respond_to?(:call) }
     end
 
