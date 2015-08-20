@@ -39,13 +39,13 @@ module SequelRails
       load_tasks_config = app.config.sequel.load_database_tasks
       SequelRails::TASK_NAMESPACE =
       case load_tasks_config
-      when Symbol, String; load_tasks_config.to_sym
+      when Symbol, String then load_tasks_config.to_sym
       else :db
       end
       load 'sequel_rails/railties/database.rake' if load_tasks_config
     end
 
-    initializer 'sequel.load_hooks' do |app|
+    initializer 'sequel.load_hooks' do
       ::ActiveSupport.run_load_hooks(:sequel, ::Sequel::Model)
     end
 
@@ -67,9 +67,7 @@ module SequelRails
     end
 
     initializer 'sequel.connect' do |app|
-      unless app.config.sequel[:skip_connect]
-        ::SequelRails.setup ::Rails.env
-      end
+      ::SequelRails.setup ::Rails.env unless app.config.sequel[:skip_connect]
     end
 
     # Support overwriting crucial steps in subclasses

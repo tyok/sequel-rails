@@ -39,7 +39,8 @@ module SequelRails
         # default config - use just the environment variable
         Hash.new normalize_repository_config({})
       ) do |normalized, environment|
-        name, config = environment.first, environment.last
+        name = environment.first
+        config = environment.last
         normalized[name] = normalize_repository_config(config)
         normalized
       end
@@ -54,9 +55,9 @@ module SequelRails
       end
 
       if normalized_config['url']
-        ::Sequel.connect normalized_config['url'], normalized_config.deep_symbolize_keys
+        ::Sequel.connect normalized_config['url'], SequelRails.deep_symbolize_keys(normalized_config)
       else
-        ::Sequel.connect normalized_config.deep_symbolize_keys
+        ::Sequel.connect SequelRails.deep_symbolize_keys(normalized_config)
       end.tap { after_connect.call if after_connect.respond_to?(:call) }
     end
 

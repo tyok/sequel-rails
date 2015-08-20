@@ -43,7 +43,7 @@ module SequelRails
     end
 
     def self.adapter_for(config_or_env)
-      config = if config_or_env.kind_of? Hash
+      config = if config_or_env.is_a? Hash
                  config_or_env
                else
                  ::SequelRails.configuration.environments[config_or_env.to_s]

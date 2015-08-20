@@ -5,7 +5,7 @@ module Sequel
   class Database
     def log_yield(sql, args = nil)
       sql_for_log = args ? "#{sql}; #{args.inspect}" : sql
-      start = Time.now
+      start = Time.now.to_f
       begin
         ::ActiveSupport::Notifications.instrument(
           'sql.sequel',
@@ -19,7 +19,7 @@ module Sequel
         log_exception(e, sql_for_log) unless @loggers.empty?
         raise
       ensure
-        log_duration(Time.now - start, sql_for_log) unless e || @loggers.empty?
+        log_duration(Time.now.to_f - start, sql_for_log) unless e || @loggers.empty?
       end
     end
   end

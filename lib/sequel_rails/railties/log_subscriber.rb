@@ -18,12 +18,14 @@ module SequelRails
       end
 
       def self.reset_runtime
-        previous, self.runtime = runtime, 0
+        previous = runtime
+        self.runtime = 0
         previous
       end
 
       def self.reset_count
-        previous, self.count = count, 0
+        previous = count
+        self.count = 0
         previous
       end
 

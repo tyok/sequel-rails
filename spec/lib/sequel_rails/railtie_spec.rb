@@ -6,9 +6,9 @@ describe SequelRails::Railtie do
 
   it 'registers ::Sequel::Railtie::LogSubscriber to receive :sequel notification' do
     expect(
-      ActiveSupport::LogSubscriber.log_subscribers.select do |subscriber|
+      ActiveSupport::LogSubscriber.log_subscribers.count do |subscriber|
         subscriber.is_a?(SequelRails::Railties::LogSubscriber)
-      end.size
+      end
     ).to eq 1
   end
 
@@ -88,7 +88,7 @@ describe SequelRails::Railtie do
 
     include IOSpecHelper
     before do
-      pretend_file_not_exists(/\/database.yml$/)
+      pretend_file_not_exists(%r{/database.yml$})
     end
 
     context 'and DATABASE_URL is defined' do
@@ -134,6 +134,6 @@ describe SequelRails::Railtie do
       class_context = self
     end
     app
-    expect( class_context ).to be ::Sequel::Model
+    expect(class_context).to be ::Sequel::Model
   end
 end

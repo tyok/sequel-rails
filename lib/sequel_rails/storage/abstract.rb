@@ -94,10 +94,9 @@ module SequelRails
       private
 
       def add_option(commands, name, value)
-        if value.present?
-          separator = name[0, 2] == '--' ? '=' : ' '
-          commands << "#{name}#{separator}#{value}"
-        end
+        return unless value.present?
+        separator = name[0, 2] == '--' ? '=' : ' '
+        commands << "#{name}#{separator}#{value}"
       end
 
       def add_flag(commands, flag)

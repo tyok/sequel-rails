@@ -25,3 +25,12 @@ MethodLength:
 
 TrailingComma:
   Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Style/EachWithObject:
+  Enabled: false

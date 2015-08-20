@@ -41,8 +41,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'generator_spec'
   s.add_development_dependency 'rake', '>= 0.8.7'
   s.add_development_dependency 'rspec', '~> 3.1'
-  s.add_development_dependency 'rspec-rails', '~> 3.1'
-  s.add_development_dependency 'rubocop', '~> 0.28.0' unless RUBY_VERSION < '1.9.2'
+  s.add_development_dependency 'rspec-rails', '~> 3.1', '< 3.3'
+  s.add_development_dependency 'rubocop', '~> 0.33.0' unless RUBY_VERSION < '1.9.2'
   s.add_development_dependency 'ammeter', '1.1.2'
   s.add_development_dependency 'test-unit' if RUBY_VERSION >= '2.2.0'
 end

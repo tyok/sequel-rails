@@ -25,7 +25,7 @@ module SequelRails
       # the gsub transforms foo:/bar
       # (which jdbc doesn't like)
       # into foo:///bar
-      self[:url] || make_url.to_s.gsub(/:\/(?=\w)/, ':///')
+      self[:url] || make_url.to_s.gsub(%r{:/(?=\w)}, ':///')
     end
 
     private
@@ -48,18 +48,19 @@ module SequelRails
 
     def normalize_db(root)
       return unless include? :adapter
-      if root && adapter.include?('sqlite') && database != ':memory:'
-        # sqlite expects path as the database name
-        self[:database] = File.expand_path database.to_s, root
-      end
+      return unless root
+      return unless adapter.include?('sqlite') && database != ':memory:'
+      # sqlite expects path as the database name
+      self[:database] = File.expand_path database.to_s, root
     end
 
     def make_url
       if adapter =~ /^(jdbc|do):/
         scheme, subadapter = adapter.split ':'
-        return URI::Generic.build \
-            :scheme => scheme,
-            :opaque => build_url(to_hash.merge 'adapter' => subadapter).to_s
+        URI::Generic.build(
+          :scheme => scheme,
+          :opaque => build_url(to_hash.merge 'adapter' => subadapter).to_s
+        )
       else
         build_url to_hash
       end
@@ -67,11 +68,9 @@ module SequelRails
 
     def build_url(cfg)
       if (adapter = cfg['adapter']) =~ /sqlite/ &&
-          (database = cfg['database']) =~ /^:/
+         (database = cfg['database']) =~ /^:/
         # magic sqlite databases
-        return URI::Generic.build \
-            :scheme => adapter,
-            :opaque => database
+        return URI::Generic.build(:scheme => adapter, :opaque => database)
       end
 
       # these four are handled separately
@@ -84,17 +83,18 @@ module SequelRails
       end
 
       path = cfg['database'].to_s
-      path = "/#{path}" if path =~ /^(?!\/)/
+      path = "/#{path}" if path =~ %r{^(?!/)}
 
       q = URI.encode_www_form(params)
       q = nil if q.empty?
 
-      URI::Generic.build \
-          :scheme => cfg['adapter'],
-          :host => cfg['host'],
-          :port => cfg['port'],
-          :path => path,
-          :query => q
+      URI::Generic.build(
+        :scheme => cfg['adapter'],
+        :host => cfg['host'],
+        :port => cfg['port'],
+        :path => path,
+        :query => q
+      )
     end
   end
 end

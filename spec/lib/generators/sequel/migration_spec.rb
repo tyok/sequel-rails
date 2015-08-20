@@ -252,5 +252,4 @@ describe Sequel::Generators::MigrationGenerator do
       end
     end
   end
-
 end

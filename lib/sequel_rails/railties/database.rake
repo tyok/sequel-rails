@@ -10,10 +10,10 @@ namespace sequel_rails_namespace do
   end
 
   # desc "Raises an error if there are pending migrations"
-  task :abort_if_pending_migrations => [:environment, %Q{#{sequel_rails_namespace}:migrate:load}] do
+  task :abort_if_pending_migrations => [:environment, "#{sequel_rails_namespace}:migrate:load"] do
     if SequelRails::Migrations.pending_migrations?
       warn 'You have pending migrations:'
-      abort %Q{Run `rake #{sequel_rails_namespace}:migrate` to update your database then try again.}
+      abort "Run `rake #{sequel_rails_namespace}:migrate` to update your database then try again."
     end
   end
 
@@ -26,7 +26,7 @@ namespace sequel_rails_namespace do
         file << db_for_current_env.dump_schema_migration(:same_db => true)
         file << SequelRails::Migrations.dump_schema_information(:sql => false)
       end
-      Rake::Task[%Q{#{sequel_rails_namespace}:schema:dump}].reenable
+      Rake::Task["#{sequel_rails_namespace}:schema:dump"].reenable
     end
 
     desc 'Load a schema.rb file into the database'
@@ -56,7 +56,7 @@ namespace sequel_rails_namespace do
         abort "Could not dump structure for #{args.env}."
       end
 
-      Rake::Task[%Q{#{sequel_rails_namespace}:structure:dump}].reenable
+      Rake::Task["#{sequel_rails_namespace}:structure:dump"].reenable
     end
 
     task :load, [:env] => :environment do |_t, args|
@@ -72,9 +72,9 @@ namespace sequel_rails_namespace do
   task :dump => :environment do
     case (SequelRails.configuration.schema_format ||= :ruby)
     when :ruby
-      Rake::Task[%Q{#{sequel_rails_namespace}:schema:dump}].invoke
+      Rake::Task["#{sequel_rails_namespace}:schema:dump"].invoke
     when :sql
-      Rake::Task[%Q{#{sequel_rails_namespace}:structure:dump}].invoke
+      Rake::Task["#{sequel_rails_namespace}:structure:dump"].invoke
     else
       abort "unknown schema format #{SequelRails.configuration.schema_format}"
     end
@@ -83,9 +83,9 @@ namespace sequel_rails_namespace do
   task :load => :environment do
     case (SequelRails.configuration.schema_format ||= :ruby)
     when :ruby
-      Rake::Task[%Q{#{sequel_rails_namespace}:schema:load}].invoke
+      Rake::Task["#{sequel_rails_namespace}:schema:load"].invoke
     when :sql
-      Rake::Task[%Q{#{sequel_rails_namespace}:structure:load}].invoke
+      Rake::Task["#{sequel_rails_namespace}:structure:load"].invoke
     else
       abort "unknown schema format #{SequelRails.configuration.schema_format}"
     end
@@ -131,11 +131,11 @@ namespace sequel_rails_namespace do
     desc 'Rollbacks the database one migration and re migrate up. If you want to rollback more than one step, define STEP=x. Target specific version with VERSION=x.'
     task :redo => :load do
       if ENV['VERSION']
-        Rake::Task[%Q{#{sequel_rails_namespace}:migrate:down}].invoke
-        Rake::Task[%Q{#{sequel_rails_namespace}:migrate:up}].invoke
+        Rake::Task["#{sequel_rails_namespace}:migrate:down"].invoke
+        Rake::Task["#{sequel_rails_namespace}:migrate:up"].invoke
       else
-        Rake::Task[%Q{#{sequel_rails_namespace}:rollback}].invoke
-        Rake::Task[%Q{#{sequel_rails_namespace}:migrate}].invoke
+        Rake::Task["#{sequel_rails_namespace}:rollback"].invoke
+        Rake::Task["#{sequel_rails_namespace}:migrate"].invoke
       end
     end
 
@@ -147,7 +147,7 @@ namespace sequel_rails_namespace do
       version = ENV['VERSION'] ? ENV['VERSION'].to_i : nil
       fail 'VERSION is required' unless version
       SequelRails::Migrations.migrate_up!(version)
-      Rake::Task[%Q{#{sequel_rails_namespace}:dump}].invoke if SequelRails.configuration.schema_dump
+      Rake::Task["#{sequel_rails_namespace}:dump"].invoke if SequelRails.configuration.schema_dump
     end
 
     desc 'Runs the "down" for a given migration VERSION.'
@@ -155,14 +155,14 @@ namespace sequel_rails_namespace do
       version = ENV['VERSION'] ? ENV['VERSION'].to_i : nil
       fail 'VERSION is required' unless version
       SequelRails::Migrations.migrate_down!(version)
-      Rake::Task[%Q{#{sequel_rails_namespace}:dump}].invoke if SequelRails.configuration.schema_dump
+      Rake::Task["#{sequel_rails_namespace}:dump"].invoke if SequelRails.configuration.schema_dump
     end
   end
 
   desc 'Migrate the database to the latest version'
   task :migrate => 'migrate:load' do
     SequelRails::Migrations.migrate_up!(ENV['VERSION'] ? ENV['VERSION'].to_i : nil)
-    Rake::Task[%Q{#{sequel_rails_namespace}:dump}].invoke if SequelRails.configuration.schema_dump
+    Rake::Task["#{sequel_rails_namespace}:dump"].invoke if SequelRails.configuration.schema_dump
   end
 
   desc 'Rollback the latest migration file or down to specified VERSION=x'
@@ -173,7 +173,7 @@ namespace sequel_rails_namespace do
                 SequelRails::Migrations.previous_migration
               end
     SequelRails::Migrations.migrate_down! version
-    Rake::Task[%Q{#{sequel_rails_namespace}:dump}].invoke if SequelRails.configuration.schema_dump
+    Rake::Task["#{sequel_rails_namespace}:dump"].invoke if SequelRails.configuration.schema_dump
   end
 
   desc 'Load the seed data from db/seeds.rb'
@@ -195,18 +195,16 @@ namespace sequel_rails_namespace do
   end
 
   namespace :test do
-    desc %Q{Prepare test database (ensure all migrations ran, drop and re-create database then load schema). This task can be run in the same invocation as other task (eg: rake #{sequel_rails_namespace}:migrate #{sequel_rails_namespace}:test:prepare).}
-    task :prepare => %Q{#{sequel_rails_namespace}:abort_if_pending_migrations} do
+    desc "Prepare test database (ensure all migrations ran, drop and re-create database then load schema). This task can be run in the same invocation as other task (eg: rake #{sequel_rails_namespace}:migrate #{sequel_rails_namespace}:test:prepare)."
+    task :prepare => "#{sequel_rails_namespace}:abort_if_pending_migrations" do
       previous_env, Rails.env = Rails.env, 'test'
-      Rake::Task[%Q{#{sequel_rails_namespace}:drop}].execute
-      Rake::Task[%Q{#{sequel_rails_namespace}:create}].execute
-      Rake::Task[%Q{#{sequel_rails_namespace}:load}].execute
-      Sequel::DATABASES.each do |db|
-        db.disconnect
-      end
+      Rake::Task["#{sequel_rails_namespace}:drop"].execute
+      Rake::Task["#{sequel_rails_namespace}:create"].execute
+      Rake::Task["#{sequel_rails_namespace}:load"].execute
+      Sequel::DATABASES.each(&:disconnect)
       Rails.env = previous_env
     end
   end
 end
 
-task 'test:prepare' => %Q{#{sequel_rails_namespace}:test:prepare}
+task 'test:prepare' => "#{sequel_rails_namespace}:test:prepare"

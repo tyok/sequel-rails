@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe SequelRails do
-
   describe '.setup' do
     let(:environment) { 'development' }
     let(:configuration) { SequelRails::Configuration.new }
@@ -12,11 +11,9 @@ describe SequelRails do
       SequelRails.setup environment
     end
   end
-
 end
 
 describe SequelRails::Configuration do
-
   describe '#schema_dump' do
     before { allow(Rails).to receive(:env).and_return(environment) }
     subject { described_class.new }
@@ -136,11 +133,10 @@ describe SequelRails::Configuration do
     subject { described_class.new.tap { |config| config.raw = environments } }
 
     context 'when stubbing SequelRails.jruby?' do
-
       before { allow(SequelRails).to receive(:jruby?).and_return(is_jruby) }
 
       shared_examples 'max_connections' do
-        context 'with max_connections config option' do
+        context 'with max_connections=7 config option' do
           let(:max_connections) { 31_337 }
           before do
             environments[environment]['max_connections'] = 7
@@ -150,7 +146,7 @@ describe SequelRails::Configuration do
           it 'overrides the option from the configuration' do
             expect(::Sequel).to receive(:connect) do |hash_or_url, *_|
               if hash_or_url.is_a? Hash
-                expect(hash_or_url['max_connections']).to eq(max_connections)
+                expect(hash_or_url[:max_connections]).to eq(max_connections)
               else
                 expect(hash_or_url).to include("max_connections=#{max_connections}")
               end
@@ -166,7 +162,7 @@ describe SequelRails::Configuration do
           it 'uses the value' do
             expect(::Sequel).to receive(:connect) do |hash_or_url, *_|
               if hash_or_url.is_a? Hash
-                expect(hash_or_url['max_connections']).to eq(7)
+                expect(hash_or_url[:max_connections]).to eq(7)
               else
                 expect(hash_or_url).to include('max_connections=7')
               end
@@ -228,7 +224,6 @@ describe SequelRails::Configuration do
       end
 
       context 'for a postgres connection' do
-
         shared_examples 'search_path' do
           context 'with search_path config option' do
             let(:search_path) { %w(secret private public) }
@@ -240,7 +235,7 @@ describe SequelRails::Configuration do
             it 'overrides the option from the configuration' do
               expect(::Sequel).to receive(:connect) do |hash_or_url, *_|
                 if hash_or_url.is_a? Hash
-                  expect(hash_or_url['search_path']).to eq(search_path)
+                  expect(hash_or_url[:search_path]).to eq(search_path)
                 else
                   expect(hash_or_url).to include('search_path=secret%2Cprivate%2Cpublic')
                 end
@@ -253,7 +248,6 @@ describe SequelRails::Configuration do
         let(:environment) { 'development' }
 
         context 'in C-Ruby' do
-
           include_examples 'max_connections'
           include_examples 'search_path'
           include_examples 'with DATABASE_URL in ENV'
@@ -262,15 +256,13 @@ describe SequelRails::Configuration do
 
           it 'produces a sane config without url' do
             expect(::Sequel).to receive(:connect) do |hash|
-              expect(hash['adapter']).to eq('postgres')
+              expect(hash[:adapter]).to eq('postgres')
             end
             subject.connect environment
           end
-
         end
 
         context 'in JRuby' do
-
           include_examples 'max_connections'
           include_examples 'search_path'
           include_examples 'with DATABASE_URL in ENV'
@@ -280,34 +272,30 @@ describe SequelRails::Configuration do
           it 'produces an adapter config with a url' do
             expect(::Sequel).to receive(:connect) do |url, hash|
               expect(url).to start_with('jdbc:postgresql://')
-              expect(hash['adapter']).to eq('jdbc:postgresql')
-              expect(hash['host']).to eq('127.0.0.1')
+              expect(hash[:adapter]).to eq('jdbc:postgresql')
+              expect(hash[:host]).to eq('127.0.0.1')
             end
             subject.connect environment
           end
 
           context 'when url is already given' do
-
             let(:environment) { 'url_already_constructed' }
 
             it 'does not change the url' do
               expect(::Sequel).to receive(:connect) do |url, hash|
                 expect(url).to eq('jdbc:adaptername://HOST/DB?user=U&password=P&ssl=true&sslfactory=sslFactoryOption')
-                expect(hash['adapter']).to eq('jdbc:adaptername')
+                expect(hash[:adapter]).to eq('jdbc:adaptername')
               end
               subject.connect environment
             end
-
           end
         end
       end
 
       context 'for a mysql connection' do
-
         let(:environment) { 'remote' }
 
         context 'in C-Ruby' do
-
           include_examples 'max_connections'
           include_examples 'with DATABASE_URL in ENV'
 
@@ -315,14 +303,13 @@ describe SequelRails::Configuration do
 
           it 'produces a config without url' do
             expect(::Sequel).to receive(:connect) do |hash|
-              expect(hash['adapter']).to eq('mysql')
+              expect(hash[:adapter]).to eq('mysql')
             end
             subject.connect environment
           end
         end
 
         context 'in JRuby' do
-
           include_examples 'max_connections'
           include_examples 'with DATABASE_URL in ENV'
 
@@ -331,20 +318,19 @@ describe SequelRails::Configuration do
           it 'produces a jdbc mysql config' do
             expect(::Sequel).to receive(:connect) do |url, hash|
               expect(url).to start_with('jdbc:mysql://')
-              expect(hash['adapter']).to eq('jdbc:mysql')
-              expect(hash['database']).to eq('sequel_rails_test_storage_remote')
+              expect(hash[:adapter]).to eq('jdbc:mysql')
+              expect(hash[:database]).to eq('sequel_rails_test_storage_remote')
             end
             subject.connect environment
           end
 
           context 'when url is already given' do
-
             let(:environment) { 'url_already_constructed' }
 
             it 'does not change the url' do
               expect(::Sequel).to receive(:connect) do |url, hash|
                 expect(url).to eq('jdbc:adaptername://HOST/DB?user=U&password=P&ssl=true&sslfactory=sslFactoryOption')
-                expect(hash['adapter']).to eq('jdbc:adaptername')
+                expect(hash[:adapter]).to eq('jdbc:adaptername')
               end
               subject.connect environment
             end
@@ -363,6 +349,5 @@ describe SequelRails::Configuration do
         subject.connect environment
       end
     end
-
   end
 end

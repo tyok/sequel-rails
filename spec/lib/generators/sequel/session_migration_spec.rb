@@ -37,5 +37,4 @@ describe Sequel::Generators::SessionMigrationGenerator do
       end
     }
   end
-
 end

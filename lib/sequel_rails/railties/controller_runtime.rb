@@ -35,7 +35,8 @@ module SequelRails
 
       module ClassMethods
         def log_process_action(payload)
-          messages, db_runtime = super, payload[:db_runtime]
+          messages = super
+          db_runtime = payload[:db_runtime]
           messages << format('Models: %.1fms', db_runtime.to_f) if db_runtime
           messages
         end

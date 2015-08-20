@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe 'Database rake tasks', :no_transaction => true do
-
   let(:app) { Combustion::Application }
   let(:app_root) { app.root }
   let(:schema) { "#{app_root}/db/schema.rb" }
@@ -29,24 +28,24 @@ describe 'Database rake tasks', :no_transaction => true do
         sql = Sequel::Model.db.from(
           :schema_migrations
         ).insert_sql(:filename => '1273253849_add_twitter_handle_to_users.rb')
-        content = if ENV['TEST_ADAPTER']=='postgresql'
-          <<-EOS.strip_heredoc
-            Sequel.migration do
-              change do
-                self << "SET search_path TO \\"$user\\", public"
-                self << #{sql.inspect}
-              end
-            end
-          EOS
-        else
-          <<-EOS.strip_heredoc
-            Sequel.migration do
-              change do
-                self << #{sql.inspect}
-              end
-            end
-          EOS
-        end
+        content = if ENV['TEST_ADAPTER'] == 'postgresql'
+                    <<-EOS.strip_heredoc
+                      Sequel.migration do
+                        change do
+                          self << "SET search_path TO \\"$user\\", public"
+                          self << #{sql.inspect}
+                        end
+                      end
+                    EOS
+                  else
+                    <<-EOS.strip_heredoc
+                      Sequel.migration do
+                        change do
+                          self << #{sql.inspect}
+                        end
+                      end
+                    EOS
+                  end
         expect(File.read(schema)).to include content
       end
     end
