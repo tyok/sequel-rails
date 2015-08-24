@@ -57,6 +57,28 @@ require "action_mailer/railtie"
 require "sprockets/railtie"
 ```
 
+Then you need to get ride of `ActiveRecord` configurations, that is if you
+didn't generate the new app with `-O` (or the long form `--skip-active-record`):
+
+`config/application.rb` and `config/environments/*.rb`
+
+For example in a fresh `Rails 4.2.4`, you would need to remove those lines:
+
+```
+config/application.rb
+line 27:    config.active_record.raise_in_transactional_callbacks = true
+```
+
+```
+config/environments/development.rb
+line 23:  config.active_record.migration_error = :page_load
+```
+
+```
+config/environments/production.rb
+line 78:  config.active_record.dump_schema_after_migration = false
+```
+
 Starting with sequel-rails 0.4.0.pre3 we don't change default Sequel behaviour
 nor include any plugin by default, if you want to get back the previous
 behaviour, you can create a new initializer (eg: `config/initializers/sequel.rb`)
