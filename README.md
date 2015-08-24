@@ -384,6 +384,7 @@ Improvements has been made by those awesome contributors:
 * Alexander Birkner (BirknerAlex)
 * kr3ssh (kressh)
 * John Anderson (djellemah)
+* Larivact (Larivact)
 
 Credits
 =======
