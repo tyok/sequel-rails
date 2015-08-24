@@ -57,7 +57,7 @@ require "action_mailer/railtie"
 require "sprockets/railtie"
 ```
 
-Then you need to get ride of `ActiveRecord` configurations, that is if you
+Then you need to get rid of `ActiveRecord` configurations, that is if you
 didn't generate the new app with `-O` (or the long form `--skip-active-record`):
 
 `config/application.rb` and `config/environments/*.rb`
