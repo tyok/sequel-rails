@@ -356,7 +356,7 @@ Previous maintainer
 Contributors
 ============
 
-Improvements has been made by those awesome contributors:
+Improvements have been made by those awesome contributors:
 
 * Benjamin Atkin (benatkin)
 * Gabor Ratky (rgabo)
