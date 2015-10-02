@@ -22,7 +22,7 @@ module SequelRails
       super
       self.root = Rails.root
       self.raw = nil
-      self.logger = Rails.logger
+      self.logger = nil
       self.migration_dir = nil
       self.schema_dump = default_schema_dump
       self.load_database_tasks = true

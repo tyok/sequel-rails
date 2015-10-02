@@ -54,7 +54,7 @@ module SequelRails
     end
 
     initializer 'sequel.logger' do |app|
-      setup_logger app, ::Rails.logger
+      app.config.sequel.logger ||= ::Rails.logger
     end
 
     initializer 'sequel.i18n_support' do |_app|
@@ -93,10 +93,6 @@ module SequelRails
     def setup_controller_runtime
       require 'sequel_rails/railties/controller_runtime'
       ActionController::Base.send :include, SequelRails::Railties::ControllerRuntime
-    end
-
-    def setup_logger(app, logger)
-      app.config.sequel.logger = logger
     end
   end
 end
