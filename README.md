@@ -388,6 +388,7 @@ Improvements have been made by those awesome contributors:
 * kr3ssh (kressh)
 * John Anderson (djellemah)
 * Larivact (Larivact)
+* Jan Berdajs (mrbrdo)
 
 Credits
 =======
