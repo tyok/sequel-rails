@@ -15,6 +15,7 @@ require 'sequel_rails/configuration'
 require 'sequel_rails/migrations'
 require 'sequel_rails/railties/log_subscriber'
 require 'sequel_rails/railties/i18n_support'
+require 'sequel_rails/railties/spring_support'
 require 'sequel_rails/railties/controller_runtime'
 require 'sequel_rails/sequel/database/active_support_notification'
 require 'action_dispatch/middleware/session/sequel_store'
@@ -68,6 +69,15 @@ module SequelRails
 
     initializer 'sequel.connect' do |app|
       ::SequelRails.setup ::Rails.env unless app.config.sequel[:skip_connect]
+    end
+
+    initializer 'sequel.spring' do |app|
+      if defined?(::Spring)
+        class ::Spring::Application
+          include ::SequelRails::SpringSupport
+          alias_method_chain :disconnect_database, :sequel
+        end
+      end
     end
 
     # Support overwriting crucial steps in subclasses
