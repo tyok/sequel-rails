@@ -7,7 +7,7 @@ module ActionDispatch
   module Session
     class SequelStore < AbstractStore
       SESSION_RECORD_KEY = 'rack.session.record'.freeze
-      ENV_SESSION_OPTIONS_KEY = Rack::Session::Abstract::ENV_SESSION_OPTIONS_KEY
+      ENV_SESSION_OPTIONS_KEY = 'rack.session.options'.freeze
 
       cattr_accessor :session_class
       def self.session_class
