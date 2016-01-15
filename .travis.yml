@@ -52,6 +52,12 @@ matrix:
       gemfile: ci/rails-5.0.gemfile
     - rvm: jruby-18mode
       gemfile: ci/rails-5.0.gemfile
+    - rvm: 1.9.3
+      gemfile: ci/rails-5.0.gemfile
+    - rvm: 2.0.0
+      gemfile: ci/rails-5.0.gemfile
+    - rvm: 2.1
+      gemfile: ci/rails-5.0.gemfile
 notifications:
   email:
     - jonathan.tron@metrilio.com
