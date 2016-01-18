@@ -31,7 +31,6 @@ module SequelRails
         with_pgpassword do
           commands = ['pg_dump']
           add_connection_settings commands
-          add_flag commands, '-i'
           add_flag commands, '-s'
           add_flag commands, '-x'
           add_flag commands, '-O'

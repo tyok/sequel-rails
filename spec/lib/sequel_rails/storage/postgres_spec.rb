@@ -87,7 +87,7 @@ describe SequelRails::Storage::Postgres, :postgres do
     let(:dump_file_name) { 'dump.sql' }
     it 'uses the pg_dump command' do
       expect(subject).to receive(:`).with(
-        "pg_dump --username\\=#{username} --host\\=#{host} --port\\=#{port} -i -s -x -O --file\\=#{dump_file_name} #{database}"
+        "pg_dump --username\\=#{username} --host\\=#{host} --port\\=#{port} -s -x -O --file\\=#{dump_file_name} #{database}"
       )
       subject._dump dump_file_name
     end
