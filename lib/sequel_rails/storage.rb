@@ -55,18 +55,27 @@ module SequelRails
 
     def self.with_local_repositories
       ::SequelRails.configuration.environments.each_value do |config|
-        next if config['database'].blank? || config['adapter'].blank?
-        if config['host'].blank? || %w( 127.0.0.1 localhost ).include?(config['host'])
+        url = URI(config['url']) if config['url'].present?
+        database = config['database'] || url.try(:path).try(:[], 1..-1)
+        adapter  = config['adapter'] || url.try(:scheme)
+        host     = config['host'] || url.try(:host)
+
+        next if database.blank? || adapter.blank?
+        if host.blank? || %w( 127.0.0.1 localhost ).include?(host)
           yield config
         else
-          warn "This task only modifies local databases. #{config['database']} is on a remote host."
+          warn "This task only modifies local databases. #{database} is on a remote host."
         end
       end
     end
 
     def self.with_all_repositories
       ::SequelRails.configuration.environments.each_value do |config|
-        next if config['database'].blank? || config['adapter'].blank?
+        url = URI(config['url']) if config['url'].present?
+        database = config['database'] || url.try(:path).try(:[], 1..-1)
+        adapter  = config['adapter'] || url.try(:scheme)
+
+        next if database.blank? || adapter.blank?
         yield config
       end
     end
