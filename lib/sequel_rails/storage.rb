@@ -53,22 +53,37 @@ module SequelRails
 
     private
 
+    def self.parse_url(value)
+      URI(value) if value.present?
+    rescue ArgumentError
+      warn "config url could not be parsed, value was: #{value.inspect}"
+    end
+
+    def self.extract_database(config, uri)
+      database = config['database']
+      database ||= uri.path[1..-1] if uri
+      database
+    end
+
+    def self.extract_adapter(config, uri)
+      adapter = config['adapter']
+      adapter ||= uri.scheme if uri
+      adapter
+    end
+
+    def self.extract_host(config, uri)
+      host = config['host']
+      host ||= uri.host if uri
+      host
+    end
+
     def self.with_local_repositories
       ::SequelRails.configuration.environments.each_value do |config|
-        database = config['database']
-        adapter  = config['adapter']
-        host     = config['host']
+        uri = parse_url(config['url'])
 
-        if config['url'].present?
-          begin
-            url = URI(config['url'])
-            database ||= url.path[1..-1]
-            adapter  ||= url.scheme
-            host     ||= url.host
-          rescue ArgumentError
-            warn "config url could not be parsed, value was: #{config['url'].inspect}"
-          end
-        end
+        database = extract_database(config, uri)
+        adapter = extract_adapter(config, uri)
+        host = extract_host(config, uri)
 
         next if database.blank? || adapter.blank?
         if host.blank? || %w( 127.0.0.1 localhost ).include?(host)
@@ -81,18 +96,9 @@ module SequelRails
 
     def self.with_all_repositories
       ::SequelRails.configuration.environments.each_value do |config|
-        database = config['database']
-        adapter  = config['adapter']
-
-        if config['url'].present?
-          begin
-            url = URI(config['url'])
-            database ||= url.path[1..-1]
-            adapter  ||= url.scheme
-          rescue ArgumentError
-            warn "config url could not be parsed, value was: #{config['url'].inspect}"
-          end
-        end
+        uri = parse_url(config['url'])
+        database = extract_database(config, uri)
+        adapter = extract_adapter(config, uri)
 
         next if database.blank? || adapter.blank?
         yield config

@@ -105,7 +105,7 @@ module SequelRails
           'username' => username,
           'password' => password,
           'host' => url.host,
-          'port' => url.port,
+          'port' => url.port
         )
       end
 

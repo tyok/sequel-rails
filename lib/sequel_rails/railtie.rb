@@ -71,9 +71,9 @@ module SequelRails
       ::SequelRails.setup ::Rails.env unless app.config.sequel[:skip_connect]
     end
 
-    initializer 'sequel.spring' do |app|
+    initializer 'sequel.spring' do |_app|
       if defined?(::Spring::Application)
-        class ::Spring::Application
+        class ::Spring::Application # rubocop:disable Style/ClassAndModuleChildren
           include ::SequelRails::SpringSupport
           alias_method_chain :disconnect_database, :sequel
         end
