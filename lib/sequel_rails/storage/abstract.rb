@@ -99,10 +99,11 @@ module SequelRails
 
         url = URI(@config['url'])
 
+        username, password = url.userinfo.to_s.split(':')
         @config.reverse_merge!(
-          'database' => url.path.try(:[], 1..-1),
-          'username' => url.userinfo.try(:split, ':').try(:first),
-          'password' => url.userinfo.try(:split, ':').try(:last),
+          'database' => url.path.to_s[1..-1],
+          'username' => username,
+          'password' => password,
           'host' => url.host,
           'port' => url.port,
         )

@@ -55,10 +55,20 @@ module SequelRails
 
     def self.with_local_repositories
       ::SequelRails.configuration.environments.each_value do |config|
-        url = URI(config['url']) if config['url'].present?
-        database = config['database'] || url.try(:path).try(:[], 1..-1)
-        adapter  = config['adapter'] || url.try(:scheme)
-        host     = config['host'] || url.try(:host)
+        database = config['database']
+        adapter  = config['adapter']
+        host     = config['host']
+
+        if config['url'].present?
+          begin
+            url = URI(config['url'])
+            database ||= url.path[1..-1]
+            adapter  ||= url.scheme
+            host     ||= url.host
+          rescue ArgumentError
+            warn "config url could not be parsed, value was: #{config['url'].inspect}"
+          end
+        end
 
         next if database.blank? || adapter.blank?
         if host.blank? || %w( 127.0.0.1 localhost ).include?(host)
@@ -71,9 +81,18 @@ module SequelRails
 
     def self.with_all_repositories
       ::SequelRails.configuration.environments.each_value do |config|
-        url = URI(config['url']) if config['url'].present?
-        database = config['database'] || url.try(:path).try(:[], 1..-1)
-        adapter  = config['adapter'] || url.try(:scheme)
+        database = config['database']
+        adapter  = config['adapter']
+
+        if config['url'].present?
+          begin
+            url = URI(config['url'])
+            database ||= url.path[1..-1]
+            adapter  ||= url.scheme
+          rescue ArgumentError
+            warn "config url could not be parsed, value was: #{config['url'].inspect}"
+          end
+        end
 
         next if database.blank? || adapter.blank?
         yield config
