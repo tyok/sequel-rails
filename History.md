@@ -1,3 +1,9 @@
+dev
+===================
+
+* Ensure `url` database config is used in Rake task as well (Lukas Fittl)
+  [#106](https://github.com/TalentBox/sequel-rails/pull/106)
+
 0.9.12 (2016-01-18)
 ===================
 
