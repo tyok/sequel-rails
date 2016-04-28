@@ -5,6 +5,7 @@ module SequelRails
 
       def initialize(config)
         @config = config
+        parse_url
       end
 
       def create
@@ -92,6 +93,20 @@ module SequelRails
       end
 
       private
+
+      def parse_url
+        return unless @config['url'].present?
+
+        url = URI(@config['url'])
+
+        @config.reverse_merge!(
+          'database' => url.path.try(:[], 1..-1),
+          'username' => url.userinfo.try(:split, ':').try(:first),
+          'password' => url.userinfo.try(:split, ':').try(:last),
+          'host' => url.host,
+          'port' => url.port,
+        )
+      end
 
       def add_option(commands, name, value)
         return unless value.present?

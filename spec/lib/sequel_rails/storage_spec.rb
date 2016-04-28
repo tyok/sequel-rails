@@ -12,10 +12,9 @@ describe SequelRails::Storage do
       },
       'test' => {
         'adapter' => 'postgres',
+        'url' => 'postgres://127.0.0.1/sequel_rails_test_storage_test',
         'owner' => (ENV['TEST_OWNER'] || ENV['USER']),
         'username' => (ENV['TEST_OWNER'] || ENV['USER']),
-        'database' => 'sequel_rails_test_storage_test',
-        'host' => '127.0.0.1',
       },
       'remote' => {
         'adapter' => 'postgres',
