@@ -1,6 +1,8 @@
 dev
 ===================
 
+* Make logging compatible with the Sequel master
+  [#109](https://github.com/TalentBox/sequel-rails/issues/109)
 * Ensure `url` database config is used in Rake task as well (Lukas Fittl)
   [#106](https://github.com/TalentBox/sequel-rails/pull/106)
 
