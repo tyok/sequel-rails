@@ -22,8 +22,6 @@ gemfile:
   - ci/rails-4.2.gemfile
   - ci/rails-5.0.gemfile
 matrix:
-  allow_failures:
-    - gemfile: ci/rails-5.0.gemfile
   exclude:
     - rvm: 2.2.4
       gemfile: ci/rails-3.2.gemfile
