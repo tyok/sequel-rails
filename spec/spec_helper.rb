@@ -47,8 +47,9 @@ RSpec.configure do |config|
   end
 end
 
-# Ensure db exists and clean state
+# Ensure db migrated
 begin
+  require 'sequel/storage'
   require 'sequel/extensions/migration'
   load "#{Rails.root}/db/schema.rb.init"
   Sequel::Migration.descendants.first.apply Sequel::Model.db, :up
