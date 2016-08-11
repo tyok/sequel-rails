@@ -49,12 +49,6 @@ end
 
 # Ensure db exists and clean state
 begin
-  require 'sequel_rails/storage'
-  Ammeter::OutputCapturer.capture_stdout do
-    SequelRails::Storage.adapter_for(:test).drop
-    SequelRails::Storage.adapter_for(:test).create
-  end
-
   require 'sequel/extensions/migration'
   load "#{Rails.root}/db/schema.rb.init"
   Sequel::Migration.descendants.first.apply Sequel::Model.db, :up
