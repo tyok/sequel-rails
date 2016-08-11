@@ -14,6 +14,7 @@ rvm:
   - jruby-9.0.1.0
 before_script:
   - mysql -e 'create database sequel_rails_test;'
+  - mysql -e 'create database sequel_rails_test_mysql2;'
   - psql -c 'create database sequel_rails_test;' -U postgres
 env:
   - SEQUEL='~> 3.0'

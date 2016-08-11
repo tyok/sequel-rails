@@ -34,7 +34,11 @@ begin
       'sqlite3'    => { 'TEST_DATABASE' => 'db/database.sqlite3' },
     }
 
-    configs.merge!('mysql2' => configs.fetch('mysql')) unless SequelRails.jruby?
+    configs.merge!(
+      'mysql2' => configs.fetch('mysql').merge(
+        'TEST_DATABASE' => 'sequel_rails_test_mysql2'
+      )
+    ) unless SequelRails.jruby?
 
     configs.each do |adapter, config|
       desc "Run specs for #{adapter} adapter"
