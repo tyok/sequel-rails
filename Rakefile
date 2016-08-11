@@ -46,7 +46,7 @@ begin
           ENV[key] = value
         end
         rake = ENV['RAKE'] || "#{FileUtils::RUBY} -S rake"
-        sh "#{rake} #{name} 2>&1"
+        sh "#{rake} spec 2>&1"
       end
     end
 
