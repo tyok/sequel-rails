@@ -63,6 +63,8 @@ matrix:
       gemfile: ci/rails-5.0.gemfile
     - rvm: 2.1.8
       gemfile: ci/rails-5.0.gemfile
+    - gemfile: ci/rails-3.2.gemfile
+      env: SEQUEL='~> 4.0'
 notifications:
   email:
     - jonathan.tron@metrilio.com
