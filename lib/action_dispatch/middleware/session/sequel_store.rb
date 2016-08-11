@@ -21,42 +21,49 @@ module ActionDispatch
 
       private
 
-      def get_session(env, sid)
-        sid ||= generate_sid
-        session = find_session(sid)
-        env[SESSION_RECORD_KEY] = session
-        [sid, session.data]
+      def find_session(req, sid)
+        get_session(req.env, sid)
       end
 
-      def set_session(env, sid, session_data, _options)
+      def get_session(env, sid)
+        session = load_from_store(sid)
+        env[SESSION_RECORD_KEY] = session
+        [session.session_id, session.data]
+      end
+
+      def write_session(req, sid, session_data, options)
+        set_session(req.env, sid, session_data, options)
+      end
+
+      def set_session(env, sid, session_data, options)
         session      = get_session_model(env, sid)
         session.data = session_data
-        session.save(:raise_on_failure => false) && sid
+        session.save(:raise_on_failure => false) && session.session_id
+      end
+
+      def delete_session(req, sid, options)
+        destroy_session(req.env, sid, options)
       end
 
       def destroy_session(env, sid, options)
-        sid = current_session_id(env)
-        if sid
-          session = get_session_model(env, sid)
-          session.destroy unless session.new?
-          env[SESSION_RECORD_KEY] = nil
-        end
-
+        session = get_session_model(env, sid)
+        session.destroy unless session.new?
+        env[SESSION_RECORD_KEY] = nil
         generate_sid unless options[:drop]
       end
 
       def get_session_model(env, sid)
         if env[ENV_SESSION_OPTIONS_KEY][:id].nil?
-          env[SESSION_RECORD_KEY] = find_session(sid)
+          env[SESSION_RECORD_KEY] = load_from_store(sid)
         else
-          env[SESSION_RECORD_KEY] ||= find_session(sid)
+          env[SESSION_RECORD_KEY] ||= load_from_store(sid)
         end
       end
 
-      def find_session(sid)
+      def load_from_store(sid)
         klass = self.class.session_class
         klass.where(:session_id => sid).first ||
-          klass.new(:session_id => sid, :data => {})
+          klass.new(:session_id => generate_sid, :data => {})
       end
     end
   end
