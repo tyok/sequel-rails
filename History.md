@@ -1,4 +1,4 @@
-dev
+0.9.13 (2016-08-11)
 ===================
 
 * Remove some trailing spaces (Pablo Herrero)
