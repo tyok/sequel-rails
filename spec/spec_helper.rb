@@ -49,7 +49,7 @@ end
 
 # Ensure db migrated
 begin
-  require 'sequel/storage'
+  require 'sequel_rails/storage'
   require 'sequel/extensions/migration'
   load "#{Rails.root}/db/schema.rb.init"
   Sequel::Migration.descendants.first.apply Sequel::Model.db, :up
