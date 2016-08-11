@@ -41,12 +41,12 @@ begin
       task adapter do
         puts "running spec:#{adapter}"
         clean_env
-        Rake::Task['spec'].reenable
         ENV['TEST_ADAPTER'] = adapter
         config.each do |key, value|
           ENV[key] = value
         end
-        Rake::Task['spec'].invoke
+        rake = ENV['RAKE'] || "#{FileUtils::RUBY} -S rake"
+        sh "#{rake} #{name} 2>&1"
       end
     end
 
