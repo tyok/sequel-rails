@@ -1,6 +1,8 @@
 dev
 ===================
 
+* Remove some trailing spaces (Pablo Herrero)
+  [#119](https://github.com/TalentBox/sequel-rails/pull/119)
 * Update session store for Rails 5/Rack 2.0 compatibility (Jordan Owens)
   [#110](https://github.com/TalentBox/sequel-rails/pull/110)
 * Make logging compatible with the Sequel master
