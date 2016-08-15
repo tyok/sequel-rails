@@ -1,3 +1,9 @@
+0.9.14 (2016-08-15)
+===================
+
+* Fix permissions on files and release new version
+  [#121](https://github.com/TalentBox/sequel-rails/issues/121)
+
 0.9.13 (2016-08-11)
 ===================
 
