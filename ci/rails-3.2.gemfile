@@ -21,8 +21,11 @@ end
 
 # MRI/Rubinius Adapter Dependencies
 platform :ruby do
-  if RUBY_VERSION < '1.9'
+  case
+  when RUBY_VERSION < '1.9'
     gem 'pg', '~> 0.17.1'
+  when RUBY_VERSION < '2.0'
+    gem 'pg', '~> 0.18.4'
   else
     gem 'pg'
   end
