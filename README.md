@@ -10,7 +10,7 @@
 
 This gem provides the railtie that allows
 [sequel](http://github.com/jeremyevans/sequel) to hook into
-[Rails (3.x and 4.x)](http://github.com/rails/rails) and thus behave like a
+[Rails (3.x, 4.x and 5.x)](http://github.com/rails/rails) and thus behave like a
 rails framework component. Just like activerecord does in rails,
 [sequel-rails](http://github.com/talentbox/sequel-rails) uses the railtie API to
 hook into rails. The two are actually hooked into rails almost identically.
@@ -28,7 +28,8 @@ Since January 2013, we've become the official maintainers of the gem after
 Using sequel-rails
 ==================
 
-Using sequel with Rails (3.x or 4.x) requires a couple minor changes.
+Using sequel with Rails (3.x, 4.x or 5.x) requires a couple minor
+changes.
 
 First, add the following to your Gemfile (after the `Rails` lines):
 
@@ -51,32 +52,35 @@ The top of your `config/application.rb` will probably look something like:
 # require 'rails/all'
 
 # Instead of 'rails/all', require these:
-require "action_controller/railtie"
+require "active_model/railtie"
+require "active_job/railtie"
 # require "active_record/railtie"
+require "action_controller/railtie"
 require "action_mailer/railtie"
+require "action_view/railtie"
+require "action_cable/engine"
 require "sprockets/railtie"
+require "rails/test_unit/railtie
 ```
 
 Then you need to get rid of `ActiveRecord` configurations, that is if you
 didn't generate the new app with `-O` (or the long form `--skip-active-record`):
 
-`config/application.rb` and `config/environments/*.rb`
-
-For example in a fresh `Rails 4.2.4`, you would need to remove those lines:
+For example in a fresh `Rails 5.0.0.1`, you would need to remove those lines:
 
 ```
-config/application.rb
-line 27:    config.active_record.raise_in_transactional_callbacks = true
+config/initializers/new_framework_defaults.rb
+line 18:  Rails.application.config.active_record.belongs_to_required_by_default = true
 ```
 
 ```
 config/environments/development.rb
-line 23:  config.active_record.migration_error = :page_load
+line 38:  config.active_record.migration_error = :page_load
 ```
 
 ```
 config/environments/production.rb
-line 78:  config.active_record.dump_schema_after_migration = false
+line 85:  config.active_record.dump_schema_after_migration = false
 ```
 
 Starting with sequel-rails 0.4.0.pre3 we don't change default Sequel behaviour
