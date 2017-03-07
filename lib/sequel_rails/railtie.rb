@@ -79,6 +79,14 @@ module SequelRails
       end
     end
 
+    # Show SQL log on rails console
+    console do
+      unless ActiveSupport::Logger.logger_outputs_to?(Rails.logger, STDERR, STDOUT)
+        console = ActiveSupport::Logger.new(STDERR)
+        Rails.logger.extend ActiveSupport::Logger.broadcast(console)
+      end
+    end
+
     # Support overwriting crucial steps in subclasses
     def configure_sequel(app)
       rails_db_config = begin
